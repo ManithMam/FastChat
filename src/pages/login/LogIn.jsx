@@ -1,14 +1,18 @@
 import { Button } from '@mui/material'
 import React from 'react'
 import { UserAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const LogIn = () => {
 
-  const { logIn } = UserAuth();
+  const { signIn } = UserAuth();
+  const navigate = useNavigate();
 
   const handleLogin = () => {
-    const user = logIn();
-    console.log(user)
+    signIn().then(() => {
+      console.log("Logged in")
+      navigate("/");
+    });
   }
 
   return (
