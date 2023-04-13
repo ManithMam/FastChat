@@ -8,10 +8,23 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthContextProvider, UserAuth } from "./context/AuthContext";
 import AuthRoute from "./components/AuthRoute";
 import { useEffect } from "react";
+import { createTheme, ThemeProvider } from "@mui/material";
 
 const App = () => {
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#8000c6",
+      },
+      secondary: {
+        main: "#797979",
+      },
+    },
+  });
+
   return (
     <div>
+      <ThemeProvider theme={theme}>
         <Routes>
           <Route
             exact
@@ -41,6 +54,7 @@ const App = () => {
             }
           />
         </Routes>
+      </ThemeProvider>
     </div>
   );
 };
