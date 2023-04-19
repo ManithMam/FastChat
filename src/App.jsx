@@ -3,7 +3,8 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/dashboard/Dashboard";
 import LogIn from "./pages/login/LogIn";
-import SignUp from "./pages/signup/signup";
+import SignUp from "./pages/signup/SignUp";
+import Interface from "./pages/interface/Interface";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthContextProvider, UserAuth } from "./context/AuthContext";
 import AuthRoute from "./components/AuthRoute";
@@ -26,6 +27,15 @@ const App = () => {
     <div>
       <ThemeProvider theme={theme}>
         <Routes>
+          <Route
+            exact
+            path="/interface"
+            element={
+              <ProtectedRoute>
+                <Interface />
+              </ProtectedRoute>
+            }
+          />
           <Route
             exact
             path="/"
