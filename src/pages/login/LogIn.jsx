@@ -10,7 +10,7 @@ const LogIn = () => {
   const handleLogin = () => {
     signIn().then(() => {
       console.log("Logged in");
-      navigate("/interface");
+      navigate("/");
     });
   };
 
