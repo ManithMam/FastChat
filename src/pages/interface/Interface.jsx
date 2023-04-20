@@ -6,13 +6,15 @@ import { useEffect } from "react";
 import RightSideBar from "./RightSideBar";
 import LeftSideBar from "./LeftSideBar";
 
+const myContacts = ["Jane Doe", "John Doe", "John Smith", "Jane Smith"];
+
 const Interface = () => {
-  return (
-    <div>
-      <RightSideBar />
-      <LeftSideBar />
-    </div>
-  );
+	return (
+		<div>
+			<RightSideBar />
+			<LeftSideBar contacts={myContacts} />
+		</div>
+	);
 };
 
 export default Interface;
