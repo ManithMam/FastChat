@@ -29,19 +29,10 @@ const App = () => {
         <Routes>
           <Route
             exact
-            path="/interface"
-            element={
-              <ProtectedRoute>
-                <Interface />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            exact
             path="/"
             element={
               <ProtectedRoute>
-                <Dashboard />
+                <Interface />
               </ProtectedRoute>
             }
           />
