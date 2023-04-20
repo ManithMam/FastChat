@@ -6,11 +6,15 @@ import { useEffect } from 'react';
 
 const Dashboard = () => {
 
-  const { user, logOut } = UserAuth();
+  const { user, logOut, getChats } = UserAuth();
+  const [chats, setChats] = useState({})
 
   useEffect(() => {
     if(user?.uid) {
-      console.log(user.displayName)
+      getChats().then((chats) => {
+        console.log(user.uid)
+        console.log(chats)
+      })
     }
   }, [user])
 

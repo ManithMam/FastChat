@@ -6,6 +6,7 @@ import {
   signInWithPopup
 } from "firebase/auth";
 import { auth, db } from "../firebase";
+import { collection, getDoc, getDocs, query, where } from "firebase/firestore";
 
 const UserContext = createContext();
 
@@ -29,8 +30,22 @@ export const AuthContextProvider = ({ children }) => {
     return signOut(auth);
   };
 
+  const getChats = async () => {
+    const chatsRef = collection(db, "chats")
+    
+    const userChatQuery = query(chatsRef, where("users", "array-contains", user.uid));
+    const chats = await getDocs(userChatQuery);
+    
+    return chats.docs.map((chat) => {
+      return {
+        id: chat.id,
+        ...chat.data()
+      }
+    })
+  };
+
   return (
-    <UserContext.Provider value={{user, setUser, logOut, signIn }}>
+    <UserContext.Provider value={{user, setUser, logOut, signIn, getChats }}>
       {children}
     </UserContext.Provider>
   );
