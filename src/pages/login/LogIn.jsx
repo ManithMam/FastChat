@@ -9,8 +9,13 @@ const LogIn = () => {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    signInWithGoogle().then(() => {
-      navigate("/");
+    signInWithGoogle().then((result) => {
+      console.log(result)
+      if (result === true) {
+        navigate("/");
+      } else {
+        alert("Something went wrong. Please try again.")
+      }
     });
   }
 
