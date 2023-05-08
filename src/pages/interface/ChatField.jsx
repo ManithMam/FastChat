@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Container, Grid } from "@mui/material";
+import { useRef, useEffect } from "react";
 import { UserAuth } from "../../context/AuthContext";
 import { styled, useTheme } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
@@ -21,6 +22,24 @@ import ListItemText from "@mui/material/ListItemText";
 
 const messages = {
 	CHAT_ID: [
+		{
+			from: "USER_ID",
+			to: "USER_ID",
+			message: "Hello World!",
+			timestamp: 1647483103,
+		},
+		{
+			from: "USER_ID",
+			to: "USER_ID",
+			message: "Hello Fastchat!",
+			timestamp: 1647583103,
+		},
+		{
+			from: "USER_ID",
+			to: "USER_ID",
+			message: "Hello Fastchat!",
+			timestamp: 1647583103,
+		},
 		{
 			from: "USER_ID",
 			to: "USER_ID",
@@ -75,20 +94,102 @@ const messages = {
 			message: "Hello Fastchat!",
 			timestamp: 1647583103,
 		},
+		{
+			from: "USER_ID",
+			to: "USER_ID",
+			message: "Hello Fastchat!",
+			timestamp: 1647583103,
+		},
+		{
+			from: "USER_ID",
+			to: "USER_ID",
+			message: "Hello Fastchat!",
+			timestamp: 1647583103,
+		},
+		{
+			from: "USER_ID",
+			to: "USER_ID",
+			message: "Hello Fastchat!",
+			timestamp: 1647583103,
+		},
+		{
+			from: "USER_ID",
+			to: "USER_ID",
+			message: "Hello Fastchat!",
+			timestamp: 1647583103,
+		},
+		{
+			from: "USER_ID",
+			to: "USER_ID",
+			message: "Hello Fastchat!",
+			timestamp: 1647583103,
+		},
+		{
+			from: "USER_ID",
+			to: "USER_ID",
+			message: "Hello Fastchat!",
+			timestamp: 1647583103,
+		},
+		{
+			from: "USER_ID",
+			to: "USER_ID",
+			message: "Hello Fastchat!",
+			timestamp: 1647583103,
+		},
+		{
+			from: "USER_ID",
+			to: "USER_ID",
+			message: "Hello Fastchat!",
+			timestamp: 1647583103,
+		},
+		{
+			from: "USER_ID",
+			to: "USER_ID",
+			message: "Hello Fastchat!",
+			timestamp: 1647583103,
+		},
+		{
+			from: "USER_ID",
+			to: "USER_ID",
+			message: "Hello Fastchat!",
+			timestamp: 1647583103,
+		},
+		{
+			from: "USER_ID",
+			to: "USER_ID",
+			message: "Hello Fastchat!",
+			timestamp: 1647583103,
+		},
 	],
 };
 
+const placeHolder = () => {
+	if (90 - messages.CHAT_ID.length > 75) {
+		return 84 + "vh";
+	} else {
+		return null;
+	}
+};
+
 const ChatField = () => {
+	const paperRef = useRef(null);
+
+	useEffect(() => {
+		if (paperRef.current) {
+			paperRef.current.scrollTop = paperRef.current.scrollHeight;
+		}
+	}, []);
+
 	return (
 		<Paper
 			elevation={3}
 			style={{
-				// height: "85vh",
+				height: placeHolder(),
 				width: "169.5vh",
 				marginLeft: "322px",
-				marginTop: "64px",
+				marginTop: "70px",
 				overflow: "auto",
-				maxHeight: "86vh",
+				maxHeight: "84vh",
 			}}
 		>
 			<List
@@ -102,8 +203,8 @@ const ChatField = () => {
 				{messages.CHAT_ID.map((message) => (
 					<ListItem
 						sx={{
-							marginBottom: "10px",
-							marginTop: "10px",
+							marginBottom: "5px",
+							marginTop: "5px",
 						}}
 					>
 						<Grid container>
