@@ -31,12 +31,16 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const signUpWithEmail = (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password);
+    return signInWithEmailAndPassword(auth, email, password);
   };
 
   const getUserChats = async (userId) => {
     //TODO: Implement this
     return ["chat1", "chat2", "chat3"];
+  };
+
+  const onUserChatsUpdate = (userId, callback) => {
+    //TODO: Implement this
   };
 
   const getChatInfo = async (chatId) => {
@@ -76,12 +80,21 @@ export const AuthContextProvider = ({ children }) => {
     ]
   };
 
+  const onChatMessagesUpdate = (chatId, callback) => {
+    //TODO: Implement this
+  };
+
+  const sendChatMessage = async (chatId, message) => {
+    //TODO: Implement this
+    return true;
+  };
+
   const logOut = () => {
     return signOut(auth);
   };
 
   return (
-    <UserContext.Provider value={{user, setUser, logOut, signInWithGoogle, signInWithEmail }}>
+    <UserContext.Provider value={{user, setUser, logOut, signInWithGoogle, signInWithEmail, signUpWithEmail, getUserChats, onUserChatsUpdate, getChatInfo, getChatMessages, onChatMessagesUpdate, sendChatMessage }}>
       {children}
     </UserContext.Provider>
   );
