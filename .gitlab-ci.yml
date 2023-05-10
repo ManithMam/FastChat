@@ -11,27 +11,20 @@ stages:
 build-job:       
   stage: build 
   script:
-    - echo "install..." 
+    - echo "Install all dependencies..." 
     - npm install  
-    - echo "Compiling the code..."    
+    - echo "Run build"    
     - npm run build
-    - echo "Compile complete."
+    - echo "Build complete."
   artifacts:
     paths: 
       - dist
     expire_in: 30 days
 
-unit-test-job:  
-  stage: test   
+test-job:
+  stage: test
   script:
-    - echo "Running unit tests... This will take about 60 seconds."    
-    - echo "Code coverage is 90%"
-
-lint-test-job:   
-  stage: test    
-  script:
-    - echo "Linting code... This will take about 10 seconds."    
-    - echo "No lint issues found."
+    - echo "TO_DO, add tests to pipeline"
 
 deploy-job:      
   stage: deploy  
