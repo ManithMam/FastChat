@@ -21,222 +21,225 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 
 const messages = {
-	CHAT_ID: [
-		{
-			from: "USER_ID",
-			to: "USER_ID",
-			message: "Hello World!",
-			timestamp: 1647483103,
-		},
-		{
-			from: "USER_ID",
-			to: "USER_ID",
-			message: "Hello Fastchat!",
-			timestamp: 1647583103,
-		},
-		{
-			from: "USER_ID",
-			to: "USER_ID",
-			message: "Hello Fastchat!",
-			timestamp: 1647583103,
-		},
-		{
-			from: "USER_ID",
-			to: "USER_ID",
-			message: "Hello World!",
-			timestamp: 1647483103,
-		},
-		{
-			from: "USER_ID",
-			to: "USER_ID",
-			message: "Hello Fastchat!",
-			timestamp: 1647583103,
-		},
-		{
-			from: "USER_ID",
-			to: "USER_ID",
-			message: "Hello Fastchat!",
-			timestamp: 1647583103,
-		},
-		{
-			from: "USER_ID",
-			to: "USER_ID",
-			message: "Hello Fastchat!",
-			timestamp: 1647583103,
-		},
-		{
-			from: "USER_ID",
-			to: "USER_ID",
-			message: "Hello Fastchat!",
-			timestamp: 1647583103,
-		},
-		{
-			from: "USER_ID",
-			to: "USER_ID",
-			message: "Hello Fastchat!",
-			timestamp: 1647583103,
-		},
-		{
-			from: "USER_ID",
-			to: "USER_ID",
-			message: "Hello Fastchat!",
-			timestamp: 1647583103,
-		},
-		{
-			from: "USER_ID",
-			to: "USER_ID",
-			message: "Hello Fastchat!",
-			timestamp: 1647583103,
-		},
-		{
-			from: "USER_ID",
-			to: "USER_ID",
-			message: "Hello Fastchat!",
-			timestamp: 1647583103,
-		},
-		{
-			from: "USER_ID",
-			to: "USER_ID",
-			message: "Hello Fastchat!",
-			timestamp: 1647583103,
-		},
-		{
-			from: "USER_ID",
-			to: "USER_ID",
-			message: "Hello Fastchat!",
-			timestamp: 1647583103,
-		},
-		{
-			from: "USER_ID",
-			to: "USER_ID",
-			message: "Hello Fastchat!",
-			timestamp: 1647583103,
-		},
-		{
-			from: "USER_ID",
-			to: "USER_ID",
-			message: "Hello Fastchat!",
-			timestamp: 1647583103,
-		},
-		{
-			from: "USER_ID",
-			to: "USER_ID",
-			message: "Hello Fastchat!",
-			timestamp: 1647583103,
-		},
-		{
-			from: "USER_ID",
-			to: "USER_ID",
-			message: "Hello Fastchat!",
-			timestamp: 1647583103,
-		},
-		{
-			from: "USER_ID",
-			to: "USER_ID",
-			message: "Hello Fastchat!",
-			timestamp: 1647583103,
-		},
-		{
-			from: "USER_ID",
-			to: "USER_ID",
-			message: "Hello Fastchat!",
-			timestamp: 1647583103,
-		},
-		{
-			from: "USER_ID",
-			to: "USER_ID",
-			message: "Hello Fastchat!",
-			timestamp: 1647583103,
-		},
-		{
-			from: "USER_ID",
-			to: "USER_ID",
-			message: "Hello Fastchat!",
-			timestamp: 1647583103,
-		},
-		{
-			from: "USER_ID",
-			to: "USER_ID",
-			message: "Hello Fastchat!",
-			timestamp: 1647583103,
-		},
-	],
+  CHAT_ID: [
+    {
+      from: "USER_ID",
+      to: "USER_ID",
+      message: "Hello World!",
+      timestamp: 1647483103,
+    },
+    {
+      from: "USER_ID",
+      to: "USER_ID",
+      message: "Hello Fastchat!",
+      timestamp: 1647583103,
+    },
+    {
+      from: "USER_ID",
+      to: "USER_ID",
+      message: "Hello Fastchat!",
+      timestamp: 1647583103,
+    },
+    {
+      from: "USER_ID",
+      to: "USER_ID",
+      message: "Hello World!",
+      timestamp: 1647483103,
+    },
+    {
+      from: "USER_ID",
+      to: "USER_ID",
+      message: "Hello Fastchat!",
+      timestamp: 1647583103,
+    },
+    {
+      from: "USER_ID",
+      to: "USER_ID",
+      message: "Hello Fastchat!",
+      timestamp: 1647583103,
+    },
+    {
+      from: "USER_ID",
+      to: "USER_ID",
+      message: "Hello Fastchat!",
+      timestamp: 1647583103,
+    },
+    {
+      from: "USER_ID",
+      to: "USER_ID",
+      message: "Hello Fastchat!",
+      timestamp: 1647583103,
+    },
+    {
+      from: "USER_ID",
+      to: "USER_ID",
+      message: "Hello Fastchat!",
+      timestamp: 1647583103,
+    },
+    {
+      from: "USER_ID",
+      to: "USER_ID",
+      message: "Hello Fastchat!",
+      timestamp: 1647583103,
+    },
+    {
+      from: "USER_ID",
+      to: "USER_ID",
+      message: "Hello Fastchat!",
+      timestamp: 1647583103,
+    },
+    {
+      from: "USER_ID",
+      to: "USER_ID",
+      message: "Hello Fastchat!",
+      timestamp: 1647583103,
+    },
+    {
+      from: "USER_ID",
+      to: "USER_ID",
+      message: "Hello Fastchat!",
+      timestamp: 1647583103,
+    },
+    {
+      from: "USER_ID",
+      to: "USER_ID",
+      message: "Hello Fastchat!",
+      timestamp: 1647583103,
+    },
+    {
+      from: "USER_ID",
+      to: "USER_ID",
+      message: "Hello Fastchat!",
+      timestamp: 1647583103,
+    },
+    {
+      from: "USER_ID",
+      to: "USER_ID",
+      message: "Hello Fastchat!",
+      timestamp: 1647583103,
+    },
+    {
+      from: "USER_ID",
+      to: "USER_ID",
+      message: "Hello Fastchat!",
+      timestamp: 1647583103,
+    },
+    {
+      from: "USER_ID",
+      to: "USER_ID",
+      message: "Hello Fastchat!",
+      timestamp: 1647583103,
+    },
+    {
+      from: "USER_ID",
+      to: "USER_ID",
+      message: "Hello Fastchat!",
+      timestamp: 1647583103,
+    },
+    {
+      from: "USER_ID",
+      to: "USER_ID",
+      message: "Hello Fastchat!",
+      timestamp: 1647583103,
+    },
+    {
+      from: "USER_ID",
+      to: "USER_ID",
+      message: "Hello Fastchat!",
+      timestamp: 1647583103,
+    },
+    {
+      from: "USER_ID",
+      to: "USER_ID",
+      message: "Hello Fastchat!",
+      timestamp: 1647583103,
+    },
+    {
+      from: "USER_ID",
+      to: "USER_ID",
+      message: "Hello Fastchat!",
+      timestamp: 1647583103,
+    },
+  ],
 };
 
 const placeHolder = () => {
-	if (90 - messages.CHAT_ID.length > 75) {
-		return 84 + "vh";
-	} else {
-		return null;
-	}
+  if (90 - messages.CHAT_ID.length > 75) {
+    return 84 + "vh";
+  } else {
+    return null;
+  }
 };
 
 const ChatField = () => {
-	const paperRef = useRef(null);
+  const messageEndRef = useRef(null);
 
-	useEffect(() => {
-		if (paperRef.current) {
-			paperRef.current.scrollTop = paperRef.current.scrollHeight;
-		}
-	}, []);
+  const scrollToBottom = () => {
+    messageEndRef.current?.scrollIntoView({ behavior: "instant" });
+  };
 
-	return (
-		<Paper
-			elevation={3}
-			style={{
-				height: placeHolder(),
-				width: "169.5vh",
-				marginLeft: "322px",
-				marginTop: "70px",
-				overflow: "auto",
-				maxHeight: "84vh",
-			}}
-		>
-			<List
-				sx={{
-					height: "100%",
-					display: "flex",
-					flexDirection: "column",
-					justifyContent: "flex-end",
-				}}
-			>
-				{messages.CHAT_ID.map((message) => (
-					<ListItem
-						sx={{
-							marginBottom: "5px",
-							marginTop: "5px",
-						}}
-					>
-						<Grid container>
-							<Grid item xs={"auto"}>
-								<Item border={1}>{message.from}</Item>
-							</Grid>
-							<Grid item sx={{ width: "70vw" }}>
-								<Item border={1}>{message.message}</Item>
-							</Grid>
-							<Grid item sx={{ width: "5vw" }}>
-								<Item border={1}>{message.timestamp}</Item>
-							</Grid>
-						</Grid>
-					</ListItem>
-				))}
-			</List>
-		</Paper>
+  useEffect(() => {
+    scrollToBottom();
+  }, []);
 
-		//<Container
-		// 	sx={{
-		// 		m: 1,
-		// 		ml: "320px",
-		// 		width: "177ch",
-		// 		height: "94vh",
-		// 		display: "flex",
-		// 		flexDirection: "column",
-		// 		justifyContent: "flex-end",
-		// 	}}
-		// >
-		// 	<p className="my-300">Hello</p>
-		// </Container>
-	);
+  return (
+    <Paper
+      elevation={3}
+      style={{
+        height: placeHolder(),
+        width: "169.5vh",
+        marginLeft: "322px",
+        marginTop: "70px",
+        overflow: "auto",
+        maxHeight: "84vh",
+      }}
+    >
+      <List
+        sx={{
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-end",
+        }}
+      >
+        {messages.CHAT_ID.map((message) => (
+          <ListItem
+            sx={{
+              marginBottom: "5px",
+              marginTop: "5px",
+            }}
+          >
+            <Grid container>
+              <Grid item sx={{ width: "5vw" }}>
+                <Item border={0}>{message.from}</Item>
+              </Grid>
+              <Grid item sx={{ width: "69vw" }}>
+                <Item border={0}>{message.message}</Item>
+              </Grid>
+              <Grid item sx={{ width: "5vw" }}>
+                <Item border={0}>{message.timestamp}</Item>
+              </Grid>
+            </Grid>
+          </ListItem>
+        ))}
+      </List>
+      <div ref={messageEndRef}></div>
+    </Paper>
+
+    //<Container
+    // 	sx={{
+    // 		m: 1,
+    // 		ml: "320px",
+    // 		width: "177ch",
+    // 		height: "94vh",
+    // 		display: "flex",
+    // 		flexDirection: "column",
+    // 		justifyContent: "flex-end",
+    // 	}}
+    // >
+    // 	<p className="my-300">Hello</p>
+    // </Container>
+  );
 };
 
 export default ChatField;
