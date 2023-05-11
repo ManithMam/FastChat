@@ -5,11 +5,11 @@ import { useNavigate } from 'react-router-dom';
 
 const LogIn = () => {
 
-  const { signIn } = UserAuth();
+  const { signInWithGoogle } = UserAuth();
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    signIn().then(() => {
+    signInWithGoogle().then(() => {
       console.log("Logged in")
       navigate("/");
     });
