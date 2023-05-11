@@ -7,12 +7,36 @@ const SignUp = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState(null);
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+
+    // Email validation regex pattern
+    const emailRegex = /^\S+@\S+\.\S+$/;
+
+    // Password validation regex pattern  -->  Password must contain at least 8 characters, including uppercase and lowercase letters, and at least one number
+    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+
+    // Validate email and password
+    if (!emailRegex.test(email.trim())) {
+      setError('Please enter a valid email address');
+      return;
+    }
+
+    if (!passwordRegex.test(password)) {
+      setError('Password must contain at least 8 characters, including uppercase and lowercase letters, and at least one number');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
     try {
-      await auth.createUserWithEmailAndPassword(email, password);
+      await auth.createUserWithEmailAndPassword(email.trim(), password);
       navigate("/");
     } catch (error) {
       setError(error.message);
@@ -40,6 +64,16 @@ const SignUp = () => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <div className="m-3">
+          <TextField
+            label="Confirm Password"
+            variant="outlined"
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
         </div>
