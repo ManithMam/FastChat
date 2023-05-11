@@ -4,7 +4,8 @@ import {
   onAuthStateChanged,
   GoogleAuthProvider,
   signInWithPopup,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword
 } from "firebase/auth";
 import { auth, db } from "../firebase";
 
@@ -24,14 +25,17 @@ export const AuthContextProvider = ({ children }) => {
 
   const signInWithGoogle = () => {
     return signInWithPopup(auth, new GoogleAuthProvider())
+    //TODO: Implement user creation in realtime db
   };
 
   const signInWithEmail = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
+    //TODO: Implement user creation in realtime db
   };
 
-  const signUpWithEmail = (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password);
+  const signUpWithEmail = (username, email, password) => {
+    return createUserWithEmailAndPassword(auth, email, password);
+    //TODO: Implement user creation in realtime db
   };
 
   const getUserChats = async (userId) => {
