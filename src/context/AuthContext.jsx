@@ -5,9 +5,11 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   signInWithEmailAndPassword,
-  createUserWithEmailAndPassword
+  createUserWithEmailAndPassword,
 } from "firebase/auth";
-import { auth, db } from "../firebase";
+import { auth, db as realtimedb } from "../firebase";
+import { ref, child, update, set, get } from "firebase/database";
+import { ResetTvRounded } from "@mui/icons-material";
 
 const UserContext = createContext();
 
@@ -23,9 +25,13 @@ export const AuthContextProvider = ({ children }) => {
     };
   }, []);
 
-  const signInWithGoogle = () => {
-    return signInWithPopup(auth, new GoogleAuthProvider())
-    //TODO: Implement user creation in realtime db
+  const signInWithGoogle = async () => {
+    signInWithPopup(auth, new GoogleAuthProvider()).then((result) => {
+      createOrUpdateUser(result.user).then(() => {
+        return true;
+      });
+    });
+    return false;
   };
 
   const signInWithEmail = (email, password) => {
@@ -36,6 +42,26 @@ export const AuthContextProvider = ({ children }) => {
   const signUpWithEmail = (username, email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
     //TODO: Implement user creation in realtime db
+  };
+
+  const createOrUpdateUser = async (user) => {
+    const userRef = ref(realtimedb, `users/${user.uid}`);
+    const userSnapshot = await get(child(userRef, "userName"));
+
+    if (userSnapshot.exists()) {
+      update(ref(realtimedb, "users/" + user.uid), {
+        lastOnline: Date.now(),
+      });
+    } else {
+      set(ref(realtimedb, "users/" + user.uid), {
+        userName: user.displayName,
+        displayName: user.displayName,
+        email: user.email,
+        profile_picture: user.photoURL,
+        lastOnline: Date.now(),
+        participantOf: [],
+      });
+    }
   };
 
   const getUserChats = async (userId) => {
@@ -51,37 +77,37 @@ export const AuthContextProvider = ({ children }) => {
     //TODO: Implement this
     return {
       participants: ["USER_ID", "USER_ID"],
-    }
+    };
   };
 
   const getChatMessages = async (chatId) => {
     //TODO: Implement this
     return [
       {
-        "from": "USER_ID",
-        "to": "USER_ID",
-        "message": "Hello World!",
-        "timestamp": 1647483103
+        from: "USER_ID",
+        to: "USER_ID",
+        message: "Hello World!",
+        timestamp: 1647483103,
       },
       {
-        "from": "USER_ID",
-        "to": "USER_ID",
-        "message": "Hello World!",
-        "timestamp": 1647483103
+        from: "USER_ID",
+        to: "USER_ID",
+        message: "Hello World!",
+        timestamp: 1647483103,
       },
       {
-        "from": "USER_ID",
-        "to": "USER_ID",
-        "message": "Hello World!",
-        "timestamp": 1647483103
+        from: "USER_ID",
+        to: "USER_ID",
+        message: "Hello World!",
+        timestamp: 1647483103,
       },
       {
-        "from": "USER_ID",
-        "to": "USER_ID",
-        "message": "Hello World!",
-        "timestamp": 1647483103
-      }
-    ]
+        from: "USER_ID",
+        to: "USER_ID",
+        message: "Hello World!",
+        timestamp: 1647483103,
+      },
+    ];
   };
 
   const onChatMessagesUpdate = (chatId, callback) => {
@@ -98,7 +124,22 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{user, setUser, logOut, signInWithGoogle, signInWithEmail, signUpWithEmail, getUserChats, onUserChatsUpdate, getChatInfo, getChatMessages, onChatMessagesUpdate, sendChatMessage }}>
+    <UserContext.Provider
+      value={{
+        user,
+        setUser,
+        logOut,
+        signInWithGoogle,
+        signInWithEmail,
+        signUpWithEmail,
+        getUserChats,
+        onUserChatsUpdate,
+        getChatInfo,
+        getChatMessages,
+        onChatMessagesUpdate,
+        sendChatMessage,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );
