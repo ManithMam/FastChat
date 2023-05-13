@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
 import { auth } from '../../firebase';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -11,37 +12,54 @@ const SignUp = () => {
   const [error, setError] = useState(null);
 
   const handleSignUp = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    // Email validation regex pattern
-    const emailRegex = /^\S+@\S+\.\S+$/;
+  // Email validation regex pattern
+  const emailRegex = /^\S+@\S+\.\S+$/;
 
-    // Password validation regex pattern  -->  Password must contain at least 8 characters, including uppercase and lowercase letters, and at least one number
-    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+  // Password validation regex pattern  -->  Password must contain at least 8 characters, including uppercase and lowercase letters, and at least one number
+  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
 
-    // Validate email and password
-    if (!emailRegex.test(email.trim())) {
-      setError('Please enter a valid email address');
-      return;
-    }
+  // Validate email and password
+  if (!emailRegex.test(email.trim())) {
+    setError('Please enter a valid email address');
+    return;
+  }
 
-    if (!passwordRegex.test(password)) {
-      setError('Password must contain at least 8 characters, including uppercase and lowercase letters, and at least one number');
-      return;
-    }
+  if (!passwordRegex.test(password)) {
+    setError('Password must contain at least 8 characters, including uppercase and lowercase letters, and at least one number');
+    return;
+  }
 
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
+  if (password !== confirmPassword) {
+    setError("Passwords do not match");
+    return;
+  }
 
-    try {
-      await auth.createUserWithEmailAndPassword(email.trim(), password);
-      navigate("/");
-    } catch (error) {
-      setError(error.message);
-    }
-  };
+  try {
+    const userCredential = await signUpWithEmailPassword(email, password);
+    const user = userCredential.user;
+    console.log(user);
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorCode, errorMessage);
+  }
+}
+
+function signUpWithEmailPassword(email, password) {
+  const auth = getAuth();
+  createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    return user;
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  });
+}
 
   return (
     <div className="w-full min-h-screen flex flex-col justify-center items-center">

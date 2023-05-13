@@ -3,68 +3,67 @@ import React from 'react'
 import { UserAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { auth } from '../../firebase';
+import { Modal } from 'react-bootstrap';
+import LogInEmail from './LogInEmail';
+
+
+const Container = ({ children }) => (
+  <div className='grid grid-cols-2 h-screen'>
+    <div className='bg-gray-200 p-8 '>{children[0]}</div>
+    <div className='bg-orange-200 p-8'>{children[1]}</div>
+  </div>
+);
 
 const LogIn = () => {
-
-  const { signInWithGoogle } = UserAuth();
+  const { signIn } = UserAuth();
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-
-    try {
-      await auth.signInWithEmailAndPassword(email, password);
-      navigate('/');
-    } catch (error) {
-      setError(error.message);
-    }
-  };
-
-  const handleLoginWithGoogle = () => {
-    signInWithGoogle().then((result) => {
-      console.log(result)
-      if (result === true) {
-        navigate("/");
-      } else {
-        alert("Something went wrong. Please try again.")
-      }
+  const handleLogin = () => {
+    signIn().then(() => {
+      console.log("Logged in")
+      navigate("/");
     });
   }
 
+  const createEMailAccount = () => {
+
+  }
+
+  const LeftContent = () => (
+    <div className="flex flex-col justify-center items-center">
+      <h1 className="text-6xl font-bold m-5">Welcome to FastChat!</h1>
+      <Button
+      variant="contained"
+      color="secondary"
+      onClick={() => handleLogin()}
+      >
+      Log in with Google
+      </Button>
+
+      <LogInEmail/>
+
+      <Button
+      variant="contained"
+      color="secondary"
+      onClick={() => createEMailAccount()}
+      >
+      No account? Create one.
+      </Button>
+    </div>
+  )
+
+  const RightContent = () => (
+    <div className="flex flex-col justify-center items-center">
+      <h1 className="text-6xl font-bold m-5">Right Content</h1>
+    </div>
+  )
+
   return (
-    <div className='w-full min-h-screen flex flex-col justify-center items-center'>
-    <h1 className='text-6xl font-bold m-5'>Welcome to FastChat!</h1>
-    <form onSubmit={handleLogin}>
-      <div className='m-3'>
-        <input
-          type='email'
-          placeholder='Email'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-      </div>
-      <div className='m-3'>
-        <input
-          type='password'
-          placeholder='Password'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </div>
-      <div className='m-3'>
-        <button type='submit'>Log In</button>
-      </div>
-    </form>
-    {error && <p className='text-red-500 m-3'>{error}</p>}
-    <Button variant="outlined" onClick={() => handleLoginWithGoogle()}>Log in with Google</Button>
-  </div>
-  );
+    <Container>
+      <LeftContent/>
+      <RightContent/>
+    </Container>
+  )
 }
 
 export default LogIn
