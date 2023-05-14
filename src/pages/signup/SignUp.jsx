@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
-import { auth } from '../../firebase';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const SignUp = () => {
