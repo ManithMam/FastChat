@@ -27,7 +27,8 @@ export const AuthContextProvider = ({ children }) => {
 
   const signInWithGoogle = async () => {
     signInWithPopup(auth, new GoogleAuthProvider()).then((result) => {
-      createOrUpdateUser(result.user).then(() => {
+      const user = result.user;
+      createOrUpdateUser(user.uid, user.displayName, user.displayName, user.email, user.photoURL).then(() => {
         return true;
       });
     });
@@ -44,20 +45,20 @@ export const AuthContextProvider = ({ children }) => {
     //TODO: Implement user creation in realtime db
   };
 
-  const createOrUpdateUser = async (user) => {
-    const userRef = ref(realtimedb, `users/${user.uid}`);
+  const createOrUpdateUser = async (userId, userName, displayName, email, profile_picture) => {
+    const userRef = ref(realtimedb, `users/${userId}`);
     const userSnapshot = await get(child(userRef, "userName"));
 
     if (userSnapshot.exists()) {
-      update(ref(realtimedb, "users/" + user.uid), {
+      update(ref(realtimedb, "users/" + userId), {
         lastOnline: Date.now(),
       });
     } else {
-      set(ref(realtimedb, "users/" + user.uid), {
-        userName: user.displayName,
-        displayName: user.displayName,
-        email: user.email,
-        profile_picture: user.photoURL,
+      set(ref(realtimedb, "users/" + userId), {
+        userName: userName,
+        displayName: displayName,
+        email: email,
+        profile_picture: profile_picture,
         lastOnline: Date.now(),
         participantOf: [],
       });
