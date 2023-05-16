@@ -9,29 +9,50 @@ import {
 } from "firebase/auth";
 import { auth, db as realtimedb } from "../firebase";
 import { ref, child, update, set, get } from "firebase/database";
-import { ResetTvRounded } from "@mui/icons-material";
 
 const UserContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-  const [user, setUser] = useState({});
+  // User returned from firebase auth
+  const [authUser, setAuthUser] = useState(null);
+
+  // Our custom user object
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+    const unsubscribe = onAuthStateChanged(auth, (currentAuthUser) => {
+      setAuthUser(currentAuthUser);
     });
     return () => {
       unsubscribe();
     };
   }, []);
 
-  const signInWithGoogle = async () => {
-    signInWithPopup(auth, new GoogleAuthProvider()).then((result) => {
-      const user = result.user;
-      createOrUpdateUser(user.uid, user.displayName, user.displayName, user.email, user.photoURL).then(() => {
-        return true;
+  /*
+   * This useEffect hook will run whenever the authUser changes.
+   * If the authUser is not null, we will fetch the user from the realtime db
+   * and set the user state to the user object returned from the db.
+   */
+  useEffect(() => {
+    if (authUser !== null) {
+      getCurrentUser().then((currentUser) => {
+        setUser(currentUser);
       });
-    });
+    }
+  }, [authUser]);
+
+  const signInWithGoogle = async () => {
+    const result = await signInWithPopup(auth, new GoogleAuthProvider());
+    if (result.user) {
+      await createOrUpdateUser(
+        result.user.uid,
+        result.user.displayName,
+        result.user.displayName,
+        result.user.email,
+        result.user.photoURL
+      );
+      return true;
+    }
     return false;
   };
 
@@ -40,14 +61,40 @@ export const AuthContextProvider = ({ children }) => {
     //TODO: Implement user creation in realtime db
   };
 
-  const signUpWithEmail = (username, email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password);
-    //TODO: Implement user creation in realtime db
+  const signUpWithEmail = async (username, email, password) => {
+    try {
+      const result = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      if (result.user) {
+        await createOrUpdateUser(
+          result.user.uid,
+          username,
+          username,
+          email,
+          null
+        );
+        return { success: true, error: null };
+      }
+    } catch (error) {
+      if(error.message.includes('already in use')) {
+        return { success: false, error: 'Email already in use!' };
+      }
+      return { success: false, error: error.message };
+    }
   };
 
-  const createOrUpdateUser = async (userId, userName, displayName, email, profile_picture) => {
-    const userRef = ref(realtimedb, `users/${userId}`);
-    const userSnapshot = await get(child(userRef, "userName"));
+  const createOrUpdateUser = async (
+    userId,
+    userName,
+    displayName,
+    email,
+    profile_picture
+  ) => {
+    const userRef = ref(realtimedb, `users/`);
+    const userSnapshot = await get(child(userRef, userId));
 
     if (userSnapshot.exists()) {
       update(ref(realtimedb, "users/" + userId), {
@@ -63,6 +110,19 @@ export const AuthContextProvider = ({ children }) => {
         participantOf: [],
       });
     }
+
+    setUser(await getCurrentUser());
+  };
+
+  const getCurrentUser = async () => {
+    if (authUser?.uid === undefined) return null;
+
+    const userRef = ref(realtimedb, `users/`);
+    const userSnapshot = await get(child(userRef, authUser.uid));
+    if (userSnapshot.exists()) {
+      return userSnapshot.val();
+    }
+    return null;
   };
 
   const getUserChats = async (userId) => {
@@ -127,12 +187,14 @@ export const AuthContextProvider = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
+        authUser,
         user,
-        setUser,
+        setAuthUser,
         logOut,
         signInWithGoogle,
         signInWithEmail,
         signUpWithEmail,
+        getCurrentUser,
         getUserChats,
         onUserChatsUpdate,
         getChatInfo,
