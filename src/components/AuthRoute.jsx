@@ -3,9 +3,9 @@ import { Navigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
 
 const AuthRoute = ({ children }) => {
-  const { user } = UserAuth();
+  const { authUser } = UserAuth();
 
-  if (user?.uid) {
+  if (authUser) {
     return <Navigate to='/' />;
   }
   return children;

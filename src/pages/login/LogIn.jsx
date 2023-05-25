@@ -8,11 +8,13 @@ const LogIn = () => {
   const { signInWithGoogle } = UserAuth();
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    signInWithGoogle().then(() => {
-      console.log("Logged in")
-      navigate("/");
-    });
+  const handleLogin = async () => {
+    const result = await signInWithGoogle();
+    if (result) {
+      navigate('/');
+    } else {
+      alert('Error logging in!');
+    }
   }
 
   return (
