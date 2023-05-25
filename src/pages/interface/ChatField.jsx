@@ -83,7 +83,7 @@ const messages = {
       timestamp: 1647583103,
     },
     {
-      from: "USER_ID",
+      from: "me",
       to: "USER_ID",
       message: "Hello Fastchat!",
       timestamp: 1647583103,
@@ -107,7 +107,7 @@ const messages = {
       timestamp: 1647583103,
     },
     {
-      from: "USER_ID",
+      from: "me",
       to: "USER_ID",
       message: "Hello Fastchat!",
       timestamp: 1647583103,
@@ -121,46 +121,64 @@ const messages = {
     {
       from: "USER_ID",
       to: "USER_ID",
-      message: "Hello Fastchat!",
+      message:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      timestamp: 1647583103,
+    },
+    {
+      from: "me",
+      to: "USER_ID",
+      message:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. The quick brown fox jumps over the lazy dog",
+      timestamp: 1647583103,
+    },
+    {
+      from: "me",
+      to: "USER_ID",
+      message: "Lorem ipsum",
       timestamp: 1647583103,
     },
     {
       from: "USER_ID",
       to: "USER_ID",
-      message: "Hello Fastchat!",
+      message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       timestamp: 1647583103,
     },
     {
       from: "USER_ID",
       to: "USER_ID",
-      message: "Hello Fastchat!",
+      message: "The",
       timestamp: 1647583103,
     },
     {
       from: "USER_ID",
       to: "USER_ID",
-      message: "Hello Fastchat!",
+      message: "The quick brown fox jumps over the lazy dog",
       timestamp: 1647583103,
     },
     {
-      from: "USER_ID",
+      from: "me",
       to: "USER_ID",
-      message: "Hello Fastchat!",
-      timestamp: 1647583103,
-    },
-    {
-      from: "USER_ID",
-      to: "USER_ID",
-      message: "Hello Fastchat!",
-      timestamp: 1647583103,
-    },
-    {
-      from: "USER_ID",
-      to: "USER_ID",
-      message: "Hello Fastchat!",
+      message: "The quick brown fox jumps",
       timestamp: 1647583103,
     },
   ],
+};
+
+const useColor = (from) => {
+  if (from === "me") {
+    return "#8C307D";
+  } else {
+    return "#ad719d";
+  }
+};
+
+const useMargin = (from) => {
+  if (from === "me") {
+    return null;
+  } else {
+    return "auto";
+  }
 };
 
 const placeHolder = () => {
@@ -203,21 +221,54 @@ const ChatField = () => {
         }}
       >
         {messages.CHAT_ID.map((message) => (
+          // color = useColor(message.from);
+
           <ListItem
             sx={{
               marginBottom: "5px",
               marginTop: "5px",
+              width: "auto",
+              padding: "10px",
+              // backgroundColor: "white",
             }}
           >
-            <Grid container>
-              <Grid item sx={{ width: "5vw" }}>
+            <Grid
+              container
+              sx={{
+                width: "auto",
+                border: "5px solid",
+                borderColor: useColor(message.from),
+                borderRadius: "5px",
+                backgroundColor: useColor(message.from),
+                marginLeft: useMargin(message.from),
+              }}
+            >
+              <Grid item sx={{ color: "white", width: "5vw" }}>
                 <Item border={0}>{message.from}</Item>
               </Grid>
-              <Grid item sx={{ width: "69vw" }}>
+              <Grid item sx={{ color: "white", width: "auto" }}>
                 <Item border={0}>{message.message}</Item>
               </Grid>
-              <Grid item sx={{ width: "5vw" }}>
-                <Item border={0}>{message.timestamp}</Item>
+              <Grid
+                item
+                sx={{
+                  color: "white",
+                  width: "auto",
+                  marginLeft: "10px",
+                  marginTop: "auto",
+                  marginLeft: "15px",
+                }}
+              >
+                <Item
+                  sx={{
+                    // backgroundColor: "white",
+                    fontSize: 10,
+                    color: "lightgray",
+                  }}
+                  border={0}
+                >
+                  {message.timestamp}
+                </Item>
               </Grid>
             </Grid>
           </ListItem>
