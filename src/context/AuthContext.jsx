@@ -183,7 +183,7 @@ export const AuthContextProvider = ({ children }) => {
   const logOut = () => {
     return signOut(auth);
   };
-
+  
   return (
     <UserContext.Provider
       value={{
