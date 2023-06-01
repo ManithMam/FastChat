@@ -9,6 +9,7 @@ import { AuthContextProvider, UserAuth } from "./context/AuthContext";
 import AuthRoute from "./components/AuthRoute";
 import { useEffect } from "react";
 import { createTheme, ThemeProvider } from "@mui/material";
+import Profile from "./pages/profile/profile";
 
 const App = () => {
   const theme = createTheme({
@@ -32,6 +33,15 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            exact
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile/>
               </ProtectedRoute>
             }
           />

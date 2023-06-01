@@ -95,7 +95,7 @@ export const AuthContextProvider = ({ children }) => {
 
   const logOut = () => {
     return signOut(auth);
-  };
+  };  
 
   return (
     <UserContext.Provider value={{user, setUser, logOut, signInWithGoogle, signInWithEmail, signUpWithEmail, getUserChats, onUserChatsUpdate, getChatInfo, getChatMessages, onChatMessagesUpdate, sendChatMessage }}>
