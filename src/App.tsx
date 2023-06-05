@@ -1,15 +1,11 @@
-import React from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import Dashboard from "./pages/dashboard/Dashboard";
 import LogIn from "./pages/login/LogIn";
 import SignUp from "./pages/signup/SignUp";
-import Interface from "./pages/interface/Interface";
 import ProtectedRoute from "./components/ProtectedRoute";
-import { AuthContextProvider, UserAuth } from "./context/AuthContext";
 import AuthRoute from "./components/AuthRoute";
-import { useEffect } from "react";
 import { createTheme, ThemeProvider } from "@mui/material";
+import Interface from "./pages/interface/Interface";
 
 const App = () => {
   const theme = createTheme({
@@ -28,7 +24,6 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <Routes>
           <Route
-            exact
             path="/"
             element={
               <ProtectedRoute>
@@ -37,7 +32,6 @@ const App = () => {
             }
           />
           <Route
-            exact
             path="/login"
             element={
               <AuthRoute>
@@ -46,7 +40,6 @@ const App = () => {
             }
           />
           <Route
-            exact
             path="/signup"
             element={
               <AuthRoute>

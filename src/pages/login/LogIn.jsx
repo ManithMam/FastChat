@@ -4,15 +4,18 @@ import { UserAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const LogIn = () => {
-  const { signIn } = UserAuth();
+
+  const { signInWithGoogle } = UserAuth();
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    signIn().then(() => {
-      console.log("Logged in");
-      navigate("/");
-    });
-  };
+  const handleLogin = async () => {
+    const result = await signInWithGoogle();
+    if (result) {
+      navigate('/');
+    } else {
+      alert('Error logging in!');
+    }
+  }
 
   return (
     <div className="w-full min-h-screen flex flex-col justify-center items-center">
