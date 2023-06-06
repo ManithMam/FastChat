@@ -9,7 +9,7 @@ import { AuthContextProvider, UserAuth } from "./context/AuthContext";
 import AuthRoute from "./components/AuthRoute";
 import { useEffect } from "react";
 import { createTheme, ThemeProvider } from "@mui/material";
-import Profile from "./pages/profile/profile";
+import Profile from "./pages/profile/Profile";
 
 const App = () => {
   const theme = createTheme({
@@ -20,6 +20,9 @@ const App = () => {
       secondary: {
         main: "#797979",
       },
+      button: {
+        main: "#05F2F2"
+      }
     },
   });
 

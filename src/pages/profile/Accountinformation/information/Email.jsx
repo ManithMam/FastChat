@@ -7,8 +7,8 @@ function Email(){
     return(
         <div>
             <div>
-                <h1>Email</h1>
-                <p>{user.email}</p>
+                <h1 className=" text-slate-100">Email</h1>
+                <p className=" text-slate-100">{user.email}</p>
             </div>
             <ChangeButton/>
         </div>

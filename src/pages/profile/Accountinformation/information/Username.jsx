@@ -9,8 +9,8 @@ function Username(){
     return(
         <div>
             <div>
-                <h1>Username</h1>
-                <p>{user.displayName}</p>
+                <h1 className=" text-slate-100">Username</h1>
+                <p className=" text-slate-100">{user.displayName}</p>
             </div>       
             <ChangeButton/>     
         </div>

@@ -1,7 +1,7 @@
 
 function LoginInformation({provider}) {
     return(
-        <p>Logged in with {provider}</p>
+        <p className=" text-slate-100">Logged in with {provider}</p>
     )
 }
 

@@ -9,8 +9,8 @@ function DisplayName (){
     return (
         <div>
             <div>          
-                <h1>Display Name</h1>
-                <p>{user.displayName}</p>
+                <h1 className=" text-slate-100">Display Name</h1>
+                <p className=" text-slate-100">{user.displayName}</p>
                 <ChangeButton/>
             </div>
         </div>
