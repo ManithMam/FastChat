@@ -1,24 +1,15 @@
 import { Avatar } from "@mui/material";
-import { getAuth } from "firebase/auth";
 import LoginInformation from "./LoginInformation";
+import { UserAuth } from "../../../context/AuthContext";
 
-function ProfilePicture (){    
-    const auth = getAuth();
-    const user = auth.currentUser;
-    let img;
-    let provider;    
-    
-    if(user !== null){
-        user.providerData.forEach((profile) => {
-            img = profile.photoURL;           
-            provider = profile.providerId;
-        })
-    }    
-    
+function ProfilePicture (){        
+
+    const {user} = UserAuth();  
+
     return (
         <div>
-            <Avatar src={img}/>
-            <LoginInformation provider={provider}/>
+            <Avatar src={user.providerData[0].photoURL}/>
+            <LoginInformation provider={user.providerId}/>
         </div>        
     )
 
