@@ -8,7 +8,7 @@ function ProfilePicture (){
 
     return (
         <div>
-            <Avatar src={user.providerData[0].photoURL}/>
+            <Avatar src={user.providerData[0].photoURL} sx={{width: 400, height: 400}}/>
             <LoginInformation provider={user.providerId}/>
         </div>        
     )
