@@ -4,13 +4,11 @@ import { UserAuth } from "../../../context/AuthContext";
 
 function ProfilePicture (){        
 
-    const {user} = UserAuth();  
-
-    
+    const {user} = UserAuth();      
 
     return (
         <div>
-            <Avatar  sx={{width: 400, height: 400}}/>
+            <Avatar  sx={{width: 450, height: 450}}/>
             <LoginInformation provider={user.providerId}/>
         </div>        
     )
