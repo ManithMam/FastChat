@@ -1,16 +1,18 @@
-import ChangeButton from "../../changeButton";
 import { UserAuth } from "../../../../context/AuthContext";
+import { Button } from "@mui/material";
 
 function Email(){   
     const {user} = UserAuth(); 
 
     return(
-        <div>
-            <div>
-                <h1 className=" text-slate-100">Email</h1>
-                <p className=" text-slate-100">{user.email}</p>
+        <div className=" flex flex-row">
+            <div className=" flex flex-grow flex-col">
+                <h1 className=" text-slate-100 font-bold text-2xl">Email</h1>
+                <p className=" text-slate-100 text-sm">{user.email}</p>
             </div>
-            <ChangeButton/>
+            <div className=" flex items-center">
+                <Button variant="contained" color="button">Change</Button>   
+            </div>   
         </div>
     )
 }

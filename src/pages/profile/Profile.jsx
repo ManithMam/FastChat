@@ -4,17 +4,16 @@ import Password from "./password/Password";
 
 export default function Profile (){
     return (
-        <div className=" bg-background h-screen flex justify-around flex-wrap">          
-            <div className="flex justify-center flex-wrap mt-32 ml-48">
+        <div className=" bg-background h-screen flex flex-wrap">          
+            <div className=" basis-1/2">
                 <ProfilePicture/>
             </div>
-            <div>
-                <div className="flex justify-center flex-wrap">
-                    <InformationCard/>
-                </div>
-                <div>
+            <div className=" basis-1/2 flex flex-col flex-grow justify-center">
+               
+                    <InformationCard/>               
+             
                     <Password/>
-                </div>  
+               
             </div>
             
         </div>

@@ -3,13 +3,18 @@ import Email from "./information/Email";
 import Username from "./information/Username";
 
 
-function InformationCard (){
+
+function InformationCard (){   
 
     return (
-        <div className=" bg-primary m-8 p-14 pr-96 mt-32">
-            <DisplayName/>
-            <Username/>
-            <Email/>
+        <div className="bg-primary m-10 p-12">
+
+                <DisplayName/>   
+
+                <Username/>
+
+                <Email/>                          
+           
         </div>
     )
 }
