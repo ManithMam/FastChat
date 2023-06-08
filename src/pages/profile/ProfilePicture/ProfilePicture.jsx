@@ -4,7 +4,7 @@ import { UserAuth } from "../../../context/AuthContext";
 
 function ProfilePicture (){        
 
-    const {user} = UserAuth();      
+    const {user} = UserAuth();       
 
     return (
         <div>

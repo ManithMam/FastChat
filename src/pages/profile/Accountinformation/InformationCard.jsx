@@ -7,7 +7,7 @@ import Username from "./information/Username";
 function InformationCard (){   
 
     return (
-        <div className="bg-primary m-10 p-12">
+        <div className="bg-primary m-10 p-12 rounded-lg">
 
                 <DisplayName/>   
 

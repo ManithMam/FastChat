@@ -4,7 +4,7 @@ import Password from "./password/Password";
 
 export default function Profile (){
     return (
-        <div className=" bg-background h-screen flex flex-wrap">          
+        <div className=" bg-background h-screen flex flex-wrap">              
             <div className=" basis-1/2 flex justify-center items-center mb-44">
                 <ProfilePicture/>
             </div>
