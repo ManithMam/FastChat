@@ -16,13 +16,15 @@ async function readFile(){
     return file;
 }  
 
-async function uploadFile(){
+async function uploadFile(user){
 
     const storage = getStorage();
 
-    const storageRef = ref(storage, 'images')
+    const username = user.displayName;    
 
-    const img = readFile();
+    const storageRef = ref(storage, `avatars/${username}/avatar.jpg`)
+
+    const img = await readFile();
 
     uploadBytes(storageRef, img).then((snaphot) => {
         console.log('Uploaded img to cloud storage.')
@@ -32,10 +34,10 @@ async function uploadFile(){
 function ProfilePicture (){   
 
     const {user} = UserAuth();  
-
+    
     return (
         <div>
-            <Avatar sx={{width: 450, height: 450}} onClick={() => {uploadFile()}}/>
+            <Avatar sx={{width: 450, height: 450}} onClick={() => {uploadFile(user)}}/>
             <LoginInformation provider={user.providerId}/>
         </div>        
     )
