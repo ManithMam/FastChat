@@ -2,7 +2,7 @@ import { Avatar } from "@mui/material";
 import LoginInformation from "./LoginInformation";
 import { UserAuth } from "../../../context/AuthContext";
 import { getStorage, ref, uploadBytes, getDownloadURL} from "firebase/storage"
-import { updateProfile } from "firebase/auth";
+import { updateProfile, getAuth, onAuthStateChanged } from "firebase/auth";
 import { useState } from "react";
 
 async function readFile(){   
@@ -47,19 +47,30 @@ async function uploadFile(user, setImgUrl){
     const img = await readFile();
 
     uploadBytes(storageRef, img).then((snaphot) => {
-        console.log('Uploaded img to cloud storage.')                    
-       
+        console.log('Uploaded img to cloud storage.')      
     })
 
     updateUserProfile(user, setImgUrl);  
    
 }
 
-function ProfilePicture (){     
-
-    const {user} = UserAuth();    
+function ProfilePicture (){      
     
-    const [imgUrl, setImgUrl] = useState(user.photoURL);
+    const auth = getAuth();    
+
+    const [user, setUser] = useState({});
+    
+    const [imgUrl, setImgUrl] = useState();   
+
+    onAuthStateChanged(auth, async (currUser) => {
+        if(currUser){
+            setUser(currUser)
+            setImgUrl(currUser.photoURL)
+        }
+        else{
+            console.log('noUser')
+        }
+    })    
     
     return (
         <div>
