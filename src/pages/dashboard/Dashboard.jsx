@@ -6,20 +6,33 @@ import { useEffect } from 'react';
 
 const Dashboard = () => {
 
-  const { user, logOut, onUserChatsUpdate, createChat } = UserAuth();
+  const { user, logOut, onUserChatsUpdate, createChat, onChatMessagesUpdate, sendChatMessage } = UserAuth();
   const [chats, setChats] = useState([])
 
   useEffect(() => {
     if (user) {
       // createChat(user.id, "aHJClUCO6zLX2kCt0qjrSCzYbhO2")
-      const unsubscribe = onUserChatsUpdate(user.id, (chats) => {
+      const unsubscribeChatUpdates = onUserChatsUpdate(user.id, (chats) => {
         console.log(chats)
         setChats(chats ? chats : [])
       });
 
-      return unsubscribe
+      const unsubscribeMessagesUpdates = onChatMessagesUpdate("-NXef_YI54Obam6D2zLG", (messages) => {
+        console.log(messages)
+      });
+
+      return () => {
+        unsubscribeChatUpdates();
+        unsubscribeMessagesUpdates();
+      }
     }
   }, [user])
+
+  const handleTestMessage = () => {
+    sendChatMessage("-NXef_YI54Obam6D2zLG",user.id, "Test message").then((result) => {
+      console.log(result)
+    })
+  }
 
   return (
     <div>
@@ -31,6 +44,7 @@ const Dashboard = () => {
           <li key={chat}>{chat}</li>
         ))}
       </ul>
+      <button onClick={() => handleTestMessage()}>Send test message</button>
       <button onClick={() => logOut()}>LogOut</button>
     </div>
 

@@ -184,73 +184,67 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const onUserChatsUpdate = (userId, callback) => {
-    // Chat object
-    // "chats": {
-    //   "CHAT_ID": {
-    //     "title": "CAN_BE_NULL"
-    //     "participants": [
-    //       "USER_ID",
-    //       "USER_ID"
-    //     ]
-    //   }
-    // },
-
     // Get initial data and update whenever it changes, return a function to unsubscribe
-    console.log("Subscribing to user chats", userId)
     const chatsRef = ref(realtimedb, `users/${userId}/participantOf`);
     const unsubscribe = onValue(chatsRef, (snapshot) => {
-      console.log("User chats updated")
       const chats = snapshot.val();
-      console.log(chats)
       callback(chats);
     });
     return unsubscribe;
   };
 
   const getChatInfo = async (chatId) => {
-    //TODO: Implement this
-    return {
-      participants: ["USER_ID", "USER_ID"],
-    };
-  };
-
-  const getChatMessages = async (chatId) => {
-    //TODO: Implement this
-    return [
-      {
-        from: "USER_ID",
-        to: "USER_ID",
-        message: "Hello World!",
-        timestamp: 1647483103,
-      },
-      {
-        from: "USER_ID",
-        to: "USER_ID",
-        message: "Hello World!",
-        timestamp: 1647483103,
-      },
-      {
-        from: "USER_ID",
-        to: "USER_ID",
-        message: "Hello World!",
-        timestamp: 1647483103,
-      },
-      {
-        from: "USER_ID",
-        to: "USER_ID",
-        message: "Hello World!",
-        timestamp: 1647483103,
-      },
-    ];
+    // Get chat info from database
+    const chatRef = ref(realtimedb, `chats/${chatId}`);
+    const chatSnapshot = await get(chatRef);
+    if (chatSnapshot.exists()) {
+      return chatSnapshot.val();
+    }
+    return null;
   };
 
   const onChatMessagesUpdate = (chatId, callback) => {
-    //TODO: Implement this
+    // Get initial data and update whenever it changes, return a function to unsubscribe
+    const messagesRef = ref(realtimedb, `messages/${chatId}`);
+    const unsubscribe = onValue(messagesRef, (snapshot) => {
+      const messages = snapshot.val();
+      callback(messages);
+    });
+    return unsubscribe;
   };
 
-  const sendChatMessage = async (chatId, message) => {
-    //TODO: Implement this
-    return true;
+  const sendChatMessage = async (chatId, userId, message) => {
+    // Check if chat exists
+    const chatRef = ref(realtimedb, `chats/${chatId}`);
+    const chatSnapshot = await get(chatRef);
+    if (chatSnapshot.exists()) {
+      // Get messages from database
+      const messagesRef = ref(realtimedb, `messages/${chatId}`);
+      const messagesSnapshot = await get(messagesRef);
+
+      const messageObject = {
+        from: userId,
+        message: message,
+        timestamp: Date.now(),
+      }
+
+      if (messagesSnapshot.exists()) {
+        // Append message to messages array
+        const messages = messagesSnapshot.val();
+        messages.push(messageObject);
+        await set(messagesRef, messages);
+
+        return true;
+      } else {
+        // Create messages array
+        await set(messagesRef, [messageObject]);
+
+        return true;
+      }
+    } else {
+      // Chat does not exist
+      return false;
+    }
   };
 
   const logOut = () => {
@@ -271,7 +265,6 @@ export const AuthContextProvider = ({ children }) => {
         getCurrentUser,
         onUserChatsUpdate,
         getChatInfo,
-        getChatMessages,
         onChatMessagesUpdate,
         sendChatMessage,
       }}
