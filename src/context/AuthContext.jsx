@@ -8,7 +8,7 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { auth, db as realtimedb } from "../firebase";
-import { ref, child, update, set, get } from "firebase/database";
+import { ref, child, update, set, get, onValue, push } from "firebase/database";
 
 const UserContext = createContext();
 
@@ -120,18 +120,91 @@ export const AuthContextProvider = ({ children }) => {
     const userRef = ref(realtimedb, `users/`);
     const userSnapshot = await get(child(userRef, authUser.uid));
     if (userSnapshot.exists()) {
-      return userSnapshot.val();
+      return {...userSnapshot.val(), id: authUser.uid};
     }
     return null;
   };
 
-  const getUserChats = async (userId) => {
-    //TODO: Implement this
-    return ["chat1", "chat2", "chat3"];
+  const createChat = async (userId, participantId) => {
+    console.log("Creating chat between " + userId + " and " + participantId)
+
+    // Create a new chat with the current user and the user with the given userId
+    // Check if user exists in database
+    const participantRef = ref(realtimedb, `users/${participantId}`);
+    const participantSnapshot = await get(participantRef);
+    if (participantSnapshot.exists()) {
+      const currentUserRef = ref(realtimedb, `users/${userId}`);
+      const currentUserSnapshot = await get(currentUserRef);
+      if (currentUserSnapshot.exists()) {
+        // User exists
+        // Create a new chat
+        const chatRef = ref(realtimedb, "chats");
+        const newChatRef = push(chatRef);
+        const newChatKey = newChatRef.key;
+
+        // Add the chat to the chats object
+        const chatData = {
+          title: null,
+          participants: [userId, participantId],
+        };
+        await set(newChatRef, chatData);
+
+        // Append the chat id to the user's participantOf array
+        const userParticipantOfRef = ref(
+          realtimedb,
+          `users/${userId}/participantOf`
+        );
+        if(currentUserSnapshot.val().participantOf === undefined) {
+          await set(userParticipantOfRef, [newChatKey]);
+        } else {
+          await update(userParticipantOfRef, [newChatKey]);
+        }
+
+        // Append the chat id to the participant's participantOf array
+        const participantParticipantOfRef = ref(
+          realtimedb,
+          `users/${participantId}/participantOf`
+        );
+        if(participantSnapshot.val().participantOf === undefined) {
+          await set(participantParticipantOfRef, [newChatKey]);
+        } else {
+          await update(participantParticipantOfRef, [newChatKey]);
+        }
+
+        return newChatKey;
+      } else {
+        // User does not exist
+        return null;
+      }
+    } else {
+      // User does not exist
+      return null;
+    }
+
   };
 
   const onUserChatsUpdate = (userId, callback) => {
-    //TODO: Implement this
+    // Chat object
+    // "chats": {
+    //   "CHAT_ID": {
+    //     "title": "CAN_BE_NULL"
+    //     "participants": [
+    //       "USER_ID",
+    //       "USER_ID"
+    //     ]
+    //   }
+    // },
+
+    // Get initial data and update whenever it changes, return a function to unsubscribe
+    console.log("Subscribing to user chats", userId)
+    const chatsRef = ref(realtimedb, `users/${userId}/participantOf`);
+    const unsubscribe = onValue(chatsRef, (snapshot) => {
+      console.log("User chats updated")
+      const chats = snapshot.val();
+      console.log(chats)
+      callback(chats);
+    });
+    return unsubscribe;
   };
 
   const getChatInfo = async (chatId) => {
@@ -194,8 +267,8 @@ export const AuthContextProvider = ({ children }) => {
         signInWithGoogle,
         signInWithEmail,
         signUpWithEmail,
+        createChat,
         getCurrentUser,
-        getUserChats,
         onUserChatsUpdate,
         getChatInfo,
         getChatMessages,

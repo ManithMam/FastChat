@@ -6,13 +6,31 @@ import { useEffect } from 'react';
 
 const Dashboard = () => {
 
-  const { user, logOut } = UserAuth();
-  const [currentUser, setCurrentUser] = useState({})
+  const { user, logOut, onUserChatsUpdate, createChat } = UserAuth();
+  const [chats, setChats] = useState([])
+
+  useEffect(() => {
+    if (user) {
+      // createChat(user.id, "aHJClUCO6zLX2kCt0qjrSCzYbhO2")
+      const unsubscribe = onUserChatsUpdate(user.id, (chats) => {
+        console.log(chats)
+        setChats(chats ? chats : [])
+      });
+
+      return unsubscribe
+    }
+  }, [user])
 
   return (
     <div>
       <h1 className='text-5xl'>Dashboard</h1>
-      <h2>Logged in as {user?.displayName}</h2>
+      <h2>Logged in as {user?.displayName} {user?.id}</h2>
+      <h2>Chats</h2>
+      <ul>
+        {chats.map((chat) => (
+          <li key={chat}>{chat}</li>
+        ))}
+      </ul>
       <button onClick={() => logOut()}>LogOut</button>
     </div>
 
