@@ -3,9 +3,9 @@ import LoginInformation from "./LoginInformation";
 import { UserAuth } from "../../../context/AuthContext";
 import { getStorage, ref, uploadBytes, getDownloadURL} from "firebase/storage"
 import { updateProfile, getAuth, onAuthStateChanged } from "firebase/auth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-async function readFile(){   
+ async function readFile(){   
 
     const [fileHandle] = await window.showOpenFilePicker();
 
@@ -46,32 +46,24 @@ async function uploadFile(user, setImgUrl){
 
     const img = await readFile();
 
-    uploadBytes(storageRef, img).then((snaphot) => {
-        console.log('Uploaded img to cloud storage.')      
-    })
+    uploadBytes(storageRef, img)
 
     updateUserProfile(user, setImgUrl);  
    
 }
+ 
+function ProfilePicture (){
 
-function ProfilePicture (){      
+    const {user} = UserAuth();
+
+    const [imgUrl, setImgUrl] = useState();  
     
-    const auth = getAuth();    
-
-    const [user, setUser] = useState({});
-    
-    const [imgUrl, setImgUrl] = useState();   
-
-    onAuthStateChanged(auth, async (currUser) => {
-        if(currUser){
-            setUser(currUser)
-            setImgUrl(currUser.photoURL)
+    useEffect(() => {
+        if(user?.uid) {
+          setImgUrl(user.photoURL)
         }
-        else{
-            console.log('noUser')
-        }
-    })    
-    
+      }, [user])
+ 
     return (
         <div>
             <Avatar src={imgUrl} sx={{width: 450, height: 450}} onClick={() => {uploadFile(user, setImgUrl)} }/>
