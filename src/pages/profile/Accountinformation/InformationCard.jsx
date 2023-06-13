@@ -1,4 +1,4 @@
-import DisplayName from "./information/DisplayName";
+import DisplayName from "./information/DisplayName/DisplayName";
 import Email from "./information/Email";
 import Username from "./information/Username";
 
