@@ -11,6 +11,8 @@ function DisplayName (){
 
     const [newName, setNewName] = useState('')
 
+    const [nameError, setNameError] = useState(false)
+
     const [name, setName] = useState(user.displayName)
 
     useEffect(() => {
@@ -26,18 +28,21 @@ function DisplayName (){
     function handleClose(){
         setOpen(false)
         setNewName('')
+        setNameError(false)
     }  
 
-    function updateUserDisplayName(){
+    function updateUserDisplayName(event){
+
+        event.preventDefault()      
 
         if(newName == ''){
-            alert('Please Enter a new name before submiting')
-            return
+            setNameError(true)    
+            return        
         }
 
         if(newName == user.displayName){
-            alert('Please Enter a new name before submiting')
-            return
+            setNameError(true)        
+            return   
         }
 
         console.log(newName)   
@@ -45,7 +50,7 @@ function DisplayName (){
             displayName: newName
         })             
         setName(newName)   
-
+        setNameError(false)
         setOpen(false)
     }   
 
@@ -64,18 +69,21 @@ function DisplayName (){
                     <DialogContentText>
                         Enter new display name.
                     </DialogContentText>
-                    <form>  
+                    <form autoComplete="off" onSubmit={updateUserDisplayName}>  
                         <TextField
                         autoFocus
                         margine="dense"
                         id="name"                       
                         fullWidth
-                        variant="standard"
-                        onChange={(event) => {setNewName(event.target.value)}}                                   
+                        variant="outlined"
+                        onChange={(event) => {setNewName(event.target.value)}}   
+                        required    
+                        error={nameError}   
+                        helperText={nameError == true ? 'Please Enter a name.' : ''}                         
                         />
                         <DialogActions>
                         <Button onClick={handleClose} color="button" variant="contained" type="button">Cancel</Button>
-                        <Button onClick={updateUserDisplayName} color="button" variant="contained" type="button">Submit</Button>                    
+                        <Button onClick={updateUserDisplayName} color="button" variant="contained" type="submit">Submit</Button>                    
                         </DialogActions>
                     </form>                    
                 </DialogContent>                
