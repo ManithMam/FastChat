@@ -59,54 +59,178 @@ function signUpWithEmailPassword(email, password) {
 }
 
   return (
-    <div className="w-full min-h-screen flex flex-col justify-center items-center">
-      <h1 className="text-6xl font-bold m-5">Create an account</h1>
-      <form onSubmit={handleSignUp}>
-        <div className="m-3">
-          <TextField
-            label="Email"
-            variant="outlined"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div className="m-3">
-          <TextField
-            label="Password"
-            variant="outlined"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <div className="m-3">
-          <TextField
-            label="Confirm Password"
-            variant="outlined"
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-        </div>
-        <div className="m-3">
-          <Button type="submit" variant="outlined">
-            Sign Up
-          </Button>
-        </div>
+
+    <div
+  className="w-full min-h-screen flex flex-col justify-center items-center"
+  style={{
+    backgroundColor: '#1E1E1E',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: '100vh',
+  }}
+>
+  <div
+    className="rounded-lg flex flex-col justify-center items-center"
+    style={{
+      backgroundColor: '#40033C',
+      width: '550px',
+      height: '560px',
+      borderRadius: '30px',
+      transform: 'rotate(0deg)',
+      boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}
+  >
+    <h1
+      className="text-6xl font-bold m-5"
+      style={{
+        color: '#FFFFFF',
+        fontSize: '55px',
+        fontWeight: 'bold',
+        fontFamily: 'Inter, sans-serif',
+      }}
+    >
+      Create an account
+    </h1>
+    <form onSubmit={handleSignUp} 
+      style={{ 
+        padding: '2rem', 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center'
+        }}
+    >
         
-        <p className="m-3">
-          Already have an account?{" "}
-          <span className="text-blue-600 cursor-pointer" onClick={() => navigate('/login')}>
-            Login here
-          </span>
+      <div className="m-3">
+        <TextField
+          label="Email"
+          variant="outlined"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          style={{ 
+            width: '400px', 
+            height: '45px', 
+            borderRadius: '10px',
+            fontFamily: 'Inter, sans-serif',
+            fontSize: '15px',}}
+          inputProps={{ 
+            style: { 
+              color: '#FFFFFF',
+              fontSize: '15px',
+            } 
+          }}
+          InputLabelProps={{ 
+            style: { 
+              color: '#BF8AB1',
+              fontSize: '15px',
+            } 
+          }}
+        />
+      </div>
+
+      <div className="m-3">
+        <TextField
+          label="Password"
+          variant="outlined"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          style={{ 
+            width: '400px', 
+            height: '45px', 
+            borderRadius: '10px',
+            fontFamily: 'Inter, sans-serif',
+            fontSize: '15px',}}
+          inputProps={{ 
+            style: { 
+              color: '#FFFFFF'
+            } 
+          }}
+          InputLabelProps={{ 
+            style: { 
+              color: '#BF8AB1',
+              fontSize: '15px', 
+            } 
+          }}
+        />
+      </div>
+
+      <div className="m-3">
+        <TextField
+          label="Confirm Password"
+          variant="outlined"
+          type="password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          required
+          style={{ 
+            width: '400px', 
+            height: '45px', 
+            borderRadius: '10px',
+            fontFamily: 'Inter, sans-serif',
+            fontSize: '15px',}}
+          inputProps={{ 
+            style: { 
+              color: '#FFFFFF'        
+            } 
+          }}
+          InputLabelProps={{ 
+            style: { 
+              color: '#BF8AB1',
+              fontSize: '15px',
+            } 
+          }}
+        />
+      </div>
+
+      <div className="m-3">
+        <Button type="submit" variant="outlined" 
+        style={{ 
+          width: '120px', 
+          height: '45px', 
+          color: '#40033C', 
+          backgroundColor: '#05F2F2', 
+          borderRadius: '10px',
+          fontWeight: 'bold',
+          fontFamily: 'Inter, sans-serif',
+          fontSize: '15px',
+        }}
+        >
+          Sign Up
+        </Button>
+      </div>
+
+      <p className="m-3" style={{color: '#FFFFFF', fontFamily: 'Inter, sans-serif', fontSize: '15px',}}>
+        Already have an account?{" "}
+        <span className="text-blue-600 cursor-pointer" onClick={() => navigate('/login')}>
+          Login here
+        </span>
+      </p>
+
+      {error && (
+        <p className="text-red-500 m-3" 
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            textAlign: 'center',
+            fontSize: '15px',
+            fontFamily: 'Inter, sans-serif',
+          }}
+        >
+          {error}
         </p>
-      </form>
-      {error && <p className="text-red-500 m-3">{error}</p>}
-    </div>
+      )}
+
+    </form>
+  </div>
+</div>
   );
 };
 
