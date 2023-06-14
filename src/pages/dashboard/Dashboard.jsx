@@ -11,7 +11,7 @@ const Dashboard = () => {
   return (
     <div>
       <h1 className='text-5xl'>Dashboard</h1>
-      <h2>Logged in as {user?.displayName}</h2>
+      <h2>Logged in as {user?.displayName} {user?.id}</h2>
       <button onClick={() => logOut()}>LogOut</button>
     </div>
   );
