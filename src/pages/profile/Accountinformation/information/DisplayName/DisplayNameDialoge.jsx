@@ -10,7 +10,7 @@ function DisplayNameDialoge({open, setOpen, setNewName, setName, newName, user})
         setOpen(false)
         setNewName('')
         setNameError(false)
-    }
+    }    
 
     function updateUserDisplayName(event){
 
@@ -29,7 +29,7 @@ function DisplayNameDialoge({open, setOpen, setNewName, setName, newName, user})
         updateProfile(user, {
             displayName: newName
         })             
-        setName(newName)   
+        setName(newName)          
         setNameError(false)
         setOpen(false)
     }   

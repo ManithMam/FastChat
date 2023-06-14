@@ -18,11 +18,11 @@ import { useEffect, useState } from "react";
 
 async function updateUserProfile(user, setImgUrl){
 
-    const storage = getStorage();
+    const storage = getStorage();    
 
-    const username = user.displayName;    
+    const uid = user.uid;       
 
-    const avatarRef = await ref(storage, `avatars/${username}/avatar`)
+    const avatarRef = await ref(storage, `avatars/${uid}/avatar`)
 
     const imgUrl = await getDownloadURL(avatarRef)   
 
@@ -40,13 +40,13 @@ async function uploadFile(user, setImgUrl){
 
     const storage = getStorage();
 
-    const username = user.displayName;    
+    const uid = user.uid;    
 
-    const storageRef = ref(storage, `avatars/${username}/avatar`)
+    const storageRef = await ref(storage, `avatars/${uid}/avatar`)
 
     const img = await readFile();
 
-    uploadBytes(storageRef, img)
+    await uploadBytes(storageRef, img)
 
     updateUserProfile(user, setImgUrl);  
    
@@ -59,7 +59,7 @@ function ProfilePicture (){
     const [imgUrl, setImgUrl] = useState();  
     
     useEffect(() => {
-        if(user?.uid) {
+        if(user?.photoURL) {
           setImgUrl(user.photoURL)
         }
       }, [user])
