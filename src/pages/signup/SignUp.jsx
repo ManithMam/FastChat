@@ -1,62 +1,85 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, updateProfile,} from 'firebase/auth';
+import { getFirestore, collection, doc, setDoc} from 'firebase/firestore';
+
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const [userName, setUserName] = useState('');
+  const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState(null);
 
   const handleSignUp = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  // Email validation regex pattern
-  const emailRegex = /^\S+@\S+\.\S+$/;
+    // Email validation regex pattern
+    const emailRegex = /^\S+@\S+\.\S+$/;
 
-  // Password validation regex pattern  -->  Password must contain at least 8 characters, including uppercase and lowercase letters, and at least one number
-  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+    // Password validation regex pattern
+    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
 
-  // Validate email and password
-  if (!emailRegex.test(email.trim())) {
-    setError('Please enter a valid email address');
-    return;
-  }
-
-  if (!passwordRegex.test(password)) {
-    setError('Password must contain at least 8 characters, including uppercase and lowercase letters, and at least one number');
-    return;
-  }
-
-  if (password !== confirmPassword) {
-    setError("Passwords do not match");
-    return;
-  }
-
-  try {
-    const userCredential = await signUpWithEmailPassword(email, password);
-    const user = userCredential.user;
-    console.log(user);
-  } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    
-    //If user already has an account, display error message;
-    if (errorCode === 'auth/email-already-in-use') {
-      setError('An account with this email already exists. Please log in instead.');
-    } else {
-      setError(errorMessage);
+    // Validate email and password
+    if (!emailRegex.test(email.trim())) {
+      setError('Please enter a valid email address');
+      return;
     }
 
-  }
-}
+    if (!passwordRegex.test(password)) {
+      setError(
+        'Password must contain at least 8 characters, including uppercase and lowercase letters, and at least one number'
+      );
+      return;
+    }
 
-function signUpWithEmailPassword(email, password) {
-  const auth = getAuth();
-  return createUserWithEmailAndPassword(auth, email, password);
-}
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
+    try {
+      const userCredential = await signUpWithEmailPassword(email, password);
+      const user = userCredential.user;
+
+      // Update user profile with display name
+      await updateProfile(user, {
+        displayName: displayName,
+      });
+
+      // Store additional user data in Firestore
+      const userId = user.uid;
+      const userData = { userName: userName };
+      await storeAdditionalUserData(userId, userData);
+
+      console.log(user);
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+
+      if (errorCode === 'auth/email-already-in-use') {
+        setError(
+          'An account with this email already exists. Please log in instead.'
+        );
+      } else {
+        setError(errorMessage);
+      }
+    }
+  };
+
+  function signUpWithEmailPassword(email, password) {
+    const auth = getAuth();
+    return createUserWithEmailAndPassword(auth, email, password);
+  }
+
+  async function storeAdditionalUserData(userId, data) {
+    const db = getFirestore();
+    const userRef = doc(collection(db, 'users'), userId);
+    await setDoc(userRef, data);
+  }
 
   return (
 
@@ -88,21 +111,82 @@ function signUpWithEmailPassword(email, password) {
       className="text-6xl font-bold m-5"
       style={{
         color: '#FFFFFF',
-        fontSize: '55px',
+        fontSize: '50px',
         fontWeight: 'bold',
         fontFamily: 'Inter, sans-serif',
+        marginTop: '2rem'
       }}
     >
       Create an account
     </h1>
     <form onSubmit={handleSignUp} 
       style={{ 
-        padding: '2rem', 
         display: 'flex', 
         flexDirection: 'column', 
         alignItems: 'center'
         }}
     >
+
+
+      <div className="m-3">
+      <TextField
+        label="User Name"
+        variant="outlined"
+        type="text"
+        value={userName}
+        onChange={(e) => setUserName(e.target.value)}
+        required
+        style={{
+          width: '400px',
+          height: '45px',
+          borderRadius: '10px',
+          fontFamily: 'Inter, sans-serif',
+          fontSize: '15px',
+        }}
+        inputProps={{
+          style: {
+            color: '#FFFFFF',
+            fontSize: '15px',
+          }
+        }}
+        InputLabelProps={{
+          style: {
+            color: '#BF8AB1',
+            fontSize: '15px',
+          }
+        }}
+      />
+      </div>
+
+      <div className="m-3">
+      <TextField
+        label="Display Name"
+        variant="outlined"
+        type="text"
+        value={displayName}
+        onChange={(e) => setDisplayName(e.target.value)}
+        required
+        style={{
+          width: '400px',
+          height: '45px',
+          borderRadius: '10px',
+          fontFamily: 'Inter, sans-serif',
+          fontSize: '15px',
+        }}
+        inputProps={{
+          style: {
+            color: '#FFFFFF',
+            fontSize: '15px',
+          }
+        }}
+        InputLabelProps={{
+          style: {
+            color: '#BF8AB1',
+            fontSize: '15px',
+          }
+        }}
+      />
+      </div>
         
       <div className="m-3">
         <TextField
@@ -206,7 +290,7 @@ function signUpWithEmailPassword(email, password) {
         </Button>
       </div>
 
-      <p className="m-3" style={{color: '#FFFFFF', fontFamily: 'Inter, sans-serif', fontSize: '15px',}}>
+      <p className="m-3" style={{color: '#FFFFFF', fontFamily: 'Inter, sans-serif', fontSize: '15px'}}>
         Already have an account?{" "}
         <span className="text-blue-600 cursor-pointer" onClick={() => navigate('/login')}>
           Login here
