@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
-import { getAuth, createUserWithEmailAndPassword, updateProfile,} from 'firebase/auth';
-import { getFirestore, collection, doc, setDoc} from 'firebase/firestore';
-
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { getDatabase, ref, set } from 'firebase/database';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -50,9 +49,13 @@ const SignUp = () => {
         displayName: displayName,
       });
 
-      // Store additional user data in Firestore
+      // Store additional user data in Realtime Database
       const userId = user.uid;
-      const userData = { userName: userName };
+      const userData = {
+        userName: userName,
+        displayName: displayName,
+        email: email,
+      };
       await storeAdditionalUserData(userId, userData);
 
       console.log(user);
@@ -76,9 +79,9 @@ const SignUp = () => {
   }
 
   async function storeAdditionalUserData(userId, data) {
-    const db = getFirestore();
-    const userRef = doc(collection(db, 'users'), userId);
-    await setDoc(userRef, data);
+    const db = getDatabase();
+    const userRef = ref(db, 'users/' + userId);
+    await set(userRef, data);
   }
 
   return (
@@ -98,7 +101,7 @@ const SignUp = () => {
     style={{
       backgroundColor: '#40033C',
       width: '550px',
-      height: '560px',
+      height: '610px',
       borderRadius: '30px',
       transform: 'rotate(0deg)',
       boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
@@ -130,7 +133,7 @@ const SignUp = () => {
 
       <div className="m-3">
       <TextField
-        label="User Name"
+        label="Username"
         variant="outlined"
         type="text"
         value={userName}
@@ -304,7 +307,7 @@ const SignUp = () => {
             justifyContent: 'center',
             alignItems: 'center',
             textAlign: 'center',
-            fontSize: '15px',
+            fontSize: '12px',
             fontFamily: 'Inter, sans-serif',
           }}
         >
