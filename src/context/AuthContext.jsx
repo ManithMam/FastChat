@@ -82,7 +82,7 @@ export const AuthContextProvider = ({ children }) => {
       if(error.message.includes('already in use')) {
         return { success: false, error: 'Email already in use!' };
       }
-      return { success: false, error: error.message };
+      return { success: false, error: error.message};
     }
   };
 

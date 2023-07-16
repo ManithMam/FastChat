@@ -3,9 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { getDatabase, ref, set } from 'firebase/database';
+import { UserAuth } from '../../context/AuthContext';
 
 const SignUp = () => {
   const navigate = useNavigate();
+
+  const {signUpWithEmail} = UserAuth();
+
   const [userName, setUserName] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
@@ -40,49 +44,12 @@ const SignUp = () => {
       return;
     }
 
-    try {
-      const userCredential = await signUpWithEmailPassword(email, password);
-      const user = userCredential.user;
-
-      // Update user profile with display name
-      await updateProfile(user, {
-        displayName: displayName,
-      });
-
-      // Store additional user data in Realtime Database
-      const userId = user.uid;
-      const userData = {
-        userName: userName,
-        displayName: displayName,
-        email: email,
-      };
-      await storeAdditionalUserData(userId, userData);
-
-      console.log(user);
-    } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-
-      if (errorCode === 'auth/email-already-in-use') {
-        setError(
-          'An account with this email already exists. Please log in instead.'
-        );
-      } else {
-        setError(errorMessage);
-      }
+    const result = await signUpWithEmail(userName, email, password);
+    if(result.success === false) {
+      setError(result.error);
+      return;
     }
   };
-
-  function signUpWithEmailPassword(email, password) {
-    const auth = getAuth();
-    return createUserWithEmailAndPassword(auth, email, password);
-  }
-
-  async function storeAdditionalUserData(userId, data) {
-    const db = getDatabase();
-    const userRef = ref(db, 'users/' + userId);
-    await set(userRef, data);
-  }
 
   return (
 
