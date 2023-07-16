@@ -15,7 +15,7 @@ const Interface = () => {
       <RightSideBar />
       <LeftSideBar onSelectChat={setSelectedChat}/>
       <ChatField selectedChatId={selectedChat}/>
-      <InputField />
+      <InputField selectedChatId={selectedChat}/>
     </div>
   );
 };

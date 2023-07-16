@@ -1,14 +1,22 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
 import TextField from "@mui/material/TextField";
+import { UserAuth } from "../../context/AuthContext";
 
-const InputField = () => {
+const InputField = ({selectedChatId}) => {
+
+  const { user, sendChatMessage } = UserAuth();
   const [textFieldValue, setTextFieldValue] = useState("");
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      console.log(textFieldValue);
+      
+      const sendMessageAsync = async () => {
+        await sendChatMessage(selectedChatId, user?.id, textFieldValue);
+      }
+
+      sendMessageAsync();
       setTextFieldValue("");
     }
   };

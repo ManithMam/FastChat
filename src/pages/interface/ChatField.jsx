@@ -1,188 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Container, Grid } from "@mui/material";
 import { useRef, useEffect } from "react";
 import { UserAuth } from "../../context/AuthContext";
-import { styled, useTheme } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Item from "@mui/material/Grid";
-import Drawer from "@mui/material/Drawer";
-import MuiAppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import CssBaseline from "@mui/material/CssBaseline";
 import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
 
-const messages = {
-  CHAT_ID: [
-    {
-      from: "USER_ID",
-      to: "USER_ID",
-      message: "Hello World!",
-      timestamp: 1647483103,
-    },
-    {
-      from: "USER_ID",
-      to: "USER_ID",
-      message: "Hello Fastchat!",
-      timestamp: 1647583103,
-    },
-    {
-      from: "USER_ID",
-      to: "USER_ID",
-      message: "Hello Fastchat!",
-      timestamp: 1647583103,
-    },
-    {
-      from: "USER_ID",
-      to: "USER_ID",
-      message: "Hello World!",
-      timestamp: 1647483103,
-    },
-    {
-      from: "USER_ID",
-      to: "USER_ID",
-      message: "Hello Fastchat!",
-      timestamp: 1647583103,
-    },
-    {
-      from: "USER_ID",
-      to: "USER_ID",
-      message: "Hello Fastchat!",
-      timestamp: 1647583103,
-    },
-    {
-      from: "USER_ID",
-      to: "USER_ID",
-      message: "Hello Fastchat!",
-      timestamp: 1647583103,
-    },
-    {
-      from: "USER_ID",
-      to: "USER_ID",
-      message: "Hello Fastchat!",
-      timestamp: 1647583103,
-    },
-    {
-      from: "USER_ID",
-      to: "USER_ID",
-      message: "Hello Fastchat!",
-      timestamp: 1647583103,
-    },
-    {
-      from: "USER_ID",
-      to: "USER_ID",
-      message: "Hello Fastchat!",
-      timestamp: 1647583103,
-    },
-    {
-      from: "me",
-      to: "USER_ID",
-      message: "Hello Fastchat!",
-      timestamp: 1647583103,
-    },
-    {
-      from: "USER_ID",
-      to: "USER_ID",
-      message: "Hello Fastchat!",
-      timestamp: 1647583103,
-    },
-    {
-      from: "USER_ID",
-      to: "USER_ID",
-      message: "Hello Fastchat!",
-      timestamp: 1647583103,
-    },
-    {
-      from: "USER_ID",
-      to: "USER_ID",
-      message: "Hello Fastchat!",
-      timestamp: 1647583103,
-    },
-    {
-      from: "me",
-      to: "USER_ID",
-      message: "Hello Fastchat!",
-      timestamp: 1647583103,
-    },
-    {
-      from: "USER_ID",
-      to: "USER_ID",
-      message: "Hello Fastchat!",
-      timestamp: 1647583103,
-    },
-    {
-      from: "USER_ID",
-      to: "USER_ID",
-      message:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      timestamp: 1647583103,
-    },
-    {
-      from: "me",
-      to: "USER_ID",
-      message:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. The quick brown fox jumps over the lazy dog",
-      timestamp: 1647583103,
-    },
-    {
-      from: "me",
-      to: "USER_ID",
-      message: "Lorem ipsum",
-      timestamp: 1647583103,
-    },
-    {
-      from: "USER_ID",
-      to: "USER_ID",
-      message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      timestamp: 1647583103,
-    },
-    {
-      from: "USER_ID",
-      to: "USER_ID",
-      message: "The",
-      timestamp: 1647583103,
-    },
-    {
-      from: "USER_ID",
-      to: "USER_ID",
-      message: "The quick brown fox jumps over the lazy dog",
-      timestamp: 1647583103,
-    },
-    {
-      from: "me",
-      to: "USER_ID",
-      message: "The quick brown fox jumps",
-      timestamp: 1647583103,
-    },
-  ],
-};
 
-const useColor = (from) => {
-  if (from === "me") {
+const useColor = (currentUserId, from) => {
+  if (currentUserId === from) {
     return "#8C307D";
   } else {
     return "#ad719d";
   }
 };
 
-const useMargin = (from) => {
-  if (from === "me") {
+const useMargin = (currentUserId, from) => {
+  if (currentUserId === from) {
     return null;
   } else {
     return "auto";
   }
 };
 
-const placeHolder = () => {
-  if (90 - messages.CHAT_ID.length > 75) {
+const placeHolder = (messages) => {
+  if (90 - messages.length > 75) {
     return 84 + "vh";
   } else {
     return null;
@@ -190,6 +33,10 @@ const placeHolder = () => {
 };
 
 const ChatField = ({selectedChatId}) => {
+
+  const { user, onChatMessagesUpdate } = UserAuth();
+  const [messages, setMessages] = useState([])
+
   const messageEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -197,7 +44,15 @@ const ChatField = ({selectedChatId}) => {
   };
 
   useEffect(() => {
-    console.log(selectedChatId)
+    if(!selectedChatId) return;
+
+    const unsubscribe = onChatMessagesUpdate(selectedChatId, (_messages) => {
+      setMessages(_messages ? _messages : [])
+    });
+
+    return () => {
+      unsubscribe()
+    }
   }, [selectedChatId])
 
   useEffect(() => {
@@ -208,7 +63,7 @@ const ChatField = ({selectedChatId}) => {
     <Paper
       elevation={3}
       style={{
-        height: placeHolder(),
+        height: placeHolder(messages),
         width: "169.5vh",
         marginLeft: "322px",
         marginTop: "70px",
@@ -224,7 +79,10 @@ const ChatField = ({selectedChatId}) => {
           justifyContent: "flex-end",
         }}
       >
-        {messages.CHAT_ID.map((message) => (
+        {messages.length == 0 && 
+          <h1 className="text-xl text-white">Seems like this chat is empty. Send now your first message</h1>
+        }
+        {messages.length > 0 && messages.map((message) => (
           // color = useColor(message.from);
 
           <ListItem
@@ -241,10 +99,10 @@ const ChatField = ({selectedChatId}) => {
               sx={{
                 width: "auto",
                 border: "5px solid",
-                borderColor: useColor(message.from),
+                borderColor: useColor(user?.id, message.from),
                 borderRadius: "5px",
-                backgroundColor: useColor(message.from),
-                marginLeft: useMargin(message.from),
+                backgroundColor: useColor(user?.id, message.from),
+                marginLeft: useMargin(user?.id, message.from),
               }}
             >
               <Grid item sx={{ color: "white", width: "5vw" }}>
@@ -279,20 +137,6 @@ const ChatField = ({selectedChatId}) => {
       </List>
       <div ref={messageEndRef}></div>
     </Paper>
-
-    //<Container
-    // 	sx={{
-    // 		m: 1,
-    // 		ml: "320px",
-    // 		width: "177ch",
-    // 		height: "94vh",
-    // 		display: "flex",
-    // 		flexDirection: "column",
-    // 		justifyContent: "flex-end",
-    // 	}}
-    // >
-    // 	<p className="my-300">Hello</p>
-    // </Container>
   );
 };
 
