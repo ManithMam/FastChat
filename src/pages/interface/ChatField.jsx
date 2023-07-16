@@ -254,7 +254,6 @@ const ChatField = () => {
                 sx={{
                   color: "white",
                   width: "auto",
-                  marginLeft: "10px",
                   marginTop: "auto",
                   marginLeft: "15px",
                 }}

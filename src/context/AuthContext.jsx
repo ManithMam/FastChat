@@ -9,6 +9,7 @@ import {
 } from "firebase/auth";
 import { auth, db as realtimedb } from "../firebase";
 import { ref, child, update, set, get, onValue, push } from "firebase/database";
+import {v4 as uuidv4} from 'uuid';
 
 const UserContext = createContext();
 
@@ -174,10 +175,12 @@ export const AuthContextProvider = ({ children }) => {
         return newChatKey;
       } else {
         // User does not exist
+        console.log("User does not exist")
         return null;
       }
     } else {
       // User does not exist
+      console.log("User does not exist")
       return null;
     }
 
@@ -223,6 +226,7 @@ export const AuthContextProvider = ({ children }) => {
       const messagesSnapshot = await get(messagesRef);
 
       const messageObject = {
+        id: uuidv4(),
         from: userId,
         message: message,
         timestamp: Date.now(),
