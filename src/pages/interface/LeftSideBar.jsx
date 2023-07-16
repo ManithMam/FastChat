@@ -8,7 +8,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { UserAuth } from "../../context/AuthContext";
 import { Button } from "@mui/material";
 
-const LeftSideBar = () => {
+const LeftSideBar = ({onSelectChat}) => {
 
   const { user, onUserChatsUpdate, createChat } = UserAuth();
   const [contacts, setContacts] = useState([])
@@ -33,6 +33,11 @@ const LeftSideBar = () => {
   }
 
 
+  const handleChatSelection = (chatId) => {
+    onSelectChat(chatId);
+  }
+
+
   return (
     <Drawer
     className="flex flex-col justify-between"
@@ -53,7 +58,7 @@ const LeftSideBar = () => {
       <List>
         {contacts.map((text, index) => (
           <ListItem key={index} disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={() => handleChatSelection(text)}>
               <ListItemText sx={{ color: "white" }} primary={text} />
             </ListItemButton>
           </ListItem>

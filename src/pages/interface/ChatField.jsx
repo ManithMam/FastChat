@@ -189,12 +189,16 @@ const placeHolder = () => {
   }
 };
 
-const ChatField = () => {
+const ChatField = ({selectedChatId}) => {
   const messageEndRef = useRef(null);
 
   const scrollToBottom = () => {
     messageEndRef.current?.scrollIntoView({ behavior: "instant" });
   };
+
+  useEffect(() => {
+    console.log(selectedChatId)
+  }, [selectedChatId])
 
   useEffect(() => {
     scrollToBottom();
