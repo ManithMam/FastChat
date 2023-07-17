@@ -9,7 +9,7 @@ import { AuthContextProvider, UserAuth } from "./context/AuthContext";
 import AuthRoute from "./components/AuthRoute";
 import { useEffect } from "react";
 import { createTheme, ThemeProvider } from "@mui/material";
-import Profile from "./pages/profile/Profile";
+import Profile from "./pages/profile/components/Profile";
 
 const App = () => {
   const theme = createTheme({

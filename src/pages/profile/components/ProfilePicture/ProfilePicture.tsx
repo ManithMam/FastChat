@@ -1,13 +1,13 @@
 import { Avatar } from "@mui/material";
 import LoginInformation from "./LoginInformation";
-import { UserAuth } from "../../../context/AuthContext";
+import { UserAuth } from "../../../../context/AuthContext";
 import { getStorage, ref, uploadBytes, getDownloadURL} from "firebase/storage"
 import { updateProfile, getAuth, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 
  async function readFile(){   
 
-    const [fileHandle] = await window.showOpenFilePicker();
+    const [fileHandle] = await (window as any).showOpenFilePicker();
 
     const file = await fileHandle.getFile();
 
