@@ -3,7 +3,6 @@ import Email from "./information/Email";
 import Username from "./information/Username";
 
 
-
 function InformationCard (){   
 
     return (

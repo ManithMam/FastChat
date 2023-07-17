@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
  async function readFile(){   
 
-    const [fileHandle] = await (window as any).showOpenFilePicker();
+    const [fileHandle] = await window.showOpenFilePicker();
 
     const file = await fileHandle.getFile();
 

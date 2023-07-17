@@ -1,4 +1,3 @@
-import React from "react";
 import InformationCard from "./AccountInformation/InformationCard";
 import ProfilePicture from "./ProfilePicture/ProfilePicture";
 import Password from "./password/Password";

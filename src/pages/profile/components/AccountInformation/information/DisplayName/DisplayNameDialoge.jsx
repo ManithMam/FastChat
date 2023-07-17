@@ -44,7 +44,7 @@ function DisplayNameDialoge({open, setOpen, setNewName, setName, newName, user})
                     <form autoComplete="off" onSubmit={updateUserDisplayName}>  
                         <TextField
                         autoFocus
-                        margine="dense"
+                        margin="dense"
                         id="name"                       
                         fullWidth
                         variant="outlined"
