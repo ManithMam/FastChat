@@ -1,15 +1,10 @@
 import { UserAuth } from "../../../../../../context/AuthContext";
-import { Button} from "@mui/material"
 import { useState, useEffect } from "react";
-import DisplayNameDialoge from "./DisplayNameDialoge";
+import { ChangeButton } from "./ChangeButton";
 
 function DisplayName (){
  
-    const {user} = UserAuth();   
-
-    const [open, setOpen] = useState(false)
-
-    const [newName, setNewName] = useState('')    
+    const {user} = UserAuth();       
 
     const [name, setName] = useState(user.displayName)
 
@@ -17,11 +12,7 @@ function DisplayName (){
         if(user?.uid) {
           setName(user.displayName)
         }
-      }, [user])
-
-    function handleOpen(){
-        setOpen(true)
-    }     
+      }, [user])   
 
     return (        
         <div className=" flex flex-row mb-20">
@@ -30,10 +21,7 @@ function DisplayName (){
                 <p className=" text-slate-100">{name}</p>                    
             </div>    
         <div className=" flex items-center">
-            <Button variant="contained" color="button" size="large" onClick={handleOpen}>Change</Button>    
-
-            <DisplayNameDialoge open={open} setOpen={setOpen} setNewName={setNewName} setName={setName} newName={newName} user={user}/>
-
+            <ChangeButton setName={setName} user={user}/>
         </div>                  
     </div>         
     )

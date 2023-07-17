@@ -8,14 +8,10 @@ const Profile = () => {
             <div className=" basis-1/2 flex justify-center items-center mb-44">
                 <ProfilePicture/>
             </div>
-            <div className=" basis-1/2 flex flex-col flex-grow justify-center">
-               
-                    <InformationCard/>               
-             
-                    <Password/>
-               
-            </div>
-            
+            <div className=" basis-1/2 flex flex-col flex-grow justify-center">               
+                    <InformationCard/>                            
+                    <Password/>               
+            </div>            
         </div>
     );
 }

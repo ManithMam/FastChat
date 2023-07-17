@@ -2,7 +2,7 @@ import { Avatar } from "@mui/material";
 import LoginInformation from "./LoginInformation";
 import { UserAuth } from "../../../../context/AuthContext";
 import { useEffect, useState } from "react";
-import { uploadFile } from "../../api/ProfilePicture";
+import { uploadFile } from "../../api/UpdateProfilePicture";
 
  
 function ProfilePicture (){
