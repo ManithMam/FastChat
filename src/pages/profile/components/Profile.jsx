@@ -2,7 +2,7 @@ import InformationCard from "./AccountInformation/InformationCard";
 import ProfilePicture from "./ProfilePicture/ProfilePicture";
 import Password from "./password/Password";
 
-export default function Profile (){
+const Profile = () => {
     return (
         <div className=" bg-background h-screen flex flex-wrap">              
             <div className=" basis-1/2 flex justify-center items-center mb-44">
@@ -19,3 +19,5 @@ export default function Profile (){
         </div>
     );
 }
+
+export default Profile;
