@@ -21,7 +21,7 @@ function DisplayName (){
                 <p className=" text-slate-100">{name}</p>                    
             </div>    
         <div className=" flex items-center">
-            <ChangeButton setName={setName} user={user}/>
+            <ChangeButton setName={setName}/>
         </div>                  
     </div>         
     )

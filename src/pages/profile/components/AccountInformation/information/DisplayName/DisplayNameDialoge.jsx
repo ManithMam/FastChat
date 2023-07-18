@@ -3,7 +3,7 @@ import { useState } from "react"
 import { updateProfile } from "firebase/auth";
 import { updateUserDisplayName } from "../../../../api/UpdateAccountInformation";
 
-function DisplayNameDialoge({open, setOpen, setName, user}){
+function DisplayNameDialoge({open, setOpen, setName}){
 
     const [nameError, setNameError] = useState(false)
 
@@ -45,7 +45,7 @@ function DisplayNameDialoge({open, setOpen, setName, user}){
                         />
                         <DialogActions>
                             <Button onClick={handleClose} color="button" variant="contained" type="button">Cancel</Button>
-                            <Button onClick={event => { if(isNotEmpty(newName, setNameError)) {updateUserDisplayName(event, setName, newName, user), setOpen(false)}}} color="button" variant="contained">Submit</Button>                    
+                            <Button onClick={event => { if(isNotEmpty(newName, setNameError)) {updateUserDisplayName(event, setName, newName), setOpen(false)}}} color="button" variant="contained">Submit</Button>                    
                         </DialogActions>
                     </form>                    
                 </DialogContent>                
