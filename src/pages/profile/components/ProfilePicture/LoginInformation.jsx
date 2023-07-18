@@ -1,7 +1,7 @@
 
-function LoginInformation({provider}) {
+function LoginInformation({uid}) {
     return(
-        <p className=" text-slate-100 flex justify-center mt-3">Logged in with {provider}</p>
+        <p className=" text-slate-100 flex justify-center mt-3">ID: {uid}</p>
     )
 }
 

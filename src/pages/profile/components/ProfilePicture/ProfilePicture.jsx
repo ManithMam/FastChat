@@ -11,16 +11,18 @@ function ProfilePicture (){
 
     const [imgUrl, setImgUrl] = useState();  
     
+    console.log(user)
+
     useEffect(() => {
-        if(user?.photoURL) {
-          setImgUrl(user.photoURL)
+        if(user?.profile_picture) {
+          setImgUrl(user.profile_picture)
         }
       }, [user])
  
     return (
         <div>
             <Avatar src={imgUrl} sx={{width: 450, height: 450}} onClick={() => {uploadFile(user, setImgUrl)} }/>
-            <LoginInformation provider={user.providerId}/>
+            <LoginInformation uid={user.id}/>
         </div>        
     )
 } 

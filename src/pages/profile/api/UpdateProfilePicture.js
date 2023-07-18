@@ -17,14 +17,14 @@ const updateUserProfile = async (user, setImgUrl) => {
 
     const storage = getStorage();    
 
-    const uid = user.uid;       
+    const uid = await user.id;       
 
     const avatarRef = await ref(storage, `avatars/${uid}/avatar`)
 
     const imgUrl = await getDownloadURL(avatarRef)   
 
     updateProfile(user, {
-        photoURL: imgUrl
+        profile_picture: imgUrl
     })
 
     setImgUrl(imgUrl);
@@ -37,7 +37,7 @@ export const uploadFile = async (user, setImgUrl) => {
 
     const storage = getStorage();
 
-    const uid = user.uid;    
+    const uid = await user.id;    
 
     const storageRef = await ref(storage, `avatars/${uid}/avatar`)
 
@@ -45,6 +45,6 @@ export const uploadFile = async (user, setImgUrl) => {
 
     await uploadBytes(storageRef, img)
 
-    updateUserProfile(user, setImgUrl);  
+    await updateUserProfile(user, setImgUrl);  
    
 }
