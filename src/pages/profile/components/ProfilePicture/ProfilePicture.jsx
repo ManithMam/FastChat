@@ -10,8 +10,6 @@ function ProfilePicture (){
     const {user} = UserAuth();
 
     const [imgUrl, setImgUrl] = useState();  
-    
-    console.log(user)
 
     useEffect(() => {
         if(user?.profile_picture) {

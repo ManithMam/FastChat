@@ -6,14 +6,14 @@ function DisplayName (){
  
     const {user} = UserAuth();       
 
-    const [name, setName] = useState(user.displayName)
+    const [name, setName] = useState()
 
     useEffect(() => {
-        if(user?.uid) {
+        if(user?.displayName) {
           setName(user.displayName)
         }
       }, [user])   
-
+    
     return (        
         <div className=" flex flex-row mb-20">
             <div className=" flex flex-grow flex-col">
