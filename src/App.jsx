@@ -8,6 +8,7 @@ import { createTheme, ThemeProvider } from "@mui/material";
 import { Profile } from "./pages/profile";
 
 import Interface from "./pages/interface/Interface";
+import Dashboard from "./pages/dashboard/Dashboard";
 
 
 const App = () => {
@@ -33,12 +34,11 @@ const App = () => {
             path="/"
             element={
               <ProtectedRoute>
-                <Interface />
+                <Dashboard />
               </ProtectedRoute>
             }
           />
-          <Route
-          
+          <Route          
             path="/profile"
             element={
               <ProtectedRoute>
