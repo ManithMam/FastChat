@@ -74,7 +74,7 @@ export const AuthContextProvider = ({ children }) => {
           username,
           username,
           email,
-          null
+          ""
         );
         return { success: true, error: null };
       }

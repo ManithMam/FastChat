@@ -1,5 +1,7 @@
 import { getStorage, ref, uploadBytes, getDownloadURL} from "firebase/storage"
 import { updateProfile } from "firebase/auth";
+import { getDatabase, update} from "firebase/database";
+import {ref as dbRef} from "firebase/database";
 
 const readFile = async () => {   
 
@@ -12,6 +14,13 @@ const readFile = async () => {
     return file;
 }  
 
+const updateProflePictureURLInRealtimeDB = (userId, imgUrl) => {
+    const db = getDatabase();
+    console.log(userId)
+    update(dbRef(db, 'users/' + userId), {
+        profile_picture: imgUrl
+    });
+}
 
 const updateUserProfile = async (user, setImgUrl) => {
 
@@ -25,6 +34,8 @@ const updateUserProfile = async (user, setImgUrl) => {
 
     updateProfile(user, {
         profile_picture: imgUrl
+    }).then(() => {
+        updateProflePictureURLInRealtimeDB(uid, imgUrl);
     })
 
     setImgUrl(imgUrl);

@@ -10,7 +10,7 @@ const updateDisplayNameInDB = (id, name) => {
     });
 }
 
-export const updateUserDisplayName = async (event, setName, newName) => {    
+export const updateUserDisplayName = (event, setName, newName) => {    
 
     event.preventDefault()     
 
