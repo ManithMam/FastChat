@@ -1,20 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import RightSideBar from "./RightSideBar";
 import LeftSideBar from "./LeftSideBar";
 import InputField from "./InputField";
 import ChatField from "./ChatField";
 import Background from "./Background";
 
-const myContacts = ["Jane Doe", "John Doe", "John Smith", "Jane Smith"];
-
 const Interface = () => {
+
+  const [selectedChat, setSelectedChat] = useState(null)
+
   return (
     <div>
       <Background />
       <RightSideBar />
-      <LeftSideBar contacts={myContacts} />
-      <ChatField />
-      <InputField />
+      <LeftSideBar onSelectChat={setSelectedChat}/>
+      <ChatField selectedChatId={selectedChat}/>
+      <InputField selectedChatId={selectedChat}/>
     </div>
   );
 };
