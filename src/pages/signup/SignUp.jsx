@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
-import { getAuth, createUserWithEmailAndPassword, updateProfile,} from 'firebase/auth';
-import { getFirestore, collection, doc, setDoc} from 'firebase/firestore';
-
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { getDatabase, ref, set } from 'firebase/database';
+import { UserAuth } from '../../context/AuthContext';
 
 const SignUp = () => {
   const navigate = useNavigate();
+
+  const {signUpWithEmail} = UserAuth();
+
   const [userName, setUserName] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
@@ -41,45 +44,12 @@ const SignUp = () => {
       return;
     }
 
-    try {
-      const userCredential = await signUpWithEmailPassword(email, password);
-      const user = userCredential.user;
-
-      // Update user profile with display name
-      await updateProfile(user, {
-        displayName: displayName,
-      });
-
-      // Store additional user data in Firestore
-      const userId = user.uid;
-      const userData = { userName: userName };
-      await storeAdditionalUserData(userId, userData);
-
-      console.log(user);
-    } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-
-      if (errorCode === 'auth/email-already-in-use') {
-        setError(
-          'An account with this email already exists. Please log in instead.'
-        );
-      } else {
-        setError(errorMessage);
-      }
+    const result = await signUpWithEmail(userName, email, password);
+    if(result.success === false) {
+      setError(result.error);
+      return;
     }
   };
-
-  function signUpWithEmailPassword(email, password) {
-    const auth = getAuth();
-    return createUserWithEmailAndPassword(auth, email, password);
-  }
-
-  async function storeAdditionalUserData(userId, data) {
-    const db = getFirestore();
-    const userRef = doc(collection(db, 'users'), userId);
-    await setDoc(userRef, data);
-  }
 
   return (
 
@@ -98,7 +68,7 @@ const SignUp = () => {
     style={{
       backgroundColor: '#40033C',
       width: '550px',
-      height: '560px',
+      height: '610px',
       borderRadius: '30px',
       transform: 'rotate(0deg)',
       boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
@@ -130,7 +100,7 @@ const SignUp = () => {
 
       <div className="m-3">
       <TextField
-        label="User Name"
+        label="Username"
         variant="outlined"
         type="text"
         value={userName}
@@ -304,7 +274,7 @@ const SignUp = () => {
             justifyContent: 'center',
             alignItems: 'center',
             textAlign: 'center',
-            fontSize: '15px',
+            fontSize: '12px',
             fontFamily: 'Inter, sans-serif',
           }}
         >
