@@ -21,40 +21,40 @@ const InputField = ({selectedChatId}) => {
     }
   };
 
-  return (
-    <Box
-      component="form"
-      sx={{
-        "& > :not(style)": {
-          m: 1,
-          ml: "320px",
-          width: "177ch",
-          height: "6vh",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-end",
-          //   backgroundColor: "#40033C",
-        },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <TextField
-        value={textFieldValue}
-        onKeyDown={handleKeyDown}
-        onChange={(e) => setTextFieldValue(e.target.value)}
-        sx={{
-          backgroundColor: "#40033C",
-          borderColor: "#40033C",
-          borderRadius: "5px",
-          mb: 20,
+	return (
+		<Box
+			component="form"
+			sx={{
+				"& > :not(style)": {
+					m: 1,
+					ml: "16vw",
+					width: "auto",
+					height: "6vh",
+					display: "flex",
+					flexDirection: "column",
+					justifyContent: "flex-end",
+					// backgroundColor: "#40033C",
+				},
+			}}
+			noValidate
+			autoComplete="off"
+		>
+			<TextField
+				value={textFieldValue}
+				onKeyDown={handleKeyDown}
+				onChange={(e) => setTextFieldValue(e.target.value)}
+				sx={{
+					backgroundColor: "#40033C",
+					borderColor: "#40033C",
+					borderRadius: "5px",
+					mb: 20,
 
-          input: { color: "white" },
-        }}
-        focused
-      />
-    </Box>
-  );
+					input: { color: "white" },
+				}}
+				focused
+			/>
+		</Box>
+	);
 };
 
 export default InputField;

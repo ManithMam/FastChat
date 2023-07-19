@@ -32,10 +32,10 @@ const placeHolder = (messages) => {
   }
 };
 
-const ChatField = ({selectedChatId}) => {
-
+const ChatField = ({ selectedChatId }) => {
   const { user, onChatMessagesUpdate } = UserAuth();
-  const [messages, setMessages] = useState([])
+  const [messages, setMessages] = useState([]);
+  const [userMessage, setUserMessage] = useState(null);
 
   const messageEndRef = useRef(null);
 
@@ -44,16 +44,23 @@ const ChatField = ({selectedChatId}) => {
   };
 
   useEffect(() => {
-    if(!selectedChatId) return;
+    if (!selectedChatId) {
+      setUserMessage("Please select a chat to start messaging");
+      return;
+    }
 
     const unsubscribe = onChatMessagesUpdate(selectedChatId, (_messages) => {
-      setMessages(_messages ? _messages : [])
+      if (!_messages) {
+        setUserMessage("No messages yet");
+      }
+
+      setMessages(_messages ? _messages : []);
     });
 
     return () => {
-      unsubscribe()
-    }
-  }, [selectedChatId])
+      unsubscribe();
+    };
+  }, [selectedChatId]);
 
   useEffect(() => {
     scrollToBottom();
@@ -63,10 +70,11 @@ const ChatField = ({selectedChatId}) => {
     <Paper
       elevation={3}
       style={{
-        height: placeHolder(messages),
-        width: "169.5vh",
-        marginLeft: "322px",
-        marginTop: "70px",
+        height: "100vh",
+        // width: "169.5vh",
+        width: "auto",
+        marginLeft: "16vw",
+        marginTop: "7vh",
         overflow: "auto",
         maxHeight: "84vh",
       }}
@@ -79,61 +87,63 @@ const ChatField = ({selectedChatId}) => {
           justifyContent: "flex-end",
         }}
       >
-        {messages.length == 0 && 
-          <h1 className="text-xl text-white">Seems like this chat is empty. Send now your first message</h1>
-        }
-        {messages.length > 0 && messages.map((message) => (
-          // color = useColor(message.from);
-
-          <ListItem
-            sx={{
-              marginBottom: "5px",
-              marginTop: "5px",
-              width: "auto",
-              padding: "10px",
-              // backgroundColor: "white",
-            }}
-          >
-            <Grid
-              container
+        {messages.length == 0 && userMessage !== null && (
+          <h1 className="text-xl text-white">
+            {userMessage}
+          </h1>
+        )}
+        {messages.length > 0 &&
+          messages.map((message) => (
+            <ListItem
               sx={{
+                marginBottom: "5px",
+                marginTop: "5px",
                 width: "auto",
-                border: "5px solid",
-                borderColor: useColor(user?.id, message.from),
-                borderRadius: "5px",
-                backgroundColor: useColor(user?.id, message.from),
-                marginLeft: useMargin(user?.id, message.from),
+                padding: "10px",
+                // backgroundColor: "white",
               }}
             >
-              <Grid item sx={{ color: "white", width: "5vw" }}>
-                <Item border={0}>{message.from}</Item>
-              </Grid>
-              <Grid item sx={{ color: "white", width: "auto" }}>
-                <Item border={0}>{message.message}</Item>
-              </Grid>
               <Grid
-                item
+                container
                 sx={{
-                  color: "white",
                   width: "auto",
-                  marginTop: "auto",
-                  marginLeft: "15px",
+                  border: "5px solid",
+                borderColor: useColor(user?.id, message.from),
+                  borderRadius: "5px",
+                backgroundColor: useColor(user?.id, message.from),
+                marginLeft: useMargin(user?.id, message.from),
                 }}
               >
-                <Item
+                <Grid item sx={{ color: "white", width: "5vw" }}>
+                  <Item border={0}>{message.from}</Item>
+                </Grid>
+                <Grid item sx={{ color: "white", width: "auto" }}>
+                  <Item border={0}>{message.message}</Item>
+                </Grid>
+                <Grid
+                  item
                   sx={{
-                    // backgroundColor: "white",
-                    fontSize: 10,
-                    color: "lightgray",
+                    color: "white",
+                    width: "auto",
+                    marginLeft: "10px",
+                    marginTop: "auto",
+                    marginLeft: "15px",
                   }}
-                  border={0}
                 >
-                  {message.timestamp}
-                </Item>
+                  <Item
+                    sx={{
+                      // backgroundColor: "white",
+                      fontSize: 10,
+                      color: "lightgray",
+                    }}
+                    border={0}
+                  >
+                    {message.timestamp}
+                  </Item>
+                </Grid>
               </Grid>
-            </Grid>
-          </ListItem>
-        ))}
+            </ListItem>
+          ))}
       </List>
       <div ref={messageEndRef}></div>
     </Paper>
