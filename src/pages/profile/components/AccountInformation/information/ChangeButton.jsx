@@ -1,8 +1,8 @@
 import { Button} from "@mui/material"
 import { useState } from "react";
-import DisplayNameDialoge from "./DisplayNameDialoge";
+import DisplayNameDialoge from "./DisplayName/DisplayNameDialoge";
 
-export function ChangeButton({setName}){
+export function ChangeButton({setInformation, displayDialoge: Dialoge}){
 
     const [open, setOpen] = useState(false)
 
@@ -13,7 +13,7 @@ export function ChangeButton({setName}){
     return(
         <>
             <Button variant="contained" color="button" size="large" onClick={handleOpen}>Change</Button>
-            <DisplayNameDialoge open={open} setOpen={setOpen} setName={setName}/>  
+            <Dialoge open={open} setOpen={setOpen} setInformation={setInformation}/>  
         </>
     )
 }

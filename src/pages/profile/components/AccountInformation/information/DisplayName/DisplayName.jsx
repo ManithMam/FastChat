@@ -1,6 +1,7 @@
 import { UserAuth } from "../../../../../../context/AuthContext";
 import { useState, useEffect } from "react";
-import { ChangeButton } from "./ChangeButton";
+import { ChangeButton } from "../ChangeButton";
+import DisplayNameDialoge from "./DisplayNameDialoge";
 
 function DisplayName (){
  
@@ -21,7 +22,7 @@ function DisplayName (){
                 <p className=" text-slate-100">{name}</p>                    
             </div>    
         <div className=" flex items-center">
-            <ChangeButton setName={setName}/>
+            <ChangeButton setInformation={setName} displayDialoge={DisplayNameDialoge}/>
         </div>                  
     </div>         
     )

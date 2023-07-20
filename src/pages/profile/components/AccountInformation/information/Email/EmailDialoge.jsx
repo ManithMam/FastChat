@@ -1,24 +1,25 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, TextField } from "@mui/material"
 import { useState } from "react"
 import { updateProfile } from "firebase/auth";
-import { updateUserDisplayName } from "../../../../api/UpdateAccountInformation";
+import { updateUserEmail } from "../../../../api/UpdateEmailInformation";
 
-function DisplayNameDialoge({open, setOpen, setInformation}){
 
-    const [nameError, setNameError] = useState(false)
+function EmailDialoge({open, setOpen, setInformation}){
 
-    const [newName, setNewName] = useState('')    
+    const [emailError, setEmailError] = useState(false)
+
+    const [newEmail, setNewEmail] = useState('')    
 
     function handleClose(){
         setOpen(false)
-        setNewName('')
-        setNameError(false)
+        setNewEmail('')
+        setEmailError(false)
     }   
 
-    const isNotEmpty = (newName, setNameError) => {
+    const isNotEmpty = (newEmail, setEmailError) => {
 
-        if(newName == ''){
-            setNameError(true)         
+        if(newEmail == ''){
+            setEmailError(true)         
             return false; 
         }      
 
@@ -27,10 +28,10 @@ function DisplayNameDialoge({open, setOpen, setInformation}){
 
     return(
         <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Change Display Name</DialogTitle>
+                <DialogTitle>Change Email</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Enter new display name.
+                        Enter new email.
                     </DialogContentText>
                     <form autoComplete="off">  
                         <TextField
@@ -39,13 +40,13 @@ function DisplayNameDialoge({open, setOpen, setInformation}){
                         id="name"                       
                         fullWidth
                         variant="outlined"
-                        onChange={(event) => {setNewName(event.target.value)}}                                                                  
-                        error={nameError}   
-                        helperText={nameError == true ? 'Please Enter a name.' : ''}                         
+                        onChange={(event) => {setNewEmail(event.target.value)}}                                                                  
+                        error={emailError}   
+                        helperText={emailError == true ? 'Please Enter a email.' : ''}                         
                         />
                         <DialogActions>
                             <Button onClick={handleClose} color="button" variant="contained" type="button">Cancel</Button>
-                            <Button onClick={event => { if(isNotEmpty(newName, setNameError)) {updateUserDisplayName(event, setInformation, newName), setOpen(false)}}} color="button" variant="contained">Submit</Button>                    
+                            <Button onClick={event => { if(isNotEmpty(newEmail, setEmailError)) {updateUserEmail(event, setInformation, newEmail), setOpen(false)}}} color="button" variant="contained">Submit</Button>                    
                         </DialogActions>
                     </form>                    
                 </DialogContent>                
@@ -53,4 +54,4 @@ function DisplayNameDialoge({open, setOpen, setInformation}){
     )
 }
 
-export default DisplayNameDialoge;
+export default EmailDialoge;

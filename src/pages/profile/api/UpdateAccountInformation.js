@@ -16,13 +16,13 @@ export const updateUserDisplayName = (event, setName, newName) => {
 
     const auth = getAuth();
 
-    const user2 = auth.currentUser
+    const user = auth.currentUser;
 
-    updateProfile(user2, {        
+    updateProfile(user, {        
         displayName: newName
     }).then(() => {        
         setName(auth.currentUser.displayName)        
-        updateDisplayNameInDB(user2.uid, newName)
+        updateDisplayNameInDB(user.uid, newName)
     })    
     
 }   

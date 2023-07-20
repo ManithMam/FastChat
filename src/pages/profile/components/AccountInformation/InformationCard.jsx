@@ -1,5 +1,5 @@
 import DisplayName from "./information/DisplayName/DisplayName";
-import Email from "./information/Email";
+import Email from "./information/Email/Email";
 import Username from "./information/Username";
 
 
