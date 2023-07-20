@@ -1,9 +1,11 @@
 import { getAuth, updateEmail } from "firebase/auth";
 
-const auth = getAuth();
+
 
 export const updateUserEmail = (event, setEmail, newEmail) => {
     event.preventDefault() 
+
+    const auth = getAuth();
 
     const user = auth.currentUser;
 
