@@ -1,6 +1,6 @@
 import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, DialogContentText } from "@mui/material";
 import { useState } from "react";
-import { GetCredentialsEmailAndPassword, GetCredentialsGoogle } from "../api/ReAuthenticate";
+import { ReauthenticateWithEmailAndPassword, ReauthenticateWithGoogle } from "../api/ReAuthenticate";
 
 function CredentialsDialog({open, setOpen}){
 
@@ -37,6 +37,12 @@ function CredentialsDialog({open, setOpen}){
                     margin="dense"
                     id="password"
                     />
+                     <DialogContentText className=" text-center">
+                        Or
+                    </DialogContentText>
+                    <DialogActions sx={{ display: 'flex', justifyContent: "center"}}>
+                        <Button variant="contained" onClick={() => console.log("Works")}>Log in with Google</Button>
+                    </DialogActions>
                     <DialogActions>
                         <Button>Cancel</Button>
                         <Button>Submit</Button>
