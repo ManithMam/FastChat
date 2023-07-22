@@ -1,18 +1,26 @@
 import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, DialogContentText } from "@mui/material";
 import { useState } from "react";
 import { ReauthenticateWithEmailAndPassword, ReauthenticateWithGoogle } from "../api/ReAuthenticate";
+import EmailDialoge from "./AccountInformation/information/Email/EmailDialoge";
 
 function CredentialsDialog({open, setOpen}){
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [openEmailDialog, setOpenEmailDialog] = useState(false);
+    const [openEmailDialog, setOpenEmailDialog] = useState(false);  
 
     function handleClose(){
-        setOpen(false)       
+       setOpen(false)
     }   
 
+    function handleOpenEmailDialog(){
+        setEmail('');
+        setPassword('');
+        setOpenEmailDialog(true)
+    }
+
     return(
+        <>
         <Dialog open={open} onClose={handleClose}>
             <DialogTitle>Enter credentials</DialogTitle>
             <DialogContent>
@@ -28,6 +36,7 @@ function CredentialsDialog({open, setOpen}){
                     margin="dense"
                     id="email"
                     variant="outlined"
+                    onChange={(event) => {setEmail(event.target.value)}}
                     />
                     <DialogContentText>
                         Password
@@ -36,6 +45,7 @@ function CredentialsDialog({open, setOpen}){
                     autoFocus
                     margin="dense"
                     id="password"
+                    onChange={(event) => {setPassword(event.target.value)}}
                     />
                      <DialogContentText className=" text-center">
                         Or
@@ -43,14 +53,21 @@ function CredentialsDialog({open, setOpen}){
                     <DialogActions sx={{ display: 'flex', justifyContent: "center"}}>
                         <Button variant="contained" onClick={() => console.log("Works")}>Log in with Google</Button>
                     </DialogActions>
+
                     <DialogActions>
-                        <Button>Cancel</Button>
-                        <Button>Submit</Button>
+                        <Button onClick={handleClose}>Cancel</Button>
+                        <Button onClick={() => {if(ReauthenticateWithEmailAndPassword(email, password)) {console.log("yes")}}} >Submit</Button>
                     </DialogActions>
+                    
                 </form>
             </DialogContent>
         </Dialog>
-    )
+
+        
+        </>
+    ) 
+
+   
 
 }
 
