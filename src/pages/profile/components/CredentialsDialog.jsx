@@ -3,19 +3,22 @@ import { useState } from "react";
 import { ReauthenticateWithEmailAndPassword, ReauthenticateWithGoogle } from "../api/ReAuthenticate";
 import EmailDialoge from "./AccountInformation/information/Email/EmailDialoge";
 
-function CredentialsDialog({open, setOpen}){
+function CredentialsDialog({open, setOpen, setInformation}){
 
-    const [email, setEmail] = useState('');
+    const [emailCredentials, setEmailCredentials] = useState('');
     const [password, setPassword] = useState('');
     const [openEmailDialog, setOpenEmailDialog] = useState(false);  
 
     function handleClose(){
-       setOpen(false)
+        setEmailCredentials('');
+        setPassword('');
+        setOpen(false);
     }   
 
     function handleOpenEmailDialog(){
-        setEmail('');
+        setEmailCredentials('');
         setPassword('');
+        setOpen(false);
         setOpenEmailDialog(true)
     }
 
@@ -36,7 +39,7 @@ function CredentialsDialog({open, setOpen}){
                     margin="dense"
                     id="email"
                     variant="outlined"
-                    onChange={(event) => {setEmail(event.target.value)}}
+                    onChange={(event) => {setEmailCredentials(event.target.value)}}
                     />
                     <DialogContentText>
                         Password
@@ -56,14 +59,14 @@ function CredentialsDialog({open, setOpen}){
 
                     <DialogActions>
                         <Button onClick={handleClose}>Cancel</Button>
-                        <Button onClick={() => {if(ReauthenticateWithEmailAndPassword(email, password)) {console.log("yes")}}} >Submit</Button>
-                    </DialogActions>
-                    
+                        <Button onClick={() => {if(ReauthenticateWithEmailAndPassword(emailCredentials, password)) {handleOpenEmailDialog()}}} >Submit</Button>
+                    </DialogActions>          
+
                 </form>
             </DialogContent>
         </Dialog>
 
-        
+        <EmailDialoge open={openEmailDialog} setOpen={setOpenEmailDialog} setInformation={setInformation}/>
         </>
     ) 
 

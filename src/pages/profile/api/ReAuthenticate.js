@@ -10,9 +10,11 @@ const Reauthenticate = async(credentials) => {
         return true
     })
     .catch((err) => {
-        console.log(err)
-        return false       
+        console.log(err);
+        return false;
     });
+
+    return false;
 }
 
 const GetCredentialsEmailAndPassword = async (email, password) => {  
