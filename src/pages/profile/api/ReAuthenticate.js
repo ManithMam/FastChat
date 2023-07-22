@@ -1,7 +1,18 @@
-import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
+import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, reauthenticateWithCredential } from "firebase/auth"
 
+const Reauthenticate = async(credentials) => {
+    const auth = getAuth();
+    const user = auth.currentUser;
 
-export const GetCredentialsEmailAndPassword = (email, password) => {
+    reauthenticateWithCredential(user, credentials).then(() => {
+        console.log("Reauthenticated");
+    })
+    .catch((err) => {
+        return err        
+    });
+}
+
+const GetCredentialsEmailAndPassword = (email, password) => {
     const auth = getAuth();
     let credentials;
     signInWithEmailAndPassword(auth, email, password)
@@ -16,7 +27,7 @@ export const GetCredentialsEmailAndPassword = (email, password) => {
     return credentials;
 }
 
-export const GetCredentialsGoogle = async() => {
+const GetCredentialsGoogle = async() => {
     const auth = getAuth();
     let credentials;
 
@@ -29,4 +40,14 @@ export const GetCredentialsGoogle = async() => {
         })
 
     return credentials;
+}
+
+export const ReauthenticateWithEmailAndPassword = async(email, password) => {
+    const credentials = await GetCredentialsEmailAndPassword(email, password)
+    Reauthenticate(credentials);
+}
+
+export const ReauthenticateWithGoogle = async() => {
+    const credentials = await GetCredentialsGoogle();
+    Reauthenticate(credentials);
 }
