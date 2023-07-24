@@ -54,7 +54,7 @@ function CredentialsDialog({open, setOpen, setInformation}){
                         Or
                     </DialogContentText>
                     <DialogActions sx={{ display: 'flex', justifyContent: "center"}}>
-                        <Button variant="contained" onClick={() => console.log("Works")}>Log in with Google</Button>
+                        <Button variant="contained" onClick={() => {if(ReauthenticateWithGoogle()) {handleOpenEmailDialog()}}}>Log in with Google</Button>
                     </DialogActions>
 
                     <DialogActions>

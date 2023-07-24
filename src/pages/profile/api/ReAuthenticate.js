@@ -31,7 +31,7 @@ const GetCredentialsEmailAndPassword = async (email, password) => {
 const GetCredentialsGoogle = async() => {
     const auth = getAuth();
     let credentials;
-
+    
     await signInWithPopup(auth, new GoogleAuthProvider())
         .then((result) => {
             credentials = GoogleAuthProvider.credentialFromResult(result);
