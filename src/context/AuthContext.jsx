@@ -3,7 +3,7 @@ import {
   signOut,
   onAuthStateChanged,
   GoogleAuthProvider,
-  signInWithPopup,
+  signInWithRedirect,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
@@ -45,7 +45,7 @@ export const AuthContextProvider = ({ children }) => {
   }, [authUser]);
 
   const signInWithGoogle = async () => {
-    const result = await signInWithPopup(auth, new GoogleAuthProvider());
+    const result = await signInWithRedirect(auth, new GoogleAuthProvider());
     if (result.user) {
       await createOrUpdateUser(
         result.user.uid,
