@@ -43,7 +43,7 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
     function handleWrongCredentials(){
         setErrorEmail(true)
         setErrorPassword(true)
-        setHelperTextPassword("Wrong password or email.")
+        //setHelperTextPassword("Wrong password or email.")
     }
 
     function passwordTest(password){
@@ -86,12 +86,12 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
         return atLeastOneWrong;
     }
 
-    function handleSubmit(email, password){
+    function handleSubmit(email, password, setHelperTextPassword){
         if(credentialsTestFailed(email, password) == true){
             return false;
         }
         
-        return ReauthenticateWithEmailAndPassword(email, password);
+        return ReauthenticateWithEmailAndPassword(email, password, setHelperTextPassword);
     }
 
     return(
@@ -138,7 +138,7 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
 
                     <DialogActions>
                         <Button onClick={handleClose}>Cancel</Button>
-                        <Button onClick={() => {handleSubmit(emailCredentials, password) == true ? handleOpenEmailDialog() : handleWrongCredentials()}} >Submit</Button>
+                        <Button onClick={() => {handleSubmit(emailCredentials, password, setHelperTextPassword) == true ? handleOpenEmailDialog() : handleWrongCredentials()}} >Submit</Button>
                     </DialogActions>          
 
                 </form>
