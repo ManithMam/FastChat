@@ -1,6 +1,18 @@
 import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth"
 
 
+const handleReauthErrors = (err, setHelperTextPassword) => {
+    if(err.code == 'auth/user-mismatch'){
+        setHelperTextPassword("Email and password are wrong. Check credentials and please try again.")
+    }
+    if(err.code == 'auth/invalid-password'){
+        setHelperTextPassword("Wrong password.")
+    }
+    if(err.code == 'auth/too-many-requests'){
+        setHelperTextPassword("Too many attempts to login. Temporary account timeout. Please try again later.")
+    }     
+}
+
 const Reauthenticate = async(credentials, setHelperTextPassword) => {
     const auth = getAuth();
     const user = auth.currentUser;
@@ -12,15 +24,7 @@ const Reauthenticate = async(credentials, setHelperTextPassword) => {
     })
     .catch((err) => {
         console.error(err);
-        if(err.code == 'auth/user-mismatch'){
-            setHelperTextPassword("Email and password are wrong. Check credentials and please try again.")
-        }
-        if(err.code == 'auth/invalid-password'){
-            setHelperTextPassword("Wrong password.")
-        }
-        if(err.code == 'auth/too-many-requests'){
-            setHelperTextPassword("Too many attempts to login. Temporary account timeout. Please try again later.")
-        }        
+        handleReauthErrors(err, setHelperTextPassword)    
         return false;
     });
 
