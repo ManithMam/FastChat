@@ -1,9 +1,9 @@
-import { UserAuth } from "../../../../../../context/AuthContext";
-import { Button } from "@mui/material";
-import { ChangeButton } from "../ChangeButton";
-import EmailDialoge from "./EmailDialoge";
+import { UserAuth } from "../../../../../context/AuthContext";
+
+import { ChangeButtonSensitive } from "../ChangeButtonSensitive";
+
 import { useState, useEffect } from "react";
-import CredentialsDialog from "../../../CredentialsDialog";
+import EmailDialoge from "./EmailDialoge";
 
 function Email(){   
     const {user} = UserAuth(); 
@@ -23,7 +23,7 @@ function Email(){
                 <p className=" text-slate-100">{email}</p>
             </div>
             <div className=" flex items-center">
-            <ChangeButton setInformation={setEmail} displayDialoge={CredentialsDialog}/>
+            <ChangeButtonSensitive setInformation={setEmail} displayDialoge={EmailDialoge}/>
             </div>   
         </div>
     )

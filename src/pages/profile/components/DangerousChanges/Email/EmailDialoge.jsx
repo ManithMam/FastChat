@@ -1,7 +1,7 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, TextField } from "@mui/material"
 import { useState } from "react"
 import { updateProfile } from "firebase/auth";
-import { updateUserEmail } from "../../../../api/UpdateEmailInformation";
+import { updateUserEmail } from "../../../api/UpdateEmailInformation";
 
 
 function EmailDialoge({open, setOpen, setInformation}){

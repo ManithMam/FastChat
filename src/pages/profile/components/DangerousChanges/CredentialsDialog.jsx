@@ -1,9 +1,9 @@
 import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, DialogContentText } from "@mui/material";
 import { useState } from "react";
-import { ReauthenticateWithEmailAndPassword, ReauthenticateWithGoogle } from "../api/ReAuthenticate";
-import EmailDialoge from "./AccountInformation/information/Email/EmailDialoge";
+import { ReauthenticateWithEmailAndPassword, ReauthenticateWithGoogle } from "../../api/ReAuthenticate";
 
-function CredentialsDialog({open, setOpen, setInformation}){
+
+function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Dialoge}){
 
     const [emailCredentials, setEmailCredentials] = useState('');
     const [password, setPassword] = useState('');
@@ -136,7 +136,7 @@ function CredentialsDialog({open, setOpen, setInformation}){
             </DialogContent>
         </Dialog>
 
-        <EmailDialoge open={openEmailDialog} setOpen={setOpenEmailDialog} setInformation={setInformation}/>
+        <Dialoge open={openEmailDialog} setOpen={setOpenEmailDialog} setInformation={setInformation}/>
         </>
     ) 
 
