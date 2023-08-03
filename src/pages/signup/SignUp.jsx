@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { getDatabase, ref, set } from 'firebase/database';
+import { getDatabase, ref, get, set } from 'firebase/database';
 import { UserAuth } from '../../context/AuthContext';
 
 const SignUp = () => {
@@ -44,10 +44,82 @@ const SignUp = () => {
       return;
     }
 
-    const result = await signUpWithEmail(userName, email, password);
+    // Generate a random username or use the provided custom username
+    const usernameToUse = generateRandomUsername();
+
+    // Check if the username already exists in the database
+    const isUsernameTaken = await checkUsernameExists(usernameToUse);
+
+    // If the username is already taken, display an error message
+    if (isUsernameTaken) {
+      setError('Username is already taken. Please choose a different one.');
+      return;
+    }
+
+    const result = await signUpAndSaveToDatabase(usernameToUse, displayName, email, password);
     if(result.success === false) {
       setError(result.error);
       return;
+    }
+  };
+
+  const generateRandomWord = () => {
+    const words = ['Sea', 'Night', 'Star', 'Moon', 'Sun', 'Ocean'];
+    const randomIndex = Math.floor(Math.random() * words.length);
+    return words[randomIndex];
+  };
+
+  
+  const generateRandomNumber = () => {
+    return Math.floor(Math.random() * 100001);
+  };
+  
+  const generateRandomUsername = () => {
+    const customUserName = userName.trim();
+    if (customUserName === '') {
+      const randomWord1 = generateRandomWord();
+      const randomWord2 = generateRandomWord();
+      const randomNumber = generateRandomNumber();
+      return `${randomWord1}${randomWord2}${randomNumber}`;
+    } else {
+      return customUserName;
+    }
+  };
+  
+  const checkUsernameExists = async (username) => {
+    try {
+      const database = getDatabase();
+      const usernameRef = ref(database, `users/${username}`);
+      const snapshot = await get(usernameRef);
+      return snapshot.exists(); // Returns true if the username exists in the database, false otherwise
+    } catch (error) {
+      console.error('Error checking username existence:', error);
+      return false; // If there's an error, assume the username is not taken
+    }
+  };
+
+  const signUpAndSaveToDatabase  = async (username, displayName, email, password) => {
+    try {
+      const auth = getAuth();
+      const database = getDatabase();
+  
+      // Create the user in Firebase Authentication
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  
+      // Update the user's display name in Firebase Authentication
+      await updateProfile(userCredential.user, { displayName });
+  
+      // Save the username in the database
+      const userRef = ref(database, `users/${username}`);
+      await set(userRef, {
+        displayName: userCredential.user.displayName,
+        email: userCredential.user.email,
+      });
+  
+      return { success: true };
+    } catch (error) {
+      console.error('Error signing up:', error);
+      return { success: false, error: error.message };
     }
   };
 
