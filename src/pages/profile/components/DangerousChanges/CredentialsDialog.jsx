@@ -19,6 +19,8 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
         setEmailCredentials('');
         setPassword('');
         setOpen(false);
+        resetHelperText();
+        resetErrors();
     }   
 
     function handleOpenEmailDialog(){
@@ -36,6 +38,12 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
     function resetErrors(){
         setErrorEmail(false)
         setErrorPassword(false)        
+    }
+
+    function handleWrongCredentials(){
+        setErrorEmail(true)
+        setErrorPassword(true)
+        setHelperTextPassword("Wrong password or email.")
     }
 
     function passwordTest(password){
@@ -60,7 +68,7 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
 
     }  
 
-    function credentialsTest(email, password){
+    function credentialsTestFailed(email, password){
         let atLeastOneWrong = false;
         resetErrors();
         resetHelperText();       
@@ -79,10 +87,11 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
     }
 
     function handleSubmit(email, password){
-        if(credentialsTest(email, password) == true){
+        if(credentialsTestFailed(email, password) == true){
             return false;
         }
-        return ReauthenticateWithEmailAndPassword(emailCredentials, password);
+        
+        return ReauthenticateWithEmailAndPassword(email, password);
     }
 
     return(
@@ -129,7 +138,7 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
 
                     <DialogActions>
                         <Button onClick={handleClose}>Cancel</Button>
-                        <Button onClick={() => {if(handleSubmit(emailCredentials, password)) { handleOpenEmailDialog()}}} >Submit</Button>
+                        <Button onClick={() => {handleSubmit(emailCredentials, password) == true ? handleOpenEmailDialog() : handleWrongCredentials()}} >Submit</Button>
                     </DialogActions>          
 
                 </form>

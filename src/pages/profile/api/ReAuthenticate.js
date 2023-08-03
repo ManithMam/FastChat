@@ -10,7 +10,7 @@ const Reauthenticate = async(credentials) => {
         return true
     })
     .catch((err) => {
-        console.log(err);
+        console.error(err);
         return false;
     });
 
@@ -24,7 +24,8 @@ const GetCredentialsEmailAndPassword = async (email, password) => {
         return credentials
     }
     catch(err){
-        return err;
+        console.error(err)
+        return false;
     }
 }
 
@@ -44,8 +45,14 @@ const GetCredentialsGoogle = async() => {
 }
 
 export const ReauthenticateWithEmailAndPassword = async(email, password) => {
-    const credentials = await GetCredentialsEmailAndPassword(email, password)
-    return Reauthenticate(credentials);
+    const credentials = await GetCredentialsEmailAndPassword(email, password)    
+    if(Reauthenticate(credentials) == true){       
+        return true;
+    }
+    else{       
+        return false
+    }
+    
 }
 
 export const ReauthenticateWithGoogle = async() => {
