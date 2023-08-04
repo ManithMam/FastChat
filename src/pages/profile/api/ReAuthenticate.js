@@ -1,11 +1,12 @@
-import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth"
+import { getAuth, GoogleAuthProvider, signInWithPopup, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth"
 
 
 const handleReauthErrors = (err, setHelperTextPassword) => {
+    console.log("Inside handle reauth errors")
     if(err.code == 'auth/user-mismatch'){
         setHelperTextPassword("Email and password are wrong. Check credentials and please try again.")
     }
-    if(err.code == 'auth/invalid-password'){
+    if(err.code == 'auth/wrong-password'){
         setHelperTextPassword("Wrong password.")
     }
     if(err.code == 'auth/too-many-requests'){
@@ -18,13 +19,13 @@ const Reauthenticate = async(credentials, setHelperTextPassword) => {
     const user = auth.currentUser;
 
     
-    reauthenticateWithCredential(user, credentials).then(() => {
+    await reauthenticateWithCredential(user, credentials).then(() => {
         console.log("Reauthenticated")
         return true
     })
-    .catch((err) => {
-        console.error(err);
-        handleReauthErrors(err, setHelperTextPassword)    
+    .catch((err) => {        
+        handleReauthErrors(err, setHelperTextPassword) 
+        console.error(err);                 
         return false;
     });
 
