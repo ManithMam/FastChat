@@ -1,28 +1,18 @@
 import { Button } from "@mui/material";
-import React, { useState } from "react";
-import { UserAuth } from "../../context/AuthContext";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TextField } from '@mui/material';
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const LogIn = () => {
-  const { signInWithGoogle, signInWithEmailAndPassword } = UserAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
 
-  const handleGoogleLogin = async () => {
-    const result = await signInWithGoogle();
-    if (result) {
-      navigate('/');
-    } else {
-      alert('Error logging in!');
-    }
-  }
-
   const handleEmailLogin = async () => {
-    const result = await signInWithEmailAndPassword(email, password);
+    const auth = getAuth();
+    const result = await signInWithEmailAndPassword(auth ,email, password);
     if (result) {
       navigate('/');
     } else {
@@ -150,24 +140,6 @@ const LogIn = () => {
               Log In
             </Button>
           </div>
-
-          <div className="m-3">
-            <Button onClick={handleGoogleLogin} variant="outlined"
-              style={{
-                width: '180px',
-                height: '45px',
-                color: '#FFFFFF',
-                backgroundColor: '#FF3D00',
-                borderRadius: '10px',
-                fontWeight: 'bold',
-                fontFamily: 'Inter, sans-serif',
-                fontSize: '15px',
-              }}
-            >
-              Log in with Google
-            </Button>
-          </div>
-
 
           <p className="m-3" style={{ color: '#FFFFFF', fontFamily: 'Inter, sans-serif', fontSize: '15px' }}>
             Don't have an account?{" "}
