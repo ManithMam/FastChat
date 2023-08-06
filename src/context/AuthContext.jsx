@@ -3,7 +3,7 @@ import {
   signOut,
   onAuthStateChanged,
   GoogleAuthProvider,
-  signInWithPopup,
+  signInWithRedirect,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
@@ -37,13 +37,15 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     if (authUser !== null) {
       getCurrentUser().then((currentUser) => {
-        setUser(currentUser);
+        if(currentUser !== null) {
+          setUser(currentUser);
+        }
       });
     }
   }, [authUser]);
 
   const signInWithGoogle = async () => {
-    const result = await signInWithPopup(auth, new GoogleAuthProvider());
+    const result = await signInWithRedirect(auth, new GoogleAuthProvider());
     if (result.user) {
       await createOrUpdateUser(
         result.user.uid,
@@ -98,21 +100,23 @@ export const AuthContextProvider = ({ children }) => {
     const userSnapshot = await get(child(userRef, userId));
 
     if (userSnapshot.exists()) {
-      update(ref(realtimedb, "users/" + userId), {
+      await update(ref(realtimedb, "users/" + userId), {
         lastOnline: Date.now(),
       });
+      setUser(userSnapshot.val());
     } else {
-      set(ref(realtimedb, "users/" + userId), {
+      const userData= {
+        id: userId,
         userName: userName,
         displayName: displayName,
         email: email,
         profile_picture: profile_picture,
         lastOnline: Date.now(),
         participantOf: [],
-      });
+      }
+      await set(ref(realtimedb, "users/" + userId), userData);
+      setUser(userData);
     }
-
-    setUser(await getCurrentUser());
   };
 
   const getCurrentUser = async () => {
