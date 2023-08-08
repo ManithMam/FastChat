@@ -17,6 +17,20 @@ const App = () => {
         main: "#797979",
       },
     },
+
+    components: {
+      MuiBottomNavigation: {
+       styleOverrides: {
+        root: {
+          '.MuiBottomNavigationAction-label': {
+            color: 'lightgrey',
+            fontWeight: 'bold',
+            fontSize: '12pt'
+          }
+        }
+       }
+      }
+    }
   });
 
   return (

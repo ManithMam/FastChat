@@ -6,11 +6,12 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { UserAuth } from "../../context/AuthContext";
-import { Button } from "@mui/material";
+import { BottomNavigation, BottomNavigationAction, Button } from "@mui/material";
 
 const LeftSideBar = ({ onSelectChat }) => {
   const { user, onUserChatsUpdate, createChat } = UserAuth();
   const [contacts, setContacts] = useState([]);
+  const [friends, setFriends] = useState([]);
 
   useEffect(() => {
     if (!user) return;
@@ -62,6 +63,10 @@ const LeftSideBar = ({ onSelectChat }) => {
       <Button variant="outlined" onClick={() => createChatWithDemoUser()}>
         Create chat
       </Button>
+      <BottomNavigation sx={{position: "absolute", bottom: "0", width: "100%", backgroundColor: "#141214"}} showLabels onChange={(newValue => {})}>
+          <BottomNavigationAction label="Chats"></BottomNavigationAction>
+          <BottomNavigationAction label="Friends List"></BottomNavigationAction>
+      </BottomNavigation>
     </Drawer>
   );
 };
