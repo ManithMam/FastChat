@@ -3,11 +3,11 @@ import { useState } from "react";
 import { ReauthenticateWithEmailAndPassword, ReauthenticateWithGoogle } from "../../api/ReAuthenticate";
 
 
-function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Dialoge}){
+function CredentialsDialogNoInfo({open, setOpen, InformationDialog: Dialoge}){
 
     const [emailCredentials, setEmailCredentials] = useState('');
     const [password, setPassword] = useState('');
-    const [openDialog, setOpenDialog] = useState(false);  
+    const [openEmailDialog, setOpenEmailDialog] = useState(false);  
     const [errorEmail, setErrorEmail] = useState(false);
     const [errorPassword, setErrorPassword] = useState(false);
     const [helperTextEmail, setHelperTextEmail] = useState('');
@@ -27,7 +27,7 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
         setEmailCredentials('');
         setPassword('');
         setOpen(false);
-        setOpenDialog(true)
+        setOpenEmailDialog(true)
     }
 
     function resetHelperText(){
@@ -86,23 +86,11 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
     }
 
     async function handleSubmit(email, password, setHelperTextPassword){
-
-        let succesfullSubmit = false
-
         if(credentialsTestFailed(email, password) == true){
-            handleWrongCredentials();
+            return false;
         }
         
-        if(await ReauthenticateWithEmailAndPassword(email, password, setHelperTextPassword)){            
-            succesfullSubmit = true
-        }             
-
-        if(succesfullSubmit){          
-            handleOpenEmailDialog();
-        }
-        else{           
-            handleWrongCredentials();
-        }       
+        return await ReauthenticateWithEmailAndPassword(email, password, setHelperTextPassword);        
     }
 
     return(
@@ -149,16 +137,19 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
 
                     <DialogActions>
                         <Button onClick={handleClose}>Cancel</Button>
-                        <Button onClick={() => {handleSubmit(emailCredentials, password, setHelperTextPassword)}}>Submit</Button>
+                        <Button onClick={() => {handleSubmit(emailCredentials, password, setHelperTextPassword) == true ? handleOpenEmailDialog() : handleWrongCredentials()}} >Submit</Button>
                     </DialogActions>          
 
                 </form>
             </DialogContent>
         </Dialog>
 
-        <Dialoge open={openDialog} setOpen={setOpenDialog} setInformation={setInformation}/>
+        <Dialoge open={openEmailDialog} setOpen={setOpenEmailDialog}/>
         </>
     ) 
+
+   
+
 }
 
-export default CredentialsDialog;
+export default CredentialsDialogNoInfo;

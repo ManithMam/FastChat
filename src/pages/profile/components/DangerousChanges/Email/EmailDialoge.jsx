@@ -2,10 +2,11 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogConten
 import { useState } from "react"
 import { updateProfile } from "firebase/auth";
 import { updateUserEmail } from "../../../api/UpdateEmailInformation";
+import { useEffect } from "react";
 
 
 function EmailDialoge({open, setOpen, setInformation}){
-
+    
     const [emailError, setEmailError] = useState(false)
 
     const [newEmail, setNewEmail] = useState('')    
