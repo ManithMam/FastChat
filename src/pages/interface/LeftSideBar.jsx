@@ -12,6 +12,7 @@ const LeftSideBar = ({ onSelectChat }) => {
   const { user, onUserChatsUpdate, createChat } = UserAuth();
   const [contacts, setContacts] = useState([]);
   const [friends, setFriends] = useState([]);
+  const [contents, setContents] = useState(0);
 
   useEffect(() => {
     if (!user) return;
@@ -35,9 +36,29 @@ const LeftSideBar = ({ onSelectChat }) => {
     onSelectChat(chatId);
   };
 
+  const ChatList = () => {
+    return <><List>
+    {contacts.map((text, index) => (
+      <ListItem key={index} disablePadding>
+        <ListItemButton onClick={() => handleChatSelection(text)}>
+          <ListItemText sx={{ color: "white" }} primary={text} />
+        </ListItemButton>
+      </ListItem>
+    ))}
+  </List>
+  <Divider />
+  <Button variant="outlined" onClick={() => createChatWithDemoUser()}>
+    Create chat
+  </Button></>
+  }
+
+  const FriendsList = () => {
+      return <p sx={{color: 'antiquewhite'}}>Here's the friends list!</p>
+  }
+
   return (
     <Drawer
-    className="flex flex-col justify-between"
+      className="flex flex-col justify-between"
       sx={{
         "& .MuiDrawer-paper": {
 					width: "15vw",
@@ -50,22 +71,11 @@ const LeftSideBar = ({ onSelectChat }) => {
       anchor="left"
       open={open}
     >
-      <List>
-        {contacts.map((text, index) => (
-          <ListItem key={index} disablePadding>
-            <ListItemButton onClick={() => handleChatSelection(text)}>
-              <ListItemText sx={{ color: "white" }} primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <Button variant="outlined" onClick={() => createChatWithDemoUser()}>
-        Create chat
-      </Button>
-      <BottomNavigation sx={{position: "absolute", bottom: "0", width: "100%", backgroundColor: "#141214"}} showLabels onChange={(newValue => {})}>
-          <BottomNavigationAction label="Chats"></BottomNavigationAction>
-          <BottomNavigationAction label="Friends List"></BottomNavigationAction>
+      {(contents === 0 ? <ChatList/> : <FriendsList/>)}
+      
+      <BottomNavigation sx={{position: "absolute", bottom: "0", width: "100%", backgroundColor: "#141214"}} showLabels onChange={(newValue => {setContents(newValue)})}>
+          <BottomNavigationAction value={0} label="Chats"></BottomNavigationAction>
+          <BottomNavigationAction value={1} label="Friends List"></BottomNavigationAction>
       </BottomNavigation>
     </Drawer>
   );
