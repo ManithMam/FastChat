@@ -108,17 +108,19 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
     return(
         <>
         <Dialog open={open}>
-            <DialogTitle>Enter credentials</DialogTitle>
-            <DialogContent>
-                <DialogContentText>
-                    You need to re-enter your credentials before you are able to change sensitive information.
+            <DialogTitle className="bg-primary"><p className=" text-slate-100">Enter credentials</p></DialogTitle>
+            <DialogContent className="bg-primary">
+                <DialogContentText >
+                    <p className=" text-slate-100">You need to re-enter your credentials before you are able to change sensitive information.</p>
                 </DialogContentText>
-                <form autoComplete="off" className="flex flex-col">
+                <form autoComplete="off" className="flex flex-col" >
 
                     <DialogContentText>
-                        Email
+                    <p className=" text-slate-100">Email</p>
                     </DialogContentText>
                     <TextField
+                    className=" bg-test"
+                    sx={{input: {color: "white"}}}
                     autoFocus
                     margin="dense"
                     id="email"
@@ -129,20 +131,23 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
                     />
 
                     <DialogContentText>
-                        Password
+                        <p className=" text-slate-100">Password</p>
                     </DialogContentText>
-                    <TextField
+                    <TextField      
+                    className=" bg-test"
+                    sx={{input: {color: "white"}}}
                     autoFocus
                     margin="dense"
                     id="password"
+                    variant="outlined"
                     error={errorPassword}
                     helperText={errorPassword == true ? helperTextPassword : ""}
                     onChange={(event) => {setPassword(event.target.value)}}
                     />                                 
 
                     <DialogActions>
-                        <Button onClick={handleClose}>Cancel</Button>
-                        <Button onClick={() => {handleSubmit(emailCredentials, password, setHelperTextPassword)}}>Submit</Button>
+                        <Button onClick={handleClose}><p className=" text-slate-100">Cancel</p></Button>
+                        <Button onClick={() => {handleSubmit(emailCredentials, password, setHelperTextPassword)}} variant="contained" color="button">Submit</Button>
                     </DialogActions>          
 
                 </form>

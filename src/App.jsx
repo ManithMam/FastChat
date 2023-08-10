@@ -22,8 +22,12 @@ const App = () => {
       },
       button: {
         main: "#05F2F2"
-      }
+      },
+      whiteText: {
+        main: "#FFFFFF"
+      }      
     },
+    
   });
 
   return (
