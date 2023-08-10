@@ -1,8 +1,8 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, TextField } from "@mui/material"
 import { useState } from "react"
-import { updateUserDisplayName } from "../../../../api/UpdateDisplayName";
+import { updateUsername } from "../../../api/UpdateUsername"
 
-function DisplayNameDialoge({open, setOpen, setInformation}){
+function UsernameDialog({open, setOpen, setInformation}){
 
     const [nameError, setNameError] = useState(false)
 
@@ -26,10 +26,10 @@ function DisplayNameDialoge({open, setOpen, setInformation}){
 
     return(
         <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Change Display Name</DialogTitle>
+                <DialogTitle>Change Username</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Enter new display name.
+                        Enter new username.
                     </DialogContentText>
                     <form autoComplete="off">  
                         <TextField
@@ -44,7 +44,7 @@ function DisplayNameDialoge({open, setOpen, setInformation}){
                         />
                         <DialogActions>
                             <Button onClick={handleClose} color="button" variant="contained" type="button">Cancel</Button>
-                            <Button onClick={event => { if(isNotEmpty(newName, setNameError)) {updateUserDisplayName(event, setInformation, newName), setOpen(false)}}} color="button" variant="contained">Submit</Button>                    
+                            <Button onClick={event => { if(isNotEmpty(newName, setNameError)) {updateUsername(event, setInformation, newName), setOpen(false)}}} color="button" variant="contained">Submit</Button>                    
                         </DialogActions>
                     </form>                    
                 </DialogContent>                
@@ -52,4 +52,4 @@ function DisplayNameDialoge({open, setOpen, setInformation}){
     )
 }
 
-export default DisplayNameDialoge;
+export default UsernameDialog; 

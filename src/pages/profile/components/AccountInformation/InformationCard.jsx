@@ -1,6 +1,6 @@
-import DisplayName from "./information/DisplayName/DisplayName";
+import DisplayName from "./DisplayName/DisplayName";
 import Email from "../DangerousChanges/Email/Email";
-import Username from "./information/Username/Username";
+import Username from "./Username/Username";
 
 
 function InformationCard (){   

@@ -1,4 +1,4 @@
-import { UserAuth } from "../../../../../../context/AuthContext";
+import { UserAuth } from "../../../../../context/AuthContext";
 import { useEffect, useState } from "react";
 import { ChangeButton } from "../ChangeButton";
 import UsernameDialog from "./UsernameDialog";
