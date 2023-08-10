@@ -26,14 +26,21 @@ function PasswordDialoge({open, setOpen}){
     }
 
     return(
-        <Dialog open={open}>
-                <DialogTitle>Change Password</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
+        <Dialog open={open} PaperProps={{
+            sx: {
+              width: "50%",
+              maxHeight: 300
+            }
+          }}>
+                <DialogTitle className="bg-primary text-white">Change Password</DialogTitle>
+                <DialogContent className="bg-primary">
+                    <DialogContentText sx={{color: "white"}}>
                         Enter new password.
                     </DialogContentText>
                     <form autoComplete="off">  
                         <TextField
+                        className=" bg-textfield"
+                        sx={{input: {color: "white"}}}
                         autoFocus
                         margin="dense"
                         id="name"                       
@@ -44,7 +51,7 @@ function PasswordDialoge({open, setOpen}){
                         helperText={passwordError == true ? 'Please Enter a email.' : ''}                         
                         />
                         <DialogActions>
-                            <Button onClick={handleClose} color="button" variant="contained" type="button">Cancel</Button>
+                            <Button onClick={handleClose} type="button" sx={{color: "white"}}>Cancel</Button>
                             <Button onClick={event => { if(isNotEmpty(newPassword, setPasswordError)) {updatePasswort(event, newPassword), setOpen(false)}}} color="button" variant="contained">Submit</Button>                    
                         </DialogActions>
                     </form>                    

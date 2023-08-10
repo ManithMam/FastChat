@@ -2,7 +2,7 @@ import Password from "./Password/Password";
 import DeleteAccount from "./DeleteAccount/DeleteAccount";
 
 
-function DangerousChanges(){
+function SensitiveInformation(){
     return(
         <div className="bg-primary m-10 p-12 rounded-lg">
             <Password/>
@@ -11,4 +11,4 @@ function DangerousChanges(){
     )
 }
 
-export default DangerousChanges;
+export default SensitiveInformation;

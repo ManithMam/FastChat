@@ -1,6 +1,6 @@
 import InformationCard from "./AccountInformation/InformationCard";
 import ProfilePicture from "./ProfilePicture/ProfilePicture";
-import DangerousChanges from "./DangerousChanges/DangerousChanges";
+import SensitiveInformation from "./SensitiveInformation/SensitiveInformation";
 
 const Profile = () => {
     return (
@@ -10,7 +10,7 @@ const Profile = () => {
             </div>
             <div className=" basis-1/2 flex flex-col flex-grow justify-center">               
                     <InformationCard/>                            
-                    <DangerousChanges/>               
+                    <SensitiveInformation/>               
             </div>            
         </div>
     );

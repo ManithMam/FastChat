@@ -1,5 +1,5 @@
 import DisplayName from "./DisplayName/DisplayName";
-import Email from "../DangerousChanges/Email/Email";
+import Email from "../SensitiveInformation/Email/Email";
 import Username from "./Username/Username";
 
 

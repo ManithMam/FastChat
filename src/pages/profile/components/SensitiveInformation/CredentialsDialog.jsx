@@ -108,15 +108,15 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
     return(
         <>
         <Dialog open={open}>
-            <DialogTitle className="bg-primary"><p className=" text-slate-100">Enter credentials</p></DialogTitle>
+            <DialogTitle className="bg-primary text-white">Enter credentials</DialogTitle>
             <DialogContent className="bg-primary">
-                <DialogContentText >
-                    <p className=" text-slate-100">You need to re-enter your credentials before you are able to change sensitive information.</p>
+                <DialogContentText sx={{color: "white"}} >
+                    You need to re-enter your credentials before you are able to change sensitive information.
                 </DialogContentText>
                 <form autoComplete="off" className="flex flex-col" >
 
-                    <DialogContentText>
-                    <p className=" text-slate-100">Email</p>
+                    <DialogContentText sx={{color: "white"}}>
+                        Email
                     </DialogContentText>
                     <TextField
                     className=" bg-textfield"
@@ -130,8 +130,8 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
                     onChange={(event) => {setEmailCredentials(event.target.value)}}
                     />
 
-                    <DialogContentText>
-                        <p className=" text-slate-100">Password</p>
+                    <DialogContentText sx={{color: "white"}}>
+                        Password
                     </DialogContentText>
                     <TextField      
                     className=" bg-textfield"
@@ -146,7 +146,7 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
                     />                                 
 
                     <DialogActions>
-                        <Button onClick={handleClose}><p className=" text-slate-100">Cancel</p></Button>
+                        <Button onClick={handleClose} sx={{color: "white"}}>Cancel</Button>
                         <Button onClick={() => {handleSubmit(emailCredentials, password, setHelperTextPassword)}} variant="contained" color="button">Submit</Button>
                     </DialogActions>          
 

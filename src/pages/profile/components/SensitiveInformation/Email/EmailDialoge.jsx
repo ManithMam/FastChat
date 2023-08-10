@@ -34,10 +34,10 @@ function EmailDialoge({open, setOpen, setInformation}){
               maxHeight: 300
             }
           }}>
-                <DialogTitle className="bg-primary"><p className=" text-slate-100">Change Email</p></DialogTitle>
+                <DialogTitle className="bg-primary text-white"><p className=" text-slate-100">Change Email</p></DialogTitle>
                 <DialogContent  className="bg-primary">
-                    <DialogContentText>
-                        <p className=" text-slate-100">Enter new email.</p>
+                    <DialogContentText sx={{color: "white"}}>
+                        Enter new email.
                     </DialogContentText>
                     <form autoComplete="off">  
                         <TextField
@@ -53,7 +53,7 @@ function EmailDialoge({open, setOpen, setInformation}){
                         helperText={emailError == true ? 'Please Enter a valid email.' : ''}                         
                         />
                         <DialogActions>
-                            <Button onClick={handleClose} type="button"><p className=" text-slate-100">Cancel</p></Button>
+                            <Button onClick={handleClose} type="button" sx={{color: "white"}}>Cancel</Button>
                             <Button onClick={event => { if(isNotEmpty(newEmail, setEmailError)) {updateUserEmail(event, setInformation, newEmail), setOpen(false)}}} color="button" variant="contained">Submit</Button>                    
                         </DialogActions>
                     </form>                    

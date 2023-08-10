@@ -31,10 +31,10 @@ function DisplayNameDialoge({open, setOpen, setInformation}){
               maxHeight: 300
             }
           }}>
-                <DialogTitle className="bg-primary"><p className=" text-slate-100">Change Display Name</p></DialogTitle>
+                <DialogTitle className="bg-primary text-white">Change Display Name</DialogTitle>
                 <DialogContent className="bg-primary">
-                    <DialogContentText>
-                        <p className=" text-slate-100">Enter new display name.</p>
+                    <DialogContentText sx={{color: "white"}}>
+                        Enter new display name.
                     </DialogContentText>
                     <form autoComplete="off">  
                         <TextField
@@ -50,7 +50,7 @@ function DisplayNameDialoge({open, setOpen, setInformation}){
                         helperText={nameError == true ? 'Field can not be empty.' : ''}                         
                         />
                         <DialogActions>
-                            <Button onClick={handleClose} type="button"><p className=" text-slate-100">Cancel</p></Button>
+                            <Button onClick={handleClose} type="button" sx={{color: "white"}}>Cancel</Button>
                             <Button onClick={event => { if(isNotEmpty(newName, setNameError)) {updateUserDisplayName(event, setInformation, newName), setOpen(false)}}} color="button" variant="contained">Submit</Button>                    
                         </DialogActions>
                     </form>                    

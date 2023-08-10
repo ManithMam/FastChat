@@ -18,17 +18,21 @@ function DeleteAccountDialog({open, setOpen}){
     }
 
     return(
-        <Dialog open={open}>
-            <DialogTitle>Delete account</DialogTitle>
-            <DialogContent>
-                <DialogContentText>
+        <Dialog open={open} PaperProps={{
+            sx: {
+              width: "50%",
+              maxHeight: 300
+            }
+          }}>
+            <DialogTitle className="bg-primary text-white">Delete account</DialogTitle>
+            <DialogContent className="bg-primary">
+                <DialogContentText sx={{color: "white"}}>
                     To delete the account confirm by clicking the DELETE button.
                 </DialogContentText>
                 <DialogActions sx={{display: "flex", flexDirection: "column"}}>
-                    <Button sx={{ mb: "35px", mt: "20px"}} onClick={() => {logOutUser(), deleteAccount()}} variant="contained" size="large">DELETE</Button>
-                    <Button onClick={() => handleClose()}>Cancel</Button>                    
-                </DialogActions>
-                
+                    <Button sx={{ mb: "35px", mt: "20px"}} onClick={() => {logOutUser(), deleteAccount()}} variant="contained" size="large" color="button" >DELETE</Button>
+                    <Button onClick={() => handleClose()} sx={{color: "white"}}>Cancel</Button>                    
+                </DialogActions>                
             </DialogContent>
         </Dialog>
     )
