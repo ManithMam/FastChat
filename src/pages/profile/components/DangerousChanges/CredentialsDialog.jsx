@@ -119,7 +119,7 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
                     <p className=" text-slate-100">Email</p>
                     </DialogContentText>
                     <TextField
-                    className=" bg-test"
+                    className=" bg-textfield"
                     sx={{input: {color: "white"}}}
                     autoFocus
                     margin="dense"
@@ -134,7 +134,7 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
                         <p className=" text-slate-100">Password</p>
                     </DialogContentText>
                     <TextField      
-                    className=" bg-test"
+                    className=" bg-textfield"
                     sx={{input: {color: "white"}}}
                     autoFocus
                     margin="dense"

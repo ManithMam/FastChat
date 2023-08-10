@@ -25,14 +25,21 @@ function DisplayNameDialoge({open, setOpen, setInformation}){
     }
 
     return(
-        <Dialog open={open}>
-                <DialogTitle>Change Display Name</DialogTitle>
-                <DialogContent>
+        <Dialog open={open} PaperProps={{
+            sx: {
+              width: "50%",
+              maxHeight: 300
+            }
+          }}>
+                <DialogTitle className="bg-primary"><p className=" text-slate-100">Change Display Name</p></DialogTitle>
+                <DialogContent className="bg-primary">
                     <DialogContentText>
-                        Enter new display name.
+                        <p className=" text-slate-100">Enter new display name.</p>
                     </DialogContentText>
                     <form autoComplete="off">  
                         <TextField
+                        className=" bg-textfield"
+                        sx={{input: {color: "white"}}}
                         autoFocus
                         margin="dense"
                         id="name"                       
@@ -43,7 +50,7 @@ function DisplayNameDialoge({open, setOpen, setInformation}){
                         helperText={nameError == true ? 'Field can not be empty.' : ''}                         
                         />
                         <DialogActions>
-                            <Button onClick={handleClose} color="button" variant="contained" type="button">Cancel</Button>
+                            <Button onClick={handleClose} type="button"><p className=" text-slate-100">Cancel</p></Button>
                             <Button onClick={event => { if(isNotEmpty(newName, setNameError)) {updateUserDisplayName(event, setInformation, newName), setOpen(false)}}} color="button" variant="contained">Submit</Button>                    
                         </DialogActions>
                     </form>                    

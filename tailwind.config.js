@@ -14,7 +14,7 @@ export default {
       colors: {
         'primary': '#40033C',
         'background': '#0D0D0D',
-        'test': "#4E0449"
+        'textfield': "#4E0449"
       },      
     },
   },

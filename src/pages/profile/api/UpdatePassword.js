@@ -10,8 +10,7 @@ export const updatePasswort = (event, newPassword) => {
     const user = auth.currentUser;
 
     updatePassword(user, newPassword).then(() => {
-        console.log("Success new password")
-        //setPassword(newPassword)
+        console.log("Success new password")       
     }).catch((err) => {
         throw err
     })
