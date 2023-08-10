@@ -1,6 +1,6 @@
 import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, DialogContentText } from "@mui/material";
 import { useState } from "react";
-import { ReauthenticateWithEmailAndPassword, ReauthenticateWithGoogle } from "../../api/ReAuthenticate";
+import { ReauthenticateWithEmailAndPassword } from "../../api/ReAuthenticate";
 
 
 function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Dialoge}){
@@ -138,14 +138,7 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
                     error={errorPassword}
                     helperText={errorPassword == true ? helperTextPassword : ""}
                     onChange={(event) => {setPassword(event.target.value)}}
-                    />
-
-                     <DialogContentText className=" text-center">
-                        Or
-                    </DialogContentText>
-                    <DialogActions sx={{ display: 'flex', justifyContent: "center"}}>
-                        <Button variant="contained" onClick={() => {if(ReauthenticateWithGoogle()) {handleOpenEmailDialog()}}}>Log in with Google</Button>
-                    </DialogActions>
+                    />                                 
 
                     <DialogActions>
                         <Button onClick={handleClose}>Cancel</Button>

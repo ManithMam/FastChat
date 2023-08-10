@@ -44,27 +44,7 @@ const GetCredentialsEmailAndPassword = async (email, password) => {
     }
 }
 
-const GetCredentialsGoogle = async() => {
-    const auth = getAuth();
-    let credentials;
-    
-    await signInWithPopup(auth, new GoogleAuthProvider())
-        .then((result) => {
-            credentials = GoogleAuthProvider.credentialFromResult(result);
-        })
-        .catch((err) => {
-            return err.message;
-        })
-
-    return credentials;
-}
-
 export const ReauthenticateWithEmailAndPassword = async(email, password, setHelperTextPassword) => {
     const credentials = await GetCredentialsEmailAndPassword(email, password)    
     return await Reauthenticate(credentials, setHelperTextPassword)       
-}
-
-export const ReauthenticateWithGoogle = async() => {
-    const credentials = await GetCredentialsGoogle();
-    return Reauthenticate(credentials);
 }
