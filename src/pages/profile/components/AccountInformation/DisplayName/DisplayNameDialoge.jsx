@@ -25,7 +25,7 @@ function DisplayNameDialoge({open, setOpen, setInformation}){
     }
 
     return(
-        <Dialog open={open} onClose={handleClose}>
+        <Dialog open={open}>
                 <DialogTitle>Change Display Name</DialogTitle>
                 <DialogContent>
                     <DialogContentText>

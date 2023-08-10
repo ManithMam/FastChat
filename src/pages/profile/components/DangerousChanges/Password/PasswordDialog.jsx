@@ -26,7 +26,7 @@ function PasswordDialoge({open, setOpen}){
     }
 
     return(
-        <Dialog open={open} onClose={handleClose}>
+        <Dialog open={open}>
                 <DialogTitle>Change Password</DialogTitle>
                 <DialogContent>
                     <DialogContentText>

@@ -107,7 +107,7 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
 
     return(
         <>
-        <Dialog open={open} onClose={handleClose}>
+        <Dialog open={open}>
             <DialogTitle>Enter credentials</DialogTitle>
             <DialogContent>
                 <DialogContentText>

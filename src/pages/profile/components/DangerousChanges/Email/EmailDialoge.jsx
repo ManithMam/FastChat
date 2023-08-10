@@ -28,7 +28,7 @@ function EmailDialoge({open, setOpen, setInformation}){
     }
 
     return(
-        <Dialog open={open} onClose={handleClose}>
+        <Dialog open={open}>
                 <DialogTitle>Change Email</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
