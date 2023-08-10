@@ -1,7 +1,7 @@
 import { getAuth, updatePassword } from "firebase/auth";
 
 
-export const updatePasswort = (event, setPassword, newPassword) => {
+export const updatePasswort = (event, newPassword) => {
     
     event.preventDefault() 
 
@@ -11,7 +11,7 @@ export const updatePasswort = (event, setPassword, newPassword) => {
 
     updatePassword(user, newPassword).then(() => {
         console.log("Success new password")
-        setPassword(newPassword)
+        //setPassword(newPassword)
     }).catch((err) => {
         throw err
     })

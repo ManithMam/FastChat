@@ -43,7 +43,7 @@ function EmailDialoge({open, setOpen, setInformation}){
                         variant="outlined"
                         onChange={(event) => {setNewEmail(event.target.value)}}                                                                  
                         error={emailError}   
-                        helperText={emailError == true ? 'Please Enter a email.' : ''}                         
+                        helperText={emailError == true ? 'Please Enter a valid email.' : ''}                         
                         />
                         <DialogActions>
                             <Button onClick={handleClose} color="button" variant="contained" type="button">Cancel</Button>

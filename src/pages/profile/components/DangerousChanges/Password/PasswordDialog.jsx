@@ -3,7 +3,7 @@ import { useState } from "react"
 import { updatePasswort } from "../../../api/UpdatePassword"
 
 
-function PasswordDialoge({open, setOpen, setInformation}){
+function PasswordDialoge({open, setOpen}){
 
     const [passwordError, setPasswordError] = useState(false)
 
@@ -45,7 +45,7 @@ function PasswordDialoge({open, setOpen, setInformation}){
                         />
                         <DialogActions>
                             <Button onClick={handleClose} color="button" variant="contained" type="button">Cancel</Button>
-                            <Button onClick={event => { if(isNotEmpty(newPassword, setPasswordError)) {updatePasswort(event, setInformation, newPassword), setOpen(false)}}} color="button" variant="contained">Submit</Button>                    
+                            <Button onClick={event => { if(isNotEmpty(newPassword, setPasswordError)) {updatePasswort(event, newPassword), setOpen(false)}}} color="button" variant="contained">Submit</Button>                    
                         </DialogActions>
                     </form>                    
                 </DialogContent>                

@@ -15,7 +15,7 @@ export function ChangeButtonSensitive({setInformation, displayDialoge}){
     return(
         <>
             <Button variant="contained" color="button" size="large" onClick={handleOpen}>Change</Button>
-            <CredentialsDialog open={open} setOpen={setOpen} setInformation={setInformation} InformationDialog={displayDialoge}/>  
+            <CredentialsDialog open={open} setOpen={setOpen} InformationDialog={displayDialoge}/>  
         </>
     )
 }

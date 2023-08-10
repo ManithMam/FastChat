@@ -1,7 +1,6 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, TextField } from "@mui/material"
 import { useState } from "react"
-import { updateProfile } from "firebase/auth";
-import { updateUserDisplayName } from "../../../../api/UpdateAccountInformation";
+import { updateUserDisplayName } from "../../../../api/UpdateDisplayName";
 
 function DisplayNameDialoge({open, setOpen, setInformation}){
 
