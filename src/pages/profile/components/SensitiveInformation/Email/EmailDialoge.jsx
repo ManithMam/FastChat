@@ -1,15 +1,27 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, TextField } from "@mui/material"
 import { useState } from "react"
-import { updateProfile } from "firebase/auth";
 import { updateUserEmail } from "../../../api/UpdateEmailInformation";
-import { useEffect } from "react";
-
 
 function EmailDialoge({open, setOpen, setInformation}){
     
     const [emailError, setEmailError] = useState(false)
 
+    const [errorText, setErrorText] = useState('')
+
     const [newEmail, setNewEmail] = useState('')    
+
+    const emailRegex = /^\S+@\S+\.\S+$/;
+
+    function isEmail(newEmail){        
+
+        if (!emailRegex.test(newEmail.trim())) {           
+            setErrorText("Should be a email.")
+            return false;
+        }        
+
+        return true;
+
+    }  
 
     function handleClose(){
         setOpen(false)
@@ -20,11 +32,29 @@ function EmailDialoge({open, setOpen, setInformation}){
     const isNotEmpty = (newEmail, setEmailError) => {
 
         if(newEmail == ''){
-            setEmailError(true)         
+            setEmailError(true)      
+            setErrorText("Should not be empty.")   
             return false; 
         }      
 
         return true;
+    }
+
+    const isValid = () => {
+
+        let isValid = true;
+
+        if(isNotEmpty(newEmail, setEmailError) == false){
+            isValid = false;
+            return isValid;
+        }
+
+        if(isEmail(newEmail) == false){
+            isValid = false;
+            return isValid;
+        }
+
+        return isValid;
     }
 
     return(
@@ -50,11 +80,11 @@ function EmailDialoge({open, setOpen, setInformation}){
                         variant="outlined"
                         onChange={(event) => {setNewEmail(event.target.value)}}                                                                  
                         error={emailError}   
-                        helperText={emailError == true ? 'Please Enter a valid email.' : ''}                         
+                        helperText={emailError == true ? errorText : ''}                         
                         />
                         <DialogActions>
                             <Button onClick={handleClose} type="button" sx={{color: "white"}}>Cancel</Button>
-                            <Button onClick={event => { if(isNotEmpty(newEmail, setEmailError)) {updateUserEmail(event, setInformation, newEmail), setOpen(false)}}} color="button" variant="contained">Submit</Button>                    
+                            <Button onClick={event => { if(isValid()) {updateUserEmail(event, setInformation, newEmail, setErrorText) ? setOpen(false) : setEmailError(true)}}} color="button" variant="contained">Submit</Button>                    
                         </DialogActions>
                     </form>                    
                 </DialogContent>                

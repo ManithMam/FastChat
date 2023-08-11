@@ -1,6 +1,13 @@
 import { getAuth, updateEmail } from "firebase/auth";
 import { getDatabase, ref, update} from "firebase/database";
 
+
+const handleError = (err, setErrorText) => {
+    if(err.code == 'auth/email-already-in-use'){
+        setErrorText("Email already in use please pick another.")
+    }
+}
+
 const updateEmailDB = (id, newEmail) => {
     const db = getDatabase();
     console.log(id)
@@ -9,7 +16,7 @@ const updateEmailDB = (id, newEmail) => {
     })
 }
 
-export const updateUserEmail = (event, setEmail, newEmail) => {
+export const updateUserEmail = (event, setEmail, newEmail, setErrorText) => {
     event.preventDefault() 
 
     const auth = getAuth();
@@ -22,5 +29,10 @@ export const updateUserEmail = (event, setEmail, newEmail) => {
         console.log("Sucess")        
         setEmail(user.email);
         updateEmailDB(user.uid, newEmail)
+        return true
+    }).catch((err) => {        
+        handleError(err, setErrorText)       
+        return false;
     })
+    
 }
