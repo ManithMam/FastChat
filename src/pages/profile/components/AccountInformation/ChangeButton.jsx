@@ -1,6 +1,5 @@
 import { Button} from "@mui/material"
 import { useState } from "react";
-import DisplayNameDialoge from "./DisplayName/DisplayNameDialoge";
 
 export function ChangeButton({setInformation, displayDialoge: Dialoge}){
 
