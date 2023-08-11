@@ -47,6 +47,8 @@ const SignUp = () => {
     // Generate a random username or use the provided custom username
     const usernameToUse = generateRandomUsername();
 
+    usernameToUse.toLowerCase();
+
     // Check if the username already exists in the database
     const isUsernameTaken = await checkUsernameExists(usernameToUse);
 
@@ -64,7 +66,7 @@ const SignUp = () => {
   };
 
   const generateRandomWord = () => {
-    const words = ['Sea', 'Night', 'Star', 'Moon', 'Sun', 'Ocean'];
+    const words = ['sea', 'night', 'star', 'moon', 'sun', 'ocean'];
     const randomIndex = Math.floor(Math.random() * words.length);
     return words[randomIndex];
   };
@@ -82,21 +84,30 @@ const SignUp = () => {
       const randomNumber = generateRandomNumber();
       return `${randomWord1}${randomWord2}${randomNumber}`;
     } else {
-      return customUserName;
+      return customUserName.toLowerCase();
     }
   };
   
   const checkUsernameExists = async (username) => {
     try {
       const database = getDatabase();
-      const usernameRef = ref(database, `users/${username}`);
-      const snapshot = await get(usernameRef);
-      return snapshot.exists(); // Returns true if the username exists in the database, false otherwise
+      const usersRef = ref(database, 'users');
+      const snapshot = await get(usersRef);
+  
+      if (snapshot.exists()) {
+        const usersData = snapshot.val();
+        const usernames = Object.values(usersData).map(user => user.userName);
+  
+        return usernames.includes(username); // Returns true if the username exists in the database, false otherwise
+      } else {
+        return false; // No usernames in the database
+      }
     } catch (error) {
       console.error('Error checking username existence:', error);
       return false; // If there's an error, assume the username is not taken
     }
   };
+
 
   const signUpAndSaveToDatabase  = async (username, displayName, email, password) => {
     try {
@@ -109,9 +120,10 @@ const SignUp = () => {
       // Update the user's display name in Firebase Authentication
       await updateProfile(userCredential.user, { displayName });
   
-      // Save the username in the database
-      const userRef = ref(database, `users/${username}`);
+      // Save the user data in the database
+      const userRef = ref(database, `users/${userCredential.user.uid}`);
       await set(userRef, {
+        userName: username, // Store the userName as an attribute
         displayName: userCredential.user.displayName,
         email: userCredential.user.email,
       });
