@@ -4,8 +4,8 @@ import SensitiveInformation from "./SensitiveInformation/SensitiveInformation";
 
 const Profile = () => {
     return (
-        <div className=" bg-background h-screen flex flex-wrap">              
-            <div className=" basis-1/2 flex justify-center items-center mb-44">
+        <div className="flex flex-col bg-background min-h-screen flex-wrap lg:flex-row">              
+            <div className=" basis-1/2 flex justify-center items-center mb-0 lg:mb-44 mt-10">
                 <ProfilePicture/>
             </div>
             <div className=" basis-1/2 flex flex-col flex-grow justify-center">               
