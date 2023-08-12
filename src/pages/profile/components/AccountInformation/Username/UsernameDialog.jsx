@@ -41,7 +41,7 @@ function UsernameDialog({open, setOpen, setInformation}){
         return true;
     }    
 
-    const isValid = () => {
+    const isValid = async () => {
         let isValid = true;
 
         if(isNotEmpty(newName, setNameError, setErrorText) == false){
@@ -56,8 +56,7 @@ function UsernameDialog({open, setOpen, setInformation}){
             return isValid;
         }
 
-        if(newUsernameIsNotUnique(newName, setNameError, setErrorText)){
-            console.log("not unique")
+        if(await newUsernameIsNotUnique(newName, setNameError, setErrorText)){                       
             isValid = false;
             return isValid;
         }   

@@ -15,20 +15,23 @@ const updateEmailDB = (id, newEmail) => {
     })
 }
 
-export const updateUserEmail = (event, setEmail, newEmail, setErrorText) => {
-    event.preventDefault() 
+export const updateUserEmail = async (event, setEmail, newEmail, setErrorText) => {
+
+    event.preventDefault()     
 
     const auth = getAuth();
 
     const user = auth.currentUser;       
 
-    updateEmail(user, newEmail).then(() => {          
+    await updateEmail(user, newEmail).then(() => {   
+        console.log("success")       
         setEmail(user.email);
         updateEmailDB(user.uid, newEmail)
-        return true
+        return true;
     }).catch((err) => {        
+        console.log("error")
         handleError(err, setErrorText)       
         return false;
-    })
+    })   
     
 }

@@ -132,6 +132,7 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
                             fontSize: '15px'
                         }
                     }}
+                    autoComplete="on"
                     sx={{input: {color: "white"}}}
                     autoFocus
                     margin="dense"
@@ -162,6 +163,7 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
                     sx={{input: {color: "white"}}}
                     autoFocus
                     margin="dense"
+                    autoComplete="on"
                     id="password"
                     variant="outlined"
                     error={errorPassword}

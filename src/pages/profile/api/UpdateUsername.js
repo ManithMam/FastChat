@@ -12,11 +12,13 @@ export const newUsernameIsNotUnique = async (username, setNameError, setErrorTex
           const usernames = Object.values(usersData).map(user => user.userName);
     
           if(usernames.includes(username)){ // Returns true if the username exists in the database, false otherwise
+            console.log("true")
             setNameError(true)
             setErrorText('Username has to be unique')
             return true;
           } 
-          else{            
+          else{        
+            console.log("false")    
             return false;
           }
         } else {

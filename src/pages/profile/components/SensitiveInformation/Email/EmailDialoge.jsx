@@ -96,7 +96,7 @@ function EmailDialoge({open, setOpen, setInformation}){
                         />
                         <DialogActions>
                             <Button onClick={handleClose} type="button" sx={{color: "white"}}>Cancel</Button>
-                            <Button onClick={event => { if(isValid()) {updateUserEmail(event, setInformation, newEmail, setErrorText) ? setOpen(false) : setEmailError(true)}}} color="button" variant="contained">Submit</Button>                    
+                            <Button onClick={event => { if(isValid()) {updateUserEmail(event, setInformation, newEmail, setErrorText) ? handleClose() : setEmailError(true)}}} color="button" variant="contained">Submit</Button>                    
                         </DialogActions>
                     </form>                    
                 </DialogContent>                
