@@ -3,9 +3,22 @@ import { updateProfile } from "firebase/auth";
 import { getDatabase, update} from "firebase/database";
 import {ref as dbRef} from "firebase/database";
 
-const readFile = async () => {   
+const pickerOptions = {
+    types: [
+        {
+            description: "Images",
+            accept: {
+                "image/*": [".png", ".jpeg", ".jpg"],
+            }
+        }
+    ],
+    excludeAcceptAllOption: true,
+    multiple: false,
+}
 
-    const [fileHandle] = await window.showOpenFilePicker();
+const readFile = async () => {   
+    
+    const [fileHandle] = await window.showOpenFilePicker(pickerOptions);   
 
     const file = await fileHandle.getFile();
 
