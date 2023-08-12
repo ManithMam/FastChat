@@ -36,6 +36,10 @@ const LeftSideBar = ({ onSelectChat }) => {
     onSelectChat(chatId);
   };
 
+  const handleFriendSelection = () => {
+
+  };
+
   const ChatList = () => {
     return <><List>
     {contacts.map((text, index) => (
@@ -50,11 +54,23 @@ const LeftSideBar = ({ onSelectChat }) => {
   <Button variant="outlined" onClick={() => createChatWithDemoUser()}>
     Create chat
   </Button></>
-  }
+  };
 
   const FriendsList = () => {
-      return <p sx={{color: 'antiquewhite'}}>Here's the friends list!</p>
-  }
+      return <>
+        <Button variant="outlined" sx={{ margin: "5px" }} onClick={() => {}}>Add friend</Button>
+        <Divider/>
+    <List>
+      {friends.map((text, index) => (
+        <ListItem key={index} disablePadding>
+          <ListItemButton onClick={() => handleFriendSelection(text)}>
+            <ListItemText sx={{ color: "white" }} primary={text} />
+          </ListItemButton>
+        </ListItem>
+      ))}
+    </List>
+    </>
+  };
 
   return (
     <Drawer
