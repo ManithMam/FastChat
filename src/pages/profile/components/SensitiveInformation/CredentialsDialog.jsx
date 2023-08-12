@@ -119,7 +119,19 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
                         Email
                     </DialogContentText>
                     <TextField
-                    className=" bg-textfield"
+                    label="Email"
+                    inputProps={{
+                        style: {
+                            color: '#FFFFFF',
+                            fontSize: '15px'
+                        }
+                    }}
+                    InputLabelProps={{
+                        style: {
+                            color: '#BF8AB1',
+                            fontSize: '15px'
+                        }
+                    }}
                     sx={{input: {color: "white"}}}
                     autoFocus
                     margin="dense"
@@ -134,13 +146,26 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
                         Password
                     </DialogContentText>
                     <TextField      
-                    className=" bg-textfield"
+                    label="Password"
+                    inputProps={{
+                        style: {
+                            color: '#FFFFFF',
+                            fontSize: '15px'
+                        }
+                    }}
+                    InputLabelProps={{
+                        style: {
+                            color: '#BF8AB1',
+                            fontSize: '15px'
+                        }
+                    }}
                     sx={{input: {color: "white"}}}
                     autoFocus
                     margin="dense"
                     id="password"
                     variant="outlined"
                     error={errorPassword}
+                    type="password"
                     helperText={errorPassword == true ? helperTextPassword : ""}
                     onChange={(event) => {setPassword(event.target.value)}}
                     />                                 

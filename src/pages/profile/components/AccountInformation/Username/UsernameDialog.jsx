@@ -79,13 +79,25 @@ function UsernameDialog({open, setOpen, setInformation}){
                     </DialogContentText>
                     <form autoComplete="off">  
                         <TextField
-                        className=" bg-textfield"
+                        label="Username"
                         sx={{input: {color: "white"}}}
                         autoFocus
                         margin="dense"
                         id="name"                       
                         fullWidth
                         variant="outlined"
+                        inputProps={{
+                            style: {
+                                color: '#FFFFFF',
+                                fontSize: '15px'
+                            }
+                        }}
+                        InputLabelProps={{
+                            style: {
+                                color: '#BF8AB1',
+                                fontSize: '15px'
+                            }
+                        }}
                         onChange={(event) => {setNewName(event.target.value)}}                                                                  
                         error={nameError}   
                         helperText={nameError == true ? errorText : ''}                         

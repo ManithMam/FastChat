@@ -37,14 +37,27 @@ function DisplayNameDialoge({open, setOpen, setInformation}){
                         Enter new display name.
                     </DialogContentText>
                     <form autoComplete="off">  
-                        <TextField
-                        className=" bg-textfield"
+                        <TextField                        
                         sx={{input: {color: "white"}}}
                         autoFocus
                         margin="dense"
                         id="name"                       
                         fullWidth
+                        type="text"
                         variant="outlined"
+                        label="Display Name"
+                        inputProps={{
+                            style: {
+                                color: '#FFFFFF',
+                                fontSize: '15px'
+                            }
+                        }}
+                        InputLabelProps={{
+                            style: {
+                                color: '#BF8AB1',
+                                fontSize: '15px'
+                            }
+                        }}
                         onChange={(event) => {setNewName(event.target.value)}}                                                                  
                         error={nameError}   
                         helperText={nameError == true ? 'Field can not be empty.' : ''}                         

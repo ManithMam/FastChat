@@ -71,7 +71,19 @@ function EmailDialoge({open, setOpen, setInformation}){
                     </DialogContentText>
                     <form autoComplete="off">  
                         <TextField
-                        className=" bg-textfield"
+                        label="Email"
+                        inputProps={{
+                            style: {
+                                color: '#FFFFFF',
+                                fontSize: '15px'
+                            }
+                        }}
+                        InputLabelProps={{
+                            style: {
+                                color: '#BF8AB1',
+                                fontSize: '15px'
+                            }
+                        }}
                         sx={{input: {color: "white"}}}
                         autoFocus
                         margin="dense"
