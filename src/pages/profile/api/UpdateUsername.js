@@ -41,7 +41,6 @@ export const updateUsernameInDB = (id, newUsername) => {
 export const updateUsername = (event, setUsername, newUsername) => {
 
     event.preventDefault() 
-
     
     const auth = getAuth();
 

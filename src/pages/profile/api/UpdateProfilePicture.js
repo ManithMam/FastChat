@@ -28,8 +28,7 @@ const readFile = async () => {
 }  
 
 const updateProflePictureURLInRealtimeDB = (userId, imgUrl) => {
-    const db = getDatabase();
-    console.log(userId)
+    const db = getDatabase();    
     update(dbRef(db, 'users/' + userId), {
         profile_picture: imgUrl
     });
@@ -55,9 +54,7 @@ const updateUserProfile = async (user, setImgUrl) => {
         
 }
 
-export const uploadFile = async (user, setImgUrl) => {
-
-    console.log("start...")
+export const uploadFile = async (user, setImgUrl) => {   
 
     const storage = getStorage();
 

@@ -3,8 +3,7 @@ import { getDatabase, ref, update} from "firebase/database";
 
 
 const updateDisplayNameInDB = (id, name) => {
-    const db = getDatabase();
-    console.log(id)
+    const db = getDatabase();   
     update(ref(db, 'users/' + id), {
         displayName: name
     });

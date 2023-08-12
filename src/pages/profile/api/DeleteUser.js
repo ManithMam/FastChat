@@ -16,11 +16,12 @@ const deleteUserAuth = () => {
     const auth = getAuth();
     const user = auth.currentUser;
 
-    deleteUser(user).then(() => {        
-        console.log("User deleted...")
-    }).catch((err) => {
-        console.error(err)
-    })
+    try{
+        deleteUser(user)
+    }
+    catch(err){
+        throw err;
+    }
 }
 
 

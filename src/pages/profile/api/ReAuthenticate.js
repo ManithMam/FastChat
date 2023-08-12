@@ -38,8 +38,7 @@ const GetCredentialsEmailAndPassword = async (email, password) => {
         const credentials = await EmailAuthProvider.credential(email, password)             
         return credentials
     }
-    catch(err){
-        console.error(err)
+    catch(err){        
         return false;
     }
 }

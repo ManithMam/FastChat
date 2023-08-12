@@ -9,8 +9,7 @@ const handleError = (err, setErrorText) => {
 }
 
 const updateEmailDB = (id, newEmail) => {
-    const db = getDatabase();
-    console.log(id)
+    const db = getDatabase();    
     update(ref(db, 'users/' + id), {
         email: newEmail
     })
@@ -21,12 +20,9 @@ export const updateUserEmail = (event, setEmail, newEmail, setErrorText) => {
 
     const auth = getAuth();
 
-    const user = auth.currentUser;   
+    const user = auth.currentUser;       
 
-    console.log(user.uid)  
-
-    updateEmail(user, newEmail).then(() => {
-        console.log("Sucess")        
+    updateEmail(user, newEmail).then(() => {          
         setEmail(user.email);
         updateEmailDB(user.uid, newEmail)
         return true
