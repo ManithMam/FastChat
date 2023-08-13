@@ -3,12 +3,13 @@ import {
   signOut,
   onAuthStateChanged,
   GoogleAuthProvider,
-  signInWithPopup,
+  signInWithRedirect,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { auth, db as realtimedb } from "../firebase";
 import { ref, child, update, set, get, onValue, push } from "firebase/database";
+import {v4 as uuidv4} from 'uuid';
 
 const UserContext = createContext();
 
@@ -36,13 +37,15 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     if (authUser !== null) {
       getCurrentUser().then((currentUser) => {
-        setUser(currentUser);
+        if(currentUser !== null) {
+          setUser(currentUser);
+        }
       });
     }
   }, [authUser]);
 
   const signInWithGoogle = async () => {
-    const result = await signInWithPopup(auth, new GoogleAuthProvider());
+    const result = await signInWithRedirect(auth, new GoogleAuthProvider());
     if (result.user) {
       await createOrUpdateUser(
         result.user.uid,
@@ -97,21 +100,23 @@ export const AuthContextProvider = ({ children }) => {
     const userSnapshot = await get(child(userRef, userId));
 
     if (userSnapshot.exists()) {
-      update(ref(realtimedb, "users/" + userId), {
+      await update(ref(realtimedb, "users/" + userId), {
         lastOnline: Date.now(),
       });
+      setUser(userSnapshot.val());
     } else {
-      set(ref(realtimedb, "users/" + userId), {
+      const userData= {
+        id: userId,
         userName: userName,
         displayName: displayName,
         email: email,
         profile_picture: profile_picture,
         lastOnline: Date.now(),
         participantOf: [],
-      });
+      }
+      await set(ref(realtimedb, "users/" + userId), userData);
+      setUser(userData);
     }
-
-    setUser(await getCurrentUser());
   };
 
   const getCurrentUser = async () => {
@@ -174,10 +179,12 @@ export const AuthContextProvider = ({ children }) => {
         return newChatKey;
       } else {
         // User does not exist
+        console.log("User does not exist")
         return null;
       }
     } else {
       // User does not exist
+      console.log("User does not exist")
       return null;
     }
 
@@ -223,6 +230,7 @@ export const AuthContextProvider = ({ children }) => {
       const messagesSnapshot = await get(messagesRef);
 
       const messageObject = {
+        id: uuidv4(),
         from: userId,
         message: message,
         timestamp: Date.now(),
