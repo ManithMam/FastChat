@@ -7,11 +7,11 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { UserAuth } from "../../context/AuthContext";
 import { BottomNavigation, BottomNavigationAction, Button } from "@mui/material";
+import FriendsList from "../../components/FriendsList"
 
 const LeftSideBar = ({ onSelectChat }) => {
   const { user, onUserChatsUpdate, createChat } = UserAuth();
   const [contacts, setContacts] = useState([]);
-  const [friends, setFriends] = useState([]);
   const [contents, setContents] = useState(0);
 
   useEffect(() => {
@@ -36,10 +36,6 @@ const LeftSideBar = ({ onSelectChat }) => {
     onSelectChat(chatId);
   };
 
-  const handleFriendSelection = () => {
-
-  };
-
   const ChatList = () => {
     return <><List>
     {contacts.map((text, index) => (
@@ -54,22 +50,6 @@ const LeftSideBar = ({ onSelectChat }) => {
   <Button variant="outlined" onClick={() => createChatWithDemoUser()}>
     Create chat
   </Button></>
-  };
-
-  const FriendsList = () => {
-      return <>
-        <Button variant="outlined" sx={{ margin: "5px" }} onClick={() => {}}>Add friend</Button>
-        <Divider/>
-    <List>
-      {friends.map((text, index) => (
-        <ListItem key={index} disablePadding>
-          <ListItemButton onClick={() => handleFriendSelection(text)}>
-            <ListItemText sx={{ color: "white" }} primary={text} />
-          </ListItemButton>
-        </ListItem>
-      ))}
-    </List>
-    </>
   };
 
   return (
