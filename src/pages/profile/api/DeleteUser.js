@@ -35,12 +35,10 @@ const ProfilePicCheck =  async () => {
     
     await get(child(dbRef, 'users/' + uid + '/profile_picture')).then((snapshot) => {
         console.log(snapshot.val())
-        if(snapshot.val() == ""){
-            console.log("picture doesnt exist...")
+        if(snapshot.val() == ""){           
             return
         }
-        else{
-            console.log("Picture exists...delete...")
+        else{            
             deleteProfilePicture();
         }
         

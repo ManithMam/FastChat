@@ -23,13 +23,11 @@ export const updateUserEmail = async (event, setEmail, newEmail, setErrorText) =
 
     const user = auth.currentUser;       
 
-    await updateEmail(user, newEmail).then(() => {   
-        console.log("success")       
+    await updateEmail(user, newEmail).then(() => {             
         setEmail(user.email);
         updateEmailDB(user.uid, newEmail)
         return true;
     }).catch((err) => {        
-        console.log("error")
         handleError(err, setErrorText)       
         return false;
     })   

@@ -18,10 +18,8 @@ const Reauthenticate = async(credentials, setHelperTextPassword) => {
     const user = auth.currentUser;
     let reauthenticated = false
     
-    await reauthenticateWithCredential(user, credentials).then(() => {
-        console.log("Authenticated")
-        reauthenticated = true
-        
+    await reauthenticateWithCredential(user, credentials).then(() => {      
+        reauthenticated = true        
     })
     .catch((err) => {        
         handleReauthErrors(err, setHelperTextPassword) 
