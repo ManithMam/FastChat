@@ -64,7 +64,7 @@ export const AuthContextProvider = ({ children }) => {
     //TODO: Implement user creation in realtime db
   };
 
-  const signUpWithEmail = async (username, email, password) => {
+  const signUpWithEmail = async (username, displayName, email, password) => {
     try {
       const result = await createUserWithEmailAndPassword(
         auth,
@@ -75,7 +75,7 @@ export const AuthContextProvider = ({ children }) => {
         await createOrUpdateUser(
           result.user.uid,
           username,
-          username,
+          displayName,
           email,
           null
         );
@@ -116,6 +116,25 @@ export const AuthContextProvider = ({ children }) => {
       }
       await set(ref(realtimedb, "users/" + userId), userData);
       setUser(userData);
+    }
+  };
+
+  const checkUsernameExists = async (username) => {
+    try {
+      const usersRef = ref(realtimedb, 'users');
+      const snapshot = await get(usersRef);
+  
+      if (snapshot.exists()) {
+        const usersData = snapshot.val();
+        const usernames = Object.values(usersData).map(user => user.userName);
+  
+        return usernames.includes(username); // Returns true if the username exists in the database, false otherwise
+      } else {
+        return false; // No usernames in the database
+      }
+    } catch (error) {
+      console.error('Error checking username existence:', error);
+      return false; // If there's an error, assume the username is not taken
     }
   };
 
@@ -275,6 +294,7 @@ export const AuthContextProvider = ({ children }) => {
         getChatInfo,
         onChatMessagesUpdate,
         sendChatMessage,
+        checkUsernameExists
       }}
     >
       {children}
