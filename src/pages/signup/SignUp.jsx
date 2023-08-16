@@ -8,7 +8,7 @@ import { UserAuth } from '../../context/AuthContext';
 const SignUp = () => {
   const navigate = useNavigate();
 
-  const {signUpWithEmail} = UserAuth();
+  const {signUpWithEmail, checkUsernameExists} = UserAuth();
 
   const [userName, setUserName] = useState('');
   const [displayName, setDisplayName] = useState('');
@@ -58,7 +58,7 @@ const SignUp = () => {
       return;
     }
 
-    const result = await signUpAndSaveToDatabase(usernameToUse, displayName, email, password);
+    const result = await signUpWithEmail(usernameToUse, displayName, email, password);
     if(result.success === false) {
       setError(result.error);
       return;
@@ -85,53 +85,6 @@ const SignUp = () => {
       return `${randomWord1}${randomWord2}${randomNumber}`;
     } else {
       return customUserName.toLowerCase();
-    }
-  };
-  
-  const checkUsernameExists = async (username) => {
-    try {
-      const database = getDatabase();
-      const usersRef = ref(database, 'users');
-      const snapshot = await get(usersRef);
-  
-      if (snapshot.exists()) {
-        const usersData = snapshot.val();
-        const usernames = Object.values(usersData).map(user => user.userName);
-  
-        return usernames.includes(username); // Returns true if the username exists in the database, false otherwise
-      } else {
-        return false; // No usernames in the database
-      }
-    } catch (error) {
-      console.error('Error checking username existence:', error);
-      return false; // If there's an error, assume the username is not taken
-    }
-  };
-
-
-  const signUpAndSaveToDatabase  = async (username, displayName, email, password) => {
-    try {
-      const auth = getAuth();
-      const database = getDatabase();
-  
-      // Create the user in Firebase Authentication
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-  
-      // Update the user's display name in Firebase Authentication
-      await updateProfile(userCredential.user, { displayName });
-  
-      // Save the user data in the database
-      const userRef = ref(database, `users/${userCredential.user.uid}`);
-      await set(userRef, {
-        userName: username, // Store the userName as an attribute
-        displayName: userCredential.user.displayName,
-        email: userCredential.user.email,
-      });
-  
-      return { success: true };
-    } catch (error) {
-      console.error('Error signing up:', error);
-      return { success: false, error: error.message };
     }
   };
 
