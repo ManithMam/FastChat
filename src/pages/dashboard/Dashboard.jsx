@@ -1,10 +1,12 @@
-import React from "react";
-import app from "../../firebase";
-import { useState } from "react";
-import { UserAuth } from "../../context/AuthContext";
-import { useEffect } from "react";
+import React from 'react'
+import app from '../../firebase'
+import { useState } from 'react';
+import { UserAuth } from '../../context/AuthContext';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const { user, logOut } = UserAuth();
   const [currentUser, setCurrentUser] = useState({})
 
@@ -13,6 +15,7 @@ const Dashboard = () => {
       <h1 className='text-5xl'>Dashboard</h1>
       <h2>Logged in as {user?.displayName} {user?.id}</h2>
       <button onClick={() => logOut()}>LogOut</button>
+      <button onClick={() => navigate("/profile")}>Profile</button>
     </div>
   );
 };

@@ -5,7 +5,11 @@ import SignUp from "./pages/signup/SignUp";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AuthRoute from "./components/AuthRoute";
 import { createTheme, ThemeProvider } from "@mui/material";
+import { Profile } from "./pages/profile";
+
 import Interface from "./pages/interface/Interface";
+import Dashboard from "./pages/dashboard/Dashboard";
+
 
 const App = () => {
   const theme = createTheme({
@@ -16,7 +20,14 @@ const App = () => {
       secondary: {
         main: "#797979",
       },
+      button: {
+        main: "#05F2F2"
+      },
+      whiteText: {
+        main: "#FFFFFF"
+      }      
     },
+    
   });
 
   return (
@@ -27,7 +38,15 @@ const App = () => {
             path="/"
             element={
               <ProtectedRoute>
-                <Interface />
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route          
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile/>
               </ProtectedRoute>
             }
           />
