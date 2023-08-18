@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
-import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { getDatabase, ref, get, set } from 'firebase/database';
-import { UserAuth } from '../../context/AuthContext';
+import { signUpWithEmail } from '../../_api/AuthApi';
 
 const SignUp = () => {
   const navigate = useNavigate();
-
-  const {signUpWithEmail, checkUsernameExists} = UserAuth();
 
   const [userName, setUserName] = useState('');
   const [displayName, setDisplayName] = useState('');
@@ -19,6 +15,7 @@ const SignUp = () => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+    setError(null);
 
     // Email validation regex pattern
     const emailRegex = /^\S+@\S+\.\S+$/;
@@ -44,47 +41,11 @@ const SignUp = () => {
       return;
     }
 
-    // Generate a random username or use the provided custom username
-    const usernameToUse = generateRandomUsername();
-
-    usernameToUse.toLowerCase();
-
-    // Check if the username already exists in the database
-    const isUsernameTaken = await checkUsernameExists(usernameToUse);
-
-    // If the username is already taken, display an error message
-    if (isUsernameTaken) {
-      setError('Username is already taken. Please choose a different one.');
-      return;
-    }
-
-    const result = await signUpWithEmail(usernameToUse, displayName, email, password);
+    //TODO: adjust method to allow for all signup attributes
+    const result = await signUpWithEmail(userName, displayName, email, password);
     if(result.success === false) {
       setError(result.error);
       return;
-    }
-  };
-
-  const generateRandomWord = () => {
-    const words = ['sea', 'night', 'star', 'moon', 'sun', 'ocean'];
-    const randomIndex = Math.floor(Math.random() * words.length);
-    return words[randomIndex];
-  };
-
-  
-  const generateRandomNumber = () => {
-    return Math.floor(Math.random() * 100001);
-  };
-  
-  const generateRandomUsername = () => {
-    const customUserName = userName.trim();
-    if (customUserName === '') {
-      const randomWord1 = generateRandomWord();
-      const randomWord2 = generateRandomWord();
-      const randomNumber = generateRandomNumber();
-      return `${randomWord1}${randomWord2}${randomNumber}`;
-    } else {
-      return customUserName.toLowerCase();
     }
   };
 

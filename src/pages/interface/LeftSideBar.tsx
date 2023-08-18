@@ -7,52 +7,43 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { UserAuth } from "../../context/AuthContext";
 import { Button } from "@mui/material";
+import { createChat, onUserChatsUpdate } from "../../_api/ChatApi";
+import { Link } from "react-router-dom";
+import { logOut } from "../../_api/AuthApi";
 
-const LeftSideBar = ({ onSelectChat }) => {
-  const { user, onUserChatsUpdate, createChat } = UserAuth();
-  const [contacts, setContacts] = useState([]);
+export interface LeftSideBarProps {
+  onSelectChat: (chatId: string) => void;
+}
+
+const LeftSideBar = ({ onSelectChat }: LeftSideBarProps) => {
+  console.log("LeftSideBar")
+  const { user } = UserAuth();
+  const [contacts, setContacts] = useState<string[]>([]);
 
   useEffect(() => {
-    if (!user) return;
-
-    const unsunscribe = onUserChatsUpdate(user?.id, (chats) => {
-      setContacts(chats ? chats : []);
+    const unsunscribe = onUserChatsUpdate(user, (chats: string[]) => {
+      console.log(chats)
+      setContacts(chats);
     });
 
     return () => {
-      unsunscribe();
+      if (unsunscribe) unsunscribe();
     };
   }, [user]);
 
   const createChatWithDemoUser = async () => {
     const demoUserId = "kGmLPO72QUbdP7s3io8lsnzdmST2";
-    const result = await createChat(user?.id, demoUserId);
+    const result = await createChat(user, demoUserId);
     console.log(result);
   };
 
-  const handleChatSelection = (chatId) => {
-    onSelectChat(chatId);
-  };
-
   return (
-    <Drawer
-    className="flex flex-col justify-between"
-      sx={{
-        "& .MuiDrawer-paper": {
-					width: "15vw",
-					marginTop: "7vh",
-					height: "calc(100% - 7vh)",
-					backgroundColor: "#141214",
-				},
-      }}
-      variant="persistent"
-      anchor="left"
-      open={open}
-    >
+    <div>
+      <h1>Test</h1>
       <List>
         {contacts.map((text, index) => (
           <ListItem key={index} disablePadding>
-            <ListItemButton onClick={() => handleChatSelection(text)}>
+            <ListItemButton onClick={() => onSelectChat(text)}>
               <ListItemText sx={{ color: "white" }} primary={text} />
             </ListItemButton>
           </ListItem>
@@ -62,7 +53,13 @@ const LeftSideBar = ({ onSelectChat }) => {
       <Button variant="outlined" onClick={() => createChatWithDemoUser()}>
         Create chat
       </Button>
-    </Drawer>
+      <Button variant="outlined" component={Link} to="/profile">
+        profile
+      </Button>
+      <Button variant="outlined" onClick={() => logOut()}>
+        Signout
+      </Button>
+    </div>
   );
 };
 

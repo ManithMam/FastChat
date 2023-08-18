@@ -1,25 +1,32 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
 import TextField from "@mui/material/TextField";
+import { sendChatMessage } from "../../_api/ChatApi";
 import { UserAuth } from "../../context/AuthContext";
 
-const InputField = ({selectedChatId}) => {
+export interface InputFieldProps {
+	selectedChatId: string | null;
+}
 
-  const { user, sendChatMessage } = UserAuth();
-  const [textFieldValue, setTextFieldValue] = useState("");
+const InputField = ({ selectedChatId }: InputFieldProps) => {
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      
-      const sendMessageAsync = async () => {
-        await sendChatMessage(selectedChatId, user?.id, textFieldValue);
-      }
+	const {user} = UserAuth();
+	const [textFieldValue, setTextFieldValue] = useState("");
 
-      sendMessageAsync();
-      setTextFieldValue("");
-    }
-  };
+	const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+		if (e.key === "Enter") {
+			e.preventDefault();
+
+			const sendMessageAsync = async () => {
+				if(selectedChatId) {
+					await sendChatMessage(user, selectedChatId, textFieldValue);
+				}
+			}
+
+			sendMessageAsync();
+			setTextFieldValue("");
+		}
+	};
 
 	return (
 		<Box
@@ -41,7 +48,7 @@ const InputField = ({selectedChatId}) => {
 		>
 			<TextField
 				value={textFieldValue}
-				onKeyDown={handleKeyDown}
+				onKeyDown={(e) => handleKeyDown(e)}
 				onChange={(e) => setTextFieldValue(e.target.value)}
 				sx={{
 					backgroundColor: "#40033C",

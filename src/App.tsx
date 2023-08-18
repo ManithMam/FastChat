@@ -1,3 +1,4 @@
+import React from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import LogIn from "./pages/login/LogIn";
@@ -8,7 +9,6 @@ import { createTheme, ThemeProvider } from "@mui/material";
 import { Profile } from "./pages/profile";
 
 import Interface from "./pages/interface/Interface";
-import Dashboard from "./pages/dashboard/Dashboard";
 
 
 const App = () => {
@@ -19,13 +19,7 @@ const App = () => {
       },
       secondary: {
         main: "#797979",
-      },
-      button: {
-        main: "#05F2F2"
-      },
-      whiteText: {
-        main: "#FFFFFF"
-      }      
+      }     
     },
     
   });
@@ -38,7 +32,7 @@ const App = () => {
             path="/"
             element={
               <ProtectedRoute>
-                <Dashboard />
+                <Interface />
               </ProtectedRoute>
             }
           />

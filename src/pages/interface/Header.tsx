@@ -1,6 +1,5 @@
 import React from "react";
 import { Box } from "@mui/material";
-import { UserAuth } from "../../context/AuthContext";
 import { styled, useTheme } from "@mui/material/styles";
 import Drawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
@@ -16,32 +15,26 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-
-const handleProfile = () => {
-	navigate("/profile");
-};
-const handleSettings = () => {
-	navigate("/settings");
-};
+import { logOut } from "../../_api/AuthApi";
 
 const drawerWidth = "15";
 
-const AppBar = styled(MuiAppBar, {
-	shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-	transition: theme.transitions.create(["margin", "width"], {
-		easing: theme.transitions.easing.sharp,
-		duration: theme.transitions.duration.leavingScreen,
-	}),
-	...(open && {
-		width: `calc(100% - ${drawerWidth}vw)`,
-		transition: theme.transitions.create(["margin", "width"], {
-			easing: theme.transitions.easing.easeOut,
-			duration: theme.transitions.duration.enteringScreen,
-		}),
-		marginRight: drawerWidth + "vw",
-	}),
-}));
+// const AppBar = styled(MuiAppBar, {
+// 	shouldForwardProp: (prop) => prop !== "open",
+// })(({ theme, open }) => ({
+// 	transition: theme.transitions.create(["margin", "width"], {
+// 		easing: theme.transitions.easing.sharp,
+// 		duration: theme.transitions.duration.leavingScreen,
+// 	}),
+// 	...(open && {
+// 		width: `calc(100% - ${drawerWidth}vw)`,
+// 		transition: theme.transitions.create(["margin", "width"], {
+// 			easing: theme.transitions.easing.easeOut,
+// 			duration: theme.transitions.duration.enteringScreen,
+// 		}),
+// 		marginRight: drawerWidth + "vw",
+// 	}),
+// }));
 
 const DrawerHeader = styled("div")(({ theme }) => ({
 	display: "flex",
@@ -52,10 +45,9 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 	justifyContent: "flex-start",
 }));
 
-const RightSideBar = () => {
+const Header = () => {
 	const theme = useTheme();
 	const [open, setOpen] = React.useState(false);
-	const { user, logOut } = UserAuth();
 
 	const handleDrawerOpen = () => {
 		setOpen(true);
@@ -68,7 +60,7 @@ const RightSideBar = () => {
 	return (
 		<Box sx={{ display: "flex" }}>
 			<CssBaseline />
-			<AppBar position="fixed" open={open}>
+			<MuiAppBar position="fixed">
 				<Toolbar sx={{ height: "7vh" }}>
 					<Typography variant="h6" noWrap sx={{ flexGrow: 1 }} component="div">
 						Fastchat
@@ -83,7 +75,7 @@ const RightSideBar = () => {
 						<MenuIcon />
 					</IconButton>
 				</Toolbar>
-			</AppBar>
+			</MuiAppBar>
 			<Drawer
 				sx={{
 					width: drawerWidth + "vw",
@@ -109,7 +101,7 @@ const RightSideBar = () => {
 				</DrawerHeader>
 				<Divider sx={{ backgroundColor: "gray" }} />
 				<List>
-					{["Profile", "Settings", "Help"].map((text, index) => (
+					{["Profile", "Settings", "Help"].map((text) => (
 						<ListItem key={text} disablePadding>
 							<ListItemButton>
 								<ListItemText sx={{ color: "white" }} primary={text} />
@@ -130,4 +122,4 @@ const RightSideBar = () => {
 	);
 };
 
-export default RightSideBar;
+export default Header;
