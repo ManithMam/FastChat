@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import Divider from "@mui/material/Divider";
-import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from "@mui/material"
+import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, TextField } from "@mui/material"
 
 const AddFriendDialog = () => {
     
@@ -15,7 +15,8 @@ const AddFriendDialog = () => {
         <Dialog open={open}>
             <DialogTitle>Add New Friend</DialogTitle>
             <DialogContent>
-                <DialogContentText></DialogContentText>
+                <DialogContentText>Search for the user's name that you want to add as a friend.</DialogContentText>
+                <TextField sx={{margin: '10px 0'}} label="Search" variant="outlined"/>
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleCloseDialog}>Cancel</Button>
