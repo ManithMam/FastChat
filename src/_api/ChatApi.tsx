@@ -65,7 +65,7 @@ export async function createChat(user: User | null, participantId: string) {
     }
 }
 
-export function onUserChatsUpdate(user: User | null, callback: (chats: string[]) => void) {
+export function onUserChatsUpdate(user: User | null, callback: (chats: string[]) => void): () => void {
     if (user) {
         // Get initial data and update whenever it changes, return a function to unsubscribe
         const chatsRef = ref(realtimedb, `users/${user.uid}/participantOf`);
@@ -73,8 +73,11 @@ export function onUserChatsUpdate(user: User | null, callback: (chats: string[])
             const chats = snapshot.val();
             callback(chats ? chats : []);
         });
+
         return unsubscribe;
     }
+
+    return () => { };
 }
 
 export async function getChatInfo(chatId: string) {

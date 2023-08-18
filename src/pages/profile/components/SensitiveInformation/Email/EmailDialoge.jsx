@@ -1,3 +1,4 @@
+import React from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, TextField } from "@mui/material"
 import { useState } from "react"
 import { updateUserEmail } from "../../../api/UpdateEmailInformation";

@@ -1,3 +1,4 @@
+import React from "react";
 import { ChangeButtonSensitive } from "../ChangeButtonSensitive";
 import DeleteAccountDialog from "./DeleteAccountDialog";
 

@@ -1,3 +1,4 @@
+import React from "react"
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, TextField } from "@mui/material"
 import { useState } from "react"
 import { updateUserDisplayName } from "../../../api/UpdateDisplayName";
@@ -64,7 +65,7 @@ function DisplayNameDialoge({open, setOpen, setInformation}){
                         />
                         <DialogActions>
                             <Button onClick={handleClose} type="button" sx={{color: "white"}}>Cancel</Button>
-                            <Button onClick={event => { if(isNotEmpty(newName, setNameError)) {updateUserDisplayName(event, setInformation, newName), setOpen(false)}}} color="button" variant="contained">Submit</Button>                    
+                            <Button onClick={event => { if(isNotEmpty(newName, setNameError)) {updateUserDisplayName(event, setInformation, newName), setOpen(false)}}} variant="contained">Submit</Button>                    
                         </DialogActions>
                     </form>                    
                 </DialogContent>                

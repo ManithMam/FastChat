@@ -5,8 +5,8 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase";
 import {User} from "firebase/auth";
-import { createOrUpdateUser } from "../_api/UserApi";
 import FastChatUser from "../_api/models/FastChatUser";
+import { updateUser } from "../_api/UserApi";
 
 interface AuthContextProps {
   children: React.ReactNode;
@@ -36,12 +36,11 @@ export const AuthContextProvider = ({ children }: AuthContextProps) => {
       setAuthUser(currentAuthUser);
       console.log("Auth state changed to ", currentAuthUser);
       if(currentAuthUser) {
-        createOrUpdateUser(
+        updateUser(
           currentAuthUser.uid,
-          null,
-          currentAuthUser.displayName || "",
-          currentAuthUser.email || "",
-          currentAuthUser.photoURL || ""
+          {
+            lastOnline: Date.now(),
+          }
         ).then((res) => {
           if(res.success && res.data) {
             setFastchatUser(res.data);

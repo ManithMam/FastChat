@@ -4,21 +4,17 @@ import TextField from "@mui/material/TextField";
 import { sendChatMessage } from "../../_api/ChatApi";
 import { UserAuth } from "../../context/AuthContext";
 
-export interface InputFieldProps {
-	selectedChatId: string | null;
-}
+const InputField = ({ selectedChatId }) => {
 
-const InputField = ({ selectedChatId }: InputFieldProps) => {
-
-	const {user} = UserAuth();
+	const { user } = UserAuth();
 	const [textFieldValue, setTextFieldValue] = useState("");
 
-	const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+	const handleKeyDown = (e) => {
 		if (e.key === "Enter") {
 			e.preventDefault();
 
 			const sendMessageAsync = async () => {
-				if(selectedChatId) {
+				if (selectedChatId) {
 					await sendChatMessage(user, selectedChatId, textFieldValue);
 				}
 			}

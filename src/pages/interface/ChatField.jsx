@@ -8,10 +8,9 @@ import Item from "@mui/material/Grid";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import { onChatMessagesUpdate } from "../../_api/ChatApi";
-import Message from "../../_api/models/Message";
 
 
-const useColor = (currentUserId: string, from: string) => {
+const useColor = (currentUserId, from) => {
   if (currentUserId === from) {
     return "#8C307D";
   } else {
@@ -19,7 +18,7 @@ const useColor = (currentUserId: string, from: string) => {
   }
 };
 
-const useMargin = (currentUserId: string, from: string) => {
+const useMargin = (currentUserId, from) => {
   if (currentUserId === from) {
     return null;
   } else {
@@ -27,7 +26,7 @@ const useMargin = (currentUserId: string, from: string) => {
   }
 };
 
-const placeHolder = (messages: unknown[]) => {
+const placeHolder = (messages) => {
   if (90 - messages.length > 75) {
     return 84 + "vh";
   } else {
@@ -35,14 +34,10 @@ const placeHolder = (messages: unknown[]) => {
   }
 };
 
-export interface ChatFieldProps {
-  selectedChatId: string | null;
-}
-
-const ChatField = ({ selectedChatId }: ChatFieldProps) => {
+const ChatField = ({ selectedChatId }) => {
   const { user } = UserAuth();
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [userMessage, setUserMessage] = useState<string | null>(null);
+  const [messages, setMessages] = useState([]);
+  const [userMessage, setUserMessage] = useState(null);
 
   const messageEndRef = useRef(null);
 
@@ -62,7 +57,7 @@ const ChatField = ({ selectedChatId }: ChatFieldProps) => {
         return;
       }
 
-      setMessages(_messages as Message[]);
+      setMessages(_messages);
     });
 
     return () => {

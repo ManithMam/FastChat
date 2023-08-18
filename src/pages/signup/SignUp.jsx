@@ -29,6 +29,11 @@ const SignUp = () => {
       return;
     }
 
+    if(userName === '') {
+      setError('Please enter a username');
+      return;
+    }
+
     if (!passwordRegex.test(password)) {
       setError(
         'Password must contain at least 8 characters, including uppercase and lowercase letters, and at least one number'
@@ -41,7 +46,6 @@ const SignUp = () => {
       return;
     }
 
-    //TODO: adjust method to allow for all signup attributes
     const result = await signUpWithEmail(userName, displayName, email, password);
     if(result.success === false) {
       setError(result.error);

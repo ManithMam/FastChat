@@ -16,25 +16,26 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { logOut } from "../../_api/AuthApi";
+import { Link } from "react-router-dom";
 
 const drawerWidth = "15";
 
-// const AppBar = styled(MuiAppBar, {
-// 	shouldForwardProp: (prop) => prop !== "open",
-// })(({ theme, open }) => ({
-// 	transition: theme.transitions.create(["margin", "width"], {
-// 		easing: theme.transitions.easing.sharp,
-// 		duration: theme.transitions.duration.leavingScreen,
-// 	}),
-// 	...(open && {
-// 		width: `calc(100% - ${drawerWidth}vw)`,
-// 		transition: theme.transitions.create(["margin", "width"], {
-// 			easing: theme.transitions.easing.easeOut,
-// 			duration: theme.transitions.duration.enteringScreen,
-// 		}),
-// 		marginRight: drawerWidth + "vw",
-// 	}),
-// }));
+const AppBar = styled(MuiAppBar, {
+	shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+	transition: theme.transitions.create(["margin", "width"], {
+		easing: theme.transitions.easing.sharp,
+		duration: theme.transitions.duration.leavingScreen,
+	}),
+	...(open && {
+		width: `calc(100% - ${drawerWidth}vw)`,
+		transition: theme.transitions.create(["margin", "width"], {
+			easing: theme.transitions.easing.easeOut,
+			duration: theme.transitions.duration.enteringScreen,
+		}),
+		marginRight: drawerWidth + "vw",
+	}),
+}));
 
 const DrawerHeader = styled("div")(({ theme }) => ({
 	display: "flex",
@@ -45,7 +46,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 	justifyContent: "flex-start",
 }));
 
-const Header = () => {
+const RightSideBar = () => {
 	const theme = useTheme();
 	const [open, setOpen] = React.useState(false);
 
@@ -60,7 +61,7 @@ const Header = () => {
 	return (
 		<Box sx={{ display: "flex" }}>
 			<CssBaseline />
-			<MuiAppBar position="fixed">
+			<AppBar position="fixed" open={open}>
 				<Toolbar sx={{ height: "7vh" }}>
 					<Typography variant="h6" noWrap sx={{ flexGrow: 1 }} component="div">
 						Fastchat
@@ -75,7 +76,7 @@ const Header = () => {
 						<MenuIcon />
 					</IconButton>
 				</Toolbar>
-			</MuiAppBar>
+			</AppBar>
 			<Drawer
 				sx={{
 					width: drawerWidth + "vw",
@@ -101,13 +102,22 @@ const Header = () => {
 				</DrawerHeader>
 				<Divider sx={{ backgroundColor: "gray" }} />
 				<List>
-					{["Profile", "Settings", "Help"].map((text) => (
-						<ListItem key={text} disablePadding>
-							<ListItemButton>
-								<ListItemText sx={{ color: "white" }} primary={text} />
-							</ListItemButton>
-						</ListItem>
-					))}
+					<ListItem disablePadding>
+						{/* Link to /profile */}
+						<ListItemButton component={Link} to={`/profile`}>
+							<ListItemText sx={{ color: "white" }} primary="Profile" />
+						</ListItemButton>
+					</ListItem>
+					<ListItem disablePadding>
+						<ListItemButton>
+							<ListItemText sx={{ color: "white" }} primary="Settings" />
+						</ListItemButton>
+					</ListItem>
+					<ListItem disablePadding>
+						<ListItemButton>
+							<ListItemText sx={{ color: "white" }} primary="Help" />
+						</ListItemButton>
+					</ListItem>
 				</List>
 				<Divider sx={{ backgroundColor: "gray" }} />
 				<List>
@@ -122,4 +132,4 @@ const Header = () => {
 	);
 };
 
-export default Header;
+export default RightSideBar;

@@ -1,17 +1,26 @@
 import { GoogleAuthProvider, UserCredential, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import ApiResponse from "./models/ApiResponse";
-import { checkUsernameExists, createOrUpdateUser } from "./UserApi";
+import { createUser, emailExists, updateUser, usernameExists } from "./UserApi";
 
 export async function signInWithGoogle() {
     signInWithPopup(auth, new GoogleAuthProvider()).then((result) => {
-        createOrUpdateUser(
-            result.user.uid,
-            result.user.displayName || "",
-            result.user.displayName || "",
-            result.user.email || "",
-            result.user.photoURL || ""
-        )
+        const email = result.user.email || "";
+        emailExists(email).then((exists) => {
+            if (!exists) {
+                createUser(
+                    result.user.uid,
+                    null,
+                    result.user.displayName || "",
+                    email,
+                    result.user.photoURL || ""
+                )
+            } else {
+                updateUser(result.user.uid, {
+                    lastOnline: Date.now(),
+                });
+            }
+        });
     }).catch((error) => {
         console.log(error);
     });
@@ -19,25 +28,24 @@ export async function signInWithGoogle() {
 
 export async function signInWithEmail(email: string, password: string) {
     const result = await signInWithEmailAndPassword(auth, email, password);
-    await createOrUpdateUser(
-        result.user.uid,
-        result.user.displayName || "",
-        result.user.displayName || "",
-        result.user.email || "",
-        result.user.photoURL || ""
-    )
+
+     if(result.user) {
+        updateUser(result.user.uid, {
+            lastOnline: Date.now(),
+        });
+    }
 
     return result;
 }
 
 export async function signUpWithEmail(userName: string, displayName: string, email: string, password: string): Promise<ApiResponse<UserCredential>> {
     try {
-        if(await checkUsernameExists(userName)) {
+        if(await usernameExists(userName)) {
             throw new Error("Username already exists");
         }
 
         const result = await createUserWithEmailAndPassword(auth, email, password);
-        const userResult = await createOrUpdateUser(
+        const userResult = await createUser(
             result.user.uid,
             userName,
             displayName,

@@ -1,3 +1,4 @@
+import React from "react";
 import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, DialogContentText } from "@mui/material";
 import { useState } from "react";
 import { ReauthenticateWithEmailAndPassword } from "../../api/ReAuthenticate";
