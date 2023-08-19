@@ -3,8 +3,6 @@ import { Button} from "@mui/material"
 import { useState } from "react";
 import CredentialsDialog from "./CredentialsDialog";
 
-
-
 export function ChangeButtonSensitive({setInformation, displayDialoge}){
 
     const [open, setOpen] = useState(false)

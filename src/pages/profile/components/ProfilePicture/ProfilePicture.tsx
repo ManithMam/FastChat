@@ -1,4 +1,3 @@
-import React from "react";
 import { Avatar } from "@mui/material";
 import LoginInformation from "./LoginInformation";
 import { UserAuth } from "../../../../context/AuthContext";
