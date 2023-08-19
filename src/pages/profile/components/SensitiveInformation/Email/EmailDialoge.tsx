@@ -2,8 +2,9 @@ import React from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, TextField } from "@mui/material"
 import { useState } from "react"
 import { updateUserEmail } from "../../../api/UpdateEmailInformation";
+import { InformationDialogPropTypes } from "../Types/InformationDialogPropTypes";
 
-function EmailDialoge({open, setOpen, setInformation}){
+function EmailDialoge({open, setOpen, setInformation}: InformationDialogPropTypes){
     
     const [emailError, setEmailError] = useState(false)
 
@@ -13,7 +14,7 @@ function EmailDialoge({open, setOpen, setInformation}){
 
     const emailRegex = /^\S+@\S+\.\S+$/;
 
-    function isEmail(newEmail){        
+    function isEmail(newEmail: string){        
 
         if (!emailRegex.test(newEmail.trim())) {           
             setErrorText("Should be a email.")
@@ -30,7 +31,7 @@ function EmailDialoge({open, setOpen, setInformation}){
         setEmailError(false)
     }   
 
-    const isNotEmpty = (newEmail, setEmailError) => {
+    const isNotEmpty = (newEmail: string, setEmailError: React.Dispatch<React.SetStateAction<boolean>>) => {
 
         if(newEmail == ''){
             setEmailError(true)      
@@ -97,7 +98,7 @@ function EmailDialoge({open, setOpen, setInformation}){
                         />
                         <DialogActions>
                             <Button onClick={handleClose} type="button" sx={{color: "white"}}>Cancel</Button>
-                            <Button onClick={event => { if(isValid()) {updateUserEmail(event, setInformation, newEmail, setErrorText) ? handleClose() : setEmailError(true)}}} color="button" variant="contained">Submit</Button>                    
+                            <Button onClick={async (event) => { if(isValid()) {await updateUserEmail(event, setInformation, newEmail, setErrorText) ? handleClose() : setEmailError(true)}}} color="secondary" variant="contained">Submit</Button>                    
                         </DialogActions>
                     </form>                    
                 </DialogContent>                
