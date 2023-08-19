@@ -1,4 +1,3 @@
-import React from "react";
 import { UserAuth } from "../../../../../context/AuthContext";
 import { useEffect, useState } from "react";
 import { ChangeButton } from "../ChangeButton";
@@ -8,7 +7,7 @@ function Username(){
 
     const {fastchatUser} = UserAuth();
     
-    const [username, setUsername] = useState()    
+    const [username, setUsername] = useState("")    
 
     useEffect(() => {
         if(fastchatUser?.userName) {
@@ -23,7 +22,7 @@ function Username(){
                 <p className=" text-slate-100 ">{username}</p>
             </div>       
             <div className=" flex items-center">
-                <ChangeButton setInformation={setUsername} displayDialoge={UsernameDialog} />
+                <ChangeButton setInformation={setUsername} Dialog={UsernameDialog} />
             </div>    
         </div>
     )

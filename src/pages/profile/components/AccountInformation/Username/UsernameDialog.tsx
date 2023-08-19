@@ -1,9 +1,9 @@
-import React from "react"
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, TextField } from "@mui/material"
 import { useState } from "react"
 import { updateUsername, newUsernameIsNotUnique } from "../../../api/UpdateUsername" 
+import { InformationDialogPropTypes } from "../../types/InformationDialogPropTypes"
 
-function UsernameDialog({open, setOpen, setInformation}){
+function UsernameDialog({open, setOpen, setInformation}: InformationDialogPropTypes){
 
     const [nameError, setNameError] = useState(false)
 
@@ -17,7 +17,7 @@ function UsernameDialog({open, setOpen, setInformation}){
         setNameError(false)
     }   
 
-    const isLowerCase = (newName, setNameError, setErrorText) => {
+    const isLowerCase = (newName: string, setNameError: React.Dispatch<React.SetStateAction<boolean>>, setErrorText: React.Dispatch<React.SetStateAction<string>>) => {
         const lowerCaseName = newName.toLowerCase();
 
         if(lowerCaseName == newName){
@@ -31,7 +31,7 @@ function UsernameDialog({open, setOpen, setInformation}){
         
     }
 
-    const isNotEmpty = (newName, setNameError) => {
+    const isNotEmpty = (newName: string, setNameError: React.Dispatch<React.SetStateAction<boolean>>, setErrorText: React.Dispatch<React.SetStateAction<string>>) => {
 
         if(newName == ''){
             setNameError(true)     
@@ -57,7 +57,8 @@ function UsernameDialog({open, setOpen, setInformation}){
             return isValid;
         }
 
-        if(await newUsernameIsNotUnique(newName, setNameError, setErrorText)){                       
+        if(await newUsernameIsNotUnique(newName, setNameError, setErrorText)){         
+            console.log("nnot unique")              
             isValid = false;
             return isValid;
         }   
@@ -104,7 +105,7 @@ function UsernameDialog({open, setOpen, setInformation}){
                         />
                         <DialogActions>
                             <Button onClick={handleClose} type="button" sx={{color: "white"}}>Cancel</Button>
-                            <Button onClick={event => { if(isValid()) {updateUsername(event, setInformation, newName), setOpen(false)}}} color="button" variant="contained">Submit</Button>                    
+                            <Button onClick={async (event) => { if(await isValid()) {updateUsername(event, setInformation, newName), setOpen(false)}}} color="secondary" variant="contained">Submit</Button>                    
                         </DialogActions>
                     </form>                    
                 </DialogContent>                

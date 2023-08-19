@@ -18,16 +18,14 @@ const App = () => {
         main: "#40033C",
       },
       secondary: {
-        main: "#797979",
+        main: "#05F2F2",
       },
       button: {
         main: "#05F2F2"
-      },
-      whiteText: {
-        main: "#FFFFFF"
-      }      
+      }   
     },
   });
+
 
   return (
     <div>
