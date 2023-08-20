@@ -1,3 +1,4 @@
+import React from "react";
 import InformationCard from "./AccountInformation/InformationCard";
 import ProfilePicture from "./ProfilePicture/ProfilePicture";
 import SensitiveInformation from "./SensitiveInformation/SensitiveInformation";

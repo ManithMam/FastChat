@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
 import { Box, Container, Grid } from "@mui/material";
 import { useRef, useEffect } from "react";
@@ -6,6 +7,7 @@ import Paper from "@mui/material/Paper";
 import Item from "@mui/material/Grid";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
+import { onChatMessagesUpdate } from "../../_api/ChatApi";
 
 
 const useColor = (currentUserId, from) => {
@@ -33,14 +35,14 @@ const placeHolder = (messages) => {
 };
 
 const ChatField = ({ selectedChatId }) => {
-  const { user, onChatMessagesUpdate } = UserAuth();
+  const { user } = UserAuth();
   const [messages, setMessages] = useState([]);
   const [userMessage, setUserMessage] = useState(null);
 
   const messageEndRef = useRef(null);
 
   const scrollToBottom = () => {
-    messageEndRef.current?.scrollIntoView({ behavior: "instant" });
+    // messageEndRef.current?.scrollIntoView({ behavior: "instant" });
   };
 
   useEffect(() => {
@@ -52,9 +54,10 @@ const ChatField = ({ selectedChatId }) => {
     const unsubscribe = onChatMessagesUpdate(selectedChatId, (_messages) => {
       if (!_messages) {
         setUserMessage("No messages yet");
+        return;
       }
 
-      setMessages(_messages ? _messages : []);
+      setMessages(_messages);
     });
 
     return () => {
@@ -65,6 +68,7 @@ const ChatField = ({ selectedChatId }) => {
   useEffect(() => {
     scrollToBottom();
   }, []);
+
 
   return (
     <Paper
@@ -93,8 +97,9 @@ const ChatField = ({ selectedChatId }) => {
           </h1>
         )}
         {messages.length > 0 &&
-          messages.map((message) => (
+          messages.map((message, index) => (
             <ListItem
+              key={index}
               sx={{
                 marginBottom: "5px",
                 marginTop: "5px",
@@ -108,10 +113,10 @@ const ChatField = ({ selectedChatId }) => {
                 sx={{
                   width: "auto",
                   border: "5px solid",
-                borderColor: useColor(user?.id, message.from),
+                borderColor: useColor(user?.uid || "", message.from),
                   borderRadius: "5px",
-                backgroundColor: useColor(user?.id, message.from),
-                marginLeft: useMargin(user?.id, message.from),
+                backgroundColor: useColor(user?.uid || "", message.from),
+                marginLeft: useMargin(user?.uid || "", message.from),
                 }}
               >
                 <Grid item sx={{ color: "white", width: "5vw" }}>
@@ -125,7 +130,6 @@ const ChatField = ({ selectedChatId }) => {
                   sx={{
                     color: "white",
                     width: "auto",
-                    marginLeft: "10px",
                     marginTop: "auto",
                     marginLeft: "15px",
                   }}

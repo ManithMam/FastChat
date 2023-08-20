@@ -1,3 +1,4 @@
+import React from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText } from "@mui/material";
 import { deleteAccount } from "../../../api/DeleteUser";
 import { UserAuth } from "../../../../../context/AuthContext";

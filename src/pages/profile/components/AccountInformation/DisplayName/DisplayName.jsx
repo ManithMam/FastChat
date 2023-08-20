@@ -1,3 +1,4 @@
+import React from "react";
 import { UserAuth } from "../../../../../context/AuthContext";
 import { useState, useEffect } from "react";
 import { ChangeButton } from "../ChangeButton";
@@ -5,15 +6,15 @@ import DisplayNameDialoge from "./DisplayNameDialoge";
 
 function DisplayName (){
  
-    const {user} = UserAuth();       
+    const {fastchatUser} = UserAuth();       
 
     const [name, setName] = useState()
 
     useEffect(() => {
-        if(user?.displayName) {
-          setName(user.displayName)
+        if(fastchatUser?.displayName) {
+          setName(fastchatUser.displayName)
         }
-      }, [user])   
+      }, [fastchatUser])   
     
     return (        
         <div className=" flex flex-row mb-20">

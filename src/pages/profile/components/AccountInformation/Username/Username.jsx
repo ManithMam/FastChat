@@ -1,3 +1,4 @@
+import React from "react";
 import { UserAuth } from "../../../../../context/AuthContext";
 import { useEffect, useState } from "react";
 import { ChangeButton } from "../ChangeButton";
@@ -5,15 +6,15 @@ import UsernameDialog from "./UsernameDialog";
 
 function Username(){
 
-    const {user} = UserAuth();
+    const {fastchatUser} = UserAuth();
     
     const [username, setUsername] = useState()    
 
     useEffect(() => {
-        if(user?.userName) {
-            setUsername(user.userName)
+        if(fastchatUser?.userName) {
+            setUsername(fastchatUser.userName)
         }
-      }, [user])   
+      }, [fastchatUser])   
 
     return(
         <div className=" flex flex-row mb-20">

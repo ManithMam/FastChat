@@ -1,3 +1,4 @@
+import React from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import LogIn from "./pages/login/LogIn";
@@ -5,10 +6,9 @@ import SignUp from "./pages/signup/SignUp";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AuthRoute from "./components/AuthRoute";
 import { createTheme, ThemeProvider } from "@mui/material";
-import { Profile } from "./pages/profile";
 
 import Interface from "./pages/interface/Interface";
-import Dashboard from "./pages/dashboard/Dashboard";
+import Profile from "./pages/profile/components/Profile";
 
 
 const App = () => {
@@ -27,7 +27,6 @@ const App = () => {
         main: "#FFFFFF"
       }      
     },
-    
   });
 
   return (
@@ -38,7 +37,7 @@ const App = () => {
             path="/"
             element={
               <ProtectedRoute>
-                <Dashboard />
+                <Interface />
               </ProtectedRoute>
             }
           />

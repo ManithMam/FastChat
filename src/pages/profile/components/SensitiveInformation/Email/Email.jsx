@@ -1,3 +1,4 @@
+import React from "react";
 import { UserAuth } from "../../../../../context/AuthContext";
 
 import { ChangeButtonSensitive } from "../ChangeButtonSensitive";
@@ -6,15 +7,15 @@ import { useState, useEffect } from "react";
 import EmailDialoge from "./EmailDialoge";
 
 function Email(){   
-    const {user} = UserAuth(); 
+    const {fastchatUser} = UserAuth(); 
 
     const [email, setEmail] = useState()
 
     useEffect(() => {
-        if(user?.email) {
-            setEmail(user.email)
+        if(fastchatUser?.email) {
+            setEmail(fastchatUser.email)
         }
-      }, [user])  
+      }, [fastchatUser])  
 
     return(
         <div className=" flex flex-row">
