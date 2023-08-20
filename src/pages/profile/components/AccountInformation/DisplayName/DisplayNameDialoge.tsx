@@ -1,9 +1,9 @@
-import React from "react"
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, TextField } from "@mui/material"
 import { useState } from "react"
 import { updateUserDisplayName } from "../../../api/UpdateDisplayName";
+import { InformationDialogPropTypes } from "../Types/InformationDialogPropTypes";
 
-function DisplayNameDialoge({open, setOpen, setInformation}){
+function DisplayNameDialoge({open, setOpen, setInformation}: InformationDialogPropTypes){
 
     const [nameError, setNameError] = useState(false)
 
@@ -15,7 +15,7 @@ function DisplayNameDialoge({open, setOpen, setInformation}){
         setNameError(false)
     }   
 
-    const isNotEmpty = (newName, setNameError) => {
+    const isNotEmpty = (newName: string, setNameError: React.Dispatch<React.SetStateAction<boolean>>) => {
 
         if(newName == ''){
             setNameError(true)         
@@ -65,7 +65,7 @@ function DisplayNameDialoge({open, setOpen, setInformation}){
                         />
                         <DialogActions>
                             <Button onClick={handleClose} type="button" sx={{color: "white"}}>Cancel</Button>
-                            <Button onClick={event => { if(isNotEmpty(newName, setNameError)) {updateUserDisplayName(event, setInformation, newName), setOpen(false)}}} variant="contained">Submit</Button>                    
+                            <Button onClick={event => { if(isNotEmpty(newName, setNameError)) {updateUserDisplayName(event, setInformation, newName), setOpen(false)}}} variant="contained" color="secondary" >Submit</Button>                    
                         </DialogActions>
                     </form>                    
                 </DialogContent>                

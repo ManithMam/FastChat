@@ -1,10 +1,9 @@
-import React from "react"
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, TextField } from "@mui/material"
 import { useState } from "react"
 import { updatePasswort } from "../../../api/UpdatePassword"
+import { InformationDialogPropTypes } from "../Types/InformationDialogPropTypes"
 
-
-function PasswordDialoge({open, setOpen}){
+function PasswordDialoge({open, setOpen}: InformationDialogPropTypes){
 
     const [passwordError, setPasswordError] = useState(false)
 
@@ -16,7 +15,7 @@ function PasswordDialoge({open, setOpen}){
         setPasswordError(false)
     }   
 
-    const isNotEmpty = (newPassword, setPasswordError) => {
+    const isNotEmpty = (newPassword: string, setPasswordError: React.Dispatch<React.SetStateAction<boolean>>) => {
 
         if(newPassword == ''){
             setPasswordError(true)         
@@ -66,7 +65,7 @@ function PasswordDialoge({open, setOpen}){
                         />
                         <DialogActions>
                             <Button onClick={handleClose} type="button" sx={{color: "white"}}>Cancel</Button>
-                            <Button onClick={event => { if(isNotEmpty(newPassword, setPasswordError)) {updatePasswort(event, newPassword), setOpen(false)}}} color="button" variant="contained">Submit</Button>                    
+                            <Button onClick={event => { if(isNotEmpty(newPassword, setPasswordError)) {updatePasswort(event, newPassword), setOpen(false)}}} color="secondary" variant="contained">Submit</Button>                    
                         </DialogActions>
                     </form>                    
                 </DialogContent>                

@@ -1,10 +1,10 @@
-import React from "react";
 import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, DialogContentText } from "@mui/material";
 import { useState } from "react";
 import { ReauthenticateWithEmailAndPassword } from "../../api/ReAuthenticate";
+import { credentialsDialogTypes } from "./Types/CredentialsDialogTypes";
 
 
-function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Dialoge}){
+function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Dialoge}: credentialsDialogTypes){
 
     const [emailCredentials, setEmailCredentials] = useState('');
     const [password, setPassword] = useState('');
@@ -46,7 +46,7 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
         setErrorPassword(true)        
     }
 
-    function passwordTest(password){
+    function passwordTest(password: string){
 
         if(password == ""){           
             setHelperTextPassword("Password should not be empty.")
@@ -54,7 +54,7 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
         }
     }
 
-    function emailTest(email){
+    function emailTest(email: string){
 
         if(email == ""){            
             setHelperTextEmail("Email should not be empty.")
@@ -68,7 +68,7 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
 
     }  
 
-    function credentialsTestFailed(email, password){
+    function credentialsTestFailed(email: string, password: string){
         let atLeastOneWrong = false;
         resetErrors();
         resetHelperText();       
@@ -86,7 +86,7 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
         return atLeastOneWrong;
     }
 
-    async function handleSubmit(email, password, setHelperTextPassword){
+    async function handleSubmit(email: string, password: string, setHelperTextPassword: React.Dispatch<React.SetStateAction<string>>){
 
         let succesfullSubmit = false
 
@@ -175,7 +175,7 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
 
                     <DialogActions>
                         <Button onClick={handleClose} sx={{color: "white"}}>Cancel</Button>
-                        <Button onClick={() => {handleSubmit(emailCredentials, password, setHelperTextPassword)}} variant="contained" color="button">Submit</Button>
+                        <Button onClick={() => {handleSubmit(emailCredentials, password, setHelperTextPassword)}} variant="contained" color="secondary">Submit</Button>
                     </DialogActions>          
 
                 </form>

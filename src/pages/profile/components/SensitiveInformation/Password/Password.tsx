@@ -1,5 +1,5 @@
 import React from "react";
-import { ChangeButtonSensitive } from "../ChangeButtonSensitive";
+import ChangeButtonSensitive from "../ChangeButtonSensitive";
 import PasswordDialoge from "./PasswordDialog";
 
 function Password(){        
@@ -9,7 +9,7 @@ function Password(){
             <h1 className="text-slate-100 font-bold text-2xl flex-grow">Password</h1>
 
             <div className=" flex items-center">
-               <ChangeButtonSensitive displayDialoge={PasswordDialoge}/>
+               <ChangeButtonSensitive Dialog={PasswordDialoge}/>
             </div>                
         </div> 
     )

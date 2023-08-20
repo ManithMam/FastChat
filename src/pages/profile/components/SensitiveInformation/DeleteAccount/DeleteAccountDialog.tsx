@@ -1,18 +1,8 @@
-import React from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText } from "@mui/material";
 import { deleteAccount } from "../../../api/DeleteUser";
-import { UserAuth } from "../../../../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { InformationDialogPropTypes } from "../Types/InformationDialogPropTypes";
 
-function DeleteAccountDialog({open, setOpen}){    
-
-    const {logOut} = UserAuth();
-    const navigate = useNavigate();
-
-    function logOutUser(){
-        logOut();
-        navigate("/signup");
-    }    
+function DeleteAccountDialog({open, setOpen}: InformationDialogPropTypes){      
 
     function handleClose(){
         setOpen(false)
@@ -31,7 +21,7 @@ function DeleteAccountDialog({open, setOpen}){
                     To delete the account confirm by clicking the DELETE button.
                 </DialogContentText>
                 <DialogActions sx={{display: "flex", flexDirection: "column"}}>
-                    <Button sx={{ mb: "35px", mt: "20px"}} onClick={() => {logOutUser(), deleteAccount()}} variant="contained" size="large" color="button" >DELETE</Button>
+                    <Button sx={{ mb: "35px", mt: "20px"}} onClick={() => {deleteAccount()}} variant="contained" size="large" color="secondary" >DELETE</Button>
                     <Button onClick={() => handleClose()} sx={{color: "white"}}>Cancel</Button>                    
                 </DialogActions>                
             </DialogContent>
