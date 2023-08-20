@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, Snackbar } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TextField } from '@mui/material';
@@ -9,16 +9,24 @@ const LogIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const handleEmailLogin = async () => {
     const auth = getAuth();
-    const result = await signInWithEmailAndPassword(auth ,email, password);
-    if (result) {
-      navigate('/');
-    } else {
-      alert('Error logging in with email and password!');
+    try {
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      if (result) {
+        navigate('/');
+      }
+    } catch (error) {
+      if (error.code === 'auth/user-not-found') {
+        setError('User not found. Please check your email.');
+      } else {
+        setError('Error logging in with email and password!');
+      }
+      setSnackbarOpen(true);
     }
-  }
+  };
 
   return (
     <div
@@ -149,20 +157,21 @@ const LogIn = () => {
           </p>
 
           {error && (
-            <p className="text-red-500 m-3"
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                textAlign: 'center',
-                fontSize: '12px',
-                fontFamily: 'Inter, sans-serif',
+            <Snackbar
+              open={snackbarOpen}
+              autoHideDuration={4000}
+              onClose={() => {
+                setSnackbarOpen(false);
+                setError(null);
               }}
-            >
-              {error}
-            </p>
+              message={error}
+              ContentProps={{
+                style: {
+                  backgroundColor: '#FF0000',
+                },
+              }}
+            />
           )}
-
         </form>
       </div>
     </div>
