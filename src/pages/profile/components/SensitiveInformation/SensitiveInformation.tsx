@@ -1,4 +1,3 @@
-import React from "react";
 import Password from "./Password/Password";
 import DeleteAccount from "./DeleteAccount/DeleteAccount";
 
