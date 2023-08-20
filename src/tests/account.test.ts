@@ -2,6 +2,8 @@ import { UserAuth } from "../context/AuthContext";
 import { getAuth, connectAuthEmulator } from "firebase/auth";
 import { getDatabase, connectDatabaseEmulator, ref, get, update, child, onValue, push, set } from "firebase/database";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUser } from "../_api/UserApi";
+import { signUpWithEmail } from "../_api/AuthApi";
 
 beforeEach(() => {
 
@@ -15,7 +17,7 @@ beforeEach(() => {
 })
 
 test('Add user in realtime db', async () => {
-    
-   
+    const sth = signUpWithEmail("usernametest", "displaynametest", "test@mail.com", "myPassword123!")
+    console.log(sth)  
    
 })
