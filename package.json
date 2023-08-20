@@ -8,8 +8,14 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "jest"
-  },      
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    }
+  },
   "dependencies": {
+    "@babel/preset-typescript": "^7.22.5",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.16",
