@@ -1,6 +1,5 @@
 import { getAuth, updatePassword } from "firebase/auth";
 
-
 export const updatePasswort = async (event, newPassword) => {
     
     event.preventDefault() 

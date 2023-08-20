@@ -19,7 +19,7 @@ function ProfilePicture (){
  
     return (
         <div>
-            <Avatar src={imgUrl} sx={{width: 450, height: 450}} onClick={() => {uploadFile(fastchatUser, setImgUrl)} }/>
+            <Avatar src={imgUrl} sx={{width: 450, height: 450}} onClick={() => {uploadFile(setImgUrl)} }/>
             <LoginInformation uid={fastchatUser?.id}/>
         </div>        
     )

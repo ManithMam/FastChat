@@ -2,6 +2,16 @@ import { getStorage, ref, uploadBytes, getDownloadURL} from "firebase/storage"
 import { updateProfile } from "firebase/auth";
 import { getDatabase, update} from "firebase/database";
 import {ref as dbRef} from "firebase/database";
+import FastChatUser from "../../../_api/models/FastChatUser";
+import { getAuth } from "firebase/auth";
+
+const getUserId = () => {
+    const auth = getAuth();
+
+    const user = auth.currentUser;
+
+    return user?.uid;
+}
 
 const pickerOptions = {
     types: [
@@ -18,7 +28,7 @@ const pickerOptions = {
 
 const readFile = async () => {   
     
-    const [fileHandle] = await window.showOpenFilePicker(pickerOptions);   
+    const [fileHandle] = await window.showOpenFilePicker(pickerOptions);      
 
     const file = await fileHandle.getFile();
 
@@ -27,38 +37,35 @@ const readFile = async () => {
     return file;
 }  
 
-const updateProflePictureURLInRealtimeDB = (userId, imgUrl) => {
+const updateProflePictureURLInRealtimeDB = (userId: string | undefined, imgUrl: string) => {
     const db = getDatabase();    
     update(dbRef(db, 'users/' + userId), {
         profile_picture: imgUrl
     });
 }
 
-const updateUserProfile = async (user, setImgUrl) => {
+const updateUserProfile = async (setImgUrl: React.Dispatch<React.SetStateAction<string | undefined>>) => {
 
-    const storage = getStorage();    
-
-    const uid = await user.id;       
-
+    const storage = getStorage();        
+    
+    const uid = getUserId();     
+    
     const avatarRef = await ref(storage, `avatars/${uid}/avatar`)
 
     const imgUrl = await getDownloadURL(avatarRef)   
 
-    updateProfile(user, {
-        profile_picture: imgUrl
-    }).then(() => {
+    if(uid){
         updateProflePictureURLInRealtimeDB(uid, imgUrl);
-    })
-
+    }    
     setImgUrl(imgUrl);
         
 }
 
-export const uploadFile = async (user, setImgUrl) => {   
+export const uploadFile = async (setImgUrl: React.Dispatch<React.SetStateAction<string | undefined>>) => {   
 
     const storage = getStorage();
-
-    const uid = await user.id;    
+  
+    const uid = getUserId();
 
     const storageRef = await ref(storage, `avatars/${uid}/avatar`)
 
@@ -66,6 +73,10 @@ export const uploadFile = async (user, setImgUrl) => {
 
     await uploadBytes(storageRef, img)
 
-    await updateUserProfile(user, setImgUrl);  
+    const imgUrl = await getDownloadURL(storageRef)   
+
+    updateProflePictureURLInRealtimeDB(uid, imgUrl);
+
+    setImgUrl(imgUrl);    
    
 }
