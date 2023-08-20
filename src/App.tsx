@@ -19,10 +19,7 @@ const App = () => {
       },
       secondary: {
         main: "#05F2F2",
-      },
-      button: {
-        main: "#05F2F2"
-      }   
+      } 
     },
   });
 
