@@ -3,12 +3,16 @@ import { remove, getDatabase, ref, get, child } from "firebase/database";
 import { getStorage, deleteObject } from "firebase/storage";
 import { ref as storageRef} from "firebase/storage";
 
-const deleteProfilePicture = () => {    
-
+const getUserId = () => {
     const auth = getAuth();
     const user = auth.currentUser;    
 
-    const uid = user.uid;
+    return user?.uid;
+}
+
+const deleteProfilePicture = () => {      
+
+    const uid = getUserId();
 
     const storage = getStorage();
 
@@ -22,14 +26,11 @@ const deleteProfilePicture = () => {
     }
 }
 
-const ProfilePicCheck =  async () => {
+const ProfilePicCheck =  async () => {   
 
-    const db = getDatabase();
+    const db = getDatabase();  
 
-    const auth = getAuth();
-    const user = auth.currentUser;    
-
-    const uid = user.uid;    
+    const uid = getUserId(); 
 
     const dbRef = ref(db)
     
@@ -52,21 +53,23 @@ const ProfilePicCheck =  async () => {
 
 const deleteUserDB = () => {    
 
-    const auth = getAuth();
-    const user = auth.currentUser;
+    const uid = getUserId();
 
     const db  = getDatabase();   
-
-    remove(ref(db, 'users/' + user.uid)) 
+    
+    remove(ref(db, 'users/' + uid)) 
+     
 }
 
 const deleteUserAuth = () => {    
 
     const auth = getAuth();
     const user = auth.currentUser;
-
+    
     try{
-        deleteUser(user)       
+        if(user != null){
+            deleteUser(user)  
+        }             
     }
     catch(err){
         throw err;
