@@ -10,14 +10,14 @@ import { getDatabase } from "firebase/database";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
-  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
+  apiKey: "AIzaSyBRVW9u__JTRHmrjr2YMMHovy0vlrllf74",
+  authDomain: "socketchat-7dd2a.firebaseapp.com",
+  projectId: "socketchat-7dd2a",
+  storageBucket: "socketchat-7dd2a.appspot.com",
+  messagingSenderId: "284577539732",
+  appId: "1:284577539732:web:292867bbd11b59be5b7681",
+  measurementId: "G-KBY174SZ15",
+  databaseURL: "https://socketchat-7dd2a-default-rtdb.europe-west1.firebasedatabase.app/",
 };
 
 // Initialize Firebase
