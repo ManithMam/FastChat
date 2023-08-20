@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import { useState } from "react";
-import { changeButtonPropTypes } from "../types/ChangeButtonTypes";
+import { changeButtonPropTypes } from "./Types/ChangeButtonTypes";
 
 export function ChangeButton({setInformation, Dialog}: changeButtonPropTypes){
 

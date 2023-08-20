@@ -1,7 +1,7 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, TextField } from "@mui/material"
 import { useState } from "react"
 import { updateUsername, newUsernameIsNotUnique } from "../../../api/UpdateUsername" 
-import { InformationDialogPropTypes } from "../../types/InformationDialogPropTypes"
+import { InformationDialogPropTypes } from "../Types/InformationDialogPropTypes"
 
 function UsernameDialog({open, setOpen, setInformation}: InformationDialogPropTypes){
 

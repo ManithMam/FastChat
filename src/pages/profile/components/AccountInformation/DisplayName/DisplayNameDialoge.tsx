@@ -1,7 +1,7 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, TextField } from "@mui/material"
 import { useState } from "react"
 import { updateUserDisplayName } from "../../../api/UpdateDisplayName";
-import { InformationDialogPropTypes } from "../../types/InformationDialogPropTypes";
+import { InformationDialogPropTypes } from "../Types/InformationDialogPropTypes";
 
 function DisplayNameDialoge({open, setOpen, setInformation}: InformationDialogPropTypes){
 
