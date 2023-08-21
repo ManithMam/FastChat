@@ -12,6 +12,7 @@ stages:
 build-job:       
   stage: build 
   script:
+    - npm install -g pnpm
     - echo "Install all dependencies..." 
     - pnpm install  
     - echo "Run build"    
