@@ -3,7 +3,7 @@ image: node:latest
 before_script:  
   - apt-get update -qq && apt-get install
   - npm install -g pnpm
-  - sudo apt install default-jre
+  - apt install default-jre
 
 stages:          
   - build
