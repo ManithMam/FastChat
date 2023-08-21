@@ -1,4 +1,4 @@
-image: node:latest
+image: anapsix/alpine-java:jdk8
 
 before_script:  
   - apt-get update -qq && apt-get install  
