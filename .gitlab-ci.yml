@@ -25,7 +25,6 @@ build-job:
     - main
 
 test-job:
-  image: openjdk:latest
   stage: test
   script:
     - echo "Install dependencies"
