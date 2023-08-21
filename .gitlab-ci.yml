@@ -1,4 +1,7 @@
-image: node:latest
+image: amazoncorretto:latest
+
+services:
+  - node:latest
 
 before_script:  
   - apt-get update -qq && apt-get install  
@@ -25,9 +28,7 @@ build-job:
     - main
 
 test-job:
-  stage: test
-  services:
-  - amazoncorretto:latest
+  stage: test  
   script:
     - echo "Install dependencies"
     - npm install
