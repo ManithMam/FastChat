@@ -1,8 +1,7 @@
 image: node:latest
 
 before_script:  
-  - apt-get update -qq && apt-get install
-  - apt-get install npm
+  - apt-get update -qq && apt-get install  
   - npm install -g pnpm 
 
 stages:          
