@@ -1,7 +1,7 @@
 image: node:latest
 
 services:
-  - openjdk:22-ea-11-jdk-oraclelinux8
+  - amazoncorretto:8
 
 before_script:  
   - apt-get update -qq && apt-get install  
