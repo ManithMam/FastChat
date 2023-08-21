@@ -29,6 +29,9 @@ test-job:
   script:
     - echo "Install dependencies"
     - pnpm install
+    - echo "Setup"
+    - pnpm setup
+    - npm install -g pnpm
     - echo "Install firebase"
     - pnpm install -g firebase-tools
     - echo "Run test"
