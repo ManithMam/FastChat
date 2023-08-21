@@ -28,12 +28,11 @@ test-job:
   stage: test
   script:
     - echo "Install dependencies"
-    - pnpm install
-    - echo "Setup"
-    - pnpm setup
-    - npm install -g pnpm
+    - npm install
+    #- echo "Setup"
+    #- pnpm setup set bash 
     - echo "Install firebase"
-    - pnpm install -g firebase-tools
+    - npm install -g firebase-tools
     - echo "Run test"
     - firebase emulators:exec --project socketchat-7dd2a 'pnpm test'
 
