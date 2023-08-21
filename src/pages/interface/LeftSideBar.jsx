@@ -6,13 +6,9 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { UserAuth } from "../../context/AuthContext";
-<<<<<<< HEAD
 import { BottomNavigation, BottomNavigationAction, Button } from "@mui/material";
 import FriendsList from "../../components/FriendsList"
-=======
-import { Button } from "@mui/material";
 import { createChat, onUserChatsUpdate } from "../../_api/ChatApi";
->>>>>>> develop
 
 const LeftSideBar = ({ onSelectChat }) => {
 
