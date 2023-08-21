@@ -27,7 +27,7 @@ build-job:
 test-job:
   stage: test
   services:
-  - ibmjava:latest
+  - amazoncorretto:latest
   script:
     - echo "Install dependencies"
     - npm install
