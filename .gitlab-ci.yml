@@ -2,7 +2,7 @@ image: node:latest
 
 before_script:  
   - apt-get update -qq && apt-get install
-  - npm i pnpm
+  - npm install -g pnpm
 
 stages:          
   - build
@@ -11,8 +11,7 @@ stages:
 
 build-job:       
   stage: build 
-  script:
-    - npm install -g pnpm
+  script:    
     - echo "Install all dependencies..." 
     - pnpm install  
     - echo "Run build"    
