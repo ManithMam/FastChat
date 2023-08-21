@@ -1,6 +1,6 @@
 image: node:latest
 services:
-  - openjdk
+  - ibmjava
 
 before_script:  
   - apt-get update -qq && apt-get install  
