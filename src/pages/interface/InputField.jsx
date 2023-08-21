@@ -5,7 +5,6 @@ import { sendChatMessage } from "../../_api/ChatApi";
 import { UserAuth } from "../../context/AuthContext";
 
 const InputField = ({ selectedChatId }) => {
-
 	const { user } = UserAuth();
 	const [textFieldValue, setTextFieldValue] = useState("");
 
@@ -15,9 +14,14 @@ const InputField = ({ selectedChatId }) => {
 
 			const sendMessageAsync = async () => {
 				if (selectedChatId) {
-					await sendChatMessage(user, selectedChatId, textFieldValue);
+					await sendChatMessage(
+						user,
+						selectedChatId,
+						textFieldValue,
+						user.displayName
+					);
 				}
-			}
+			};
 
 			sendMessageAsync();
 			setTextFieldValue("");
@@ -25,38 +29,40 @@ const InputField = ({ selectedChatId }) => {
 	};
 
 	return (
-		<Box
-			component="form"
-			sx={{
-				"& > :not(style)": {
-					m: 1,
-					ml: "16vw",
-					width: "auto",
-					height: "6vh",
-					display: "flex",
-					flexDirection: "column",
-					justifyContent: "flex-end",
-					// backgroundColor: "#40033C",
-				},
-			}}
-			noValidate
-			autoComplete="off"
-		>
-			<TextField
-				value={textFieldValue}
-				onKeyDown={(e) => handleKeyDown(e)}
-				onChange={(e) => setTextFieldValue(e.target.value)}
+		<div display="flex">
+			<Box
+				component="form"
 				sx={{
-					backgroundColor: "#40033C",
-					borderColor: "#40033C",
-					borderRadius: "5px",
-					mb: 20,
-
-					input: { color: "white" },
+					"& > :not(style)": {
+						m: 1,
+						ml: "16vw",
+						width: "auto",
+						height: "6vh",
+						display: "flex",
+						flexDirection: "column",
+						justifyContent: "flex-end",
+					},
 				}}
-				focused
-			/>
-		</Box>
+				noValidate
+				autoComplete="off"
+			>
+				<TextField
+					value={textFieldValue}
+					onKeyDown={(e) => handleKeyDown(e)}
+					onChange={(e) => setTextFieldValue(e.target.value)}
+					sx={{
+						borderColor: "#40033C",
+						borderRadius: "5px",
+						mb: 20,
+						display: "flex",
+						flexDirection: "column",
+						justifyContent: "flex-end",
+						input: { color: "white" },
+					}}
+					focused
+				/>
+			</Box>
+		</div>
 	);
 };
 
