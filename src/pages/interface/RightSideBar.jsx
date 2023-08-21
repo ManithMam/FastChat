@@ -1,6 +1,5 @@
 import React from "react";
 import { Box } from "@mui/material";
-import { UserAuth } from "../../context/AuthContext";
 import { styled, useTheme } from "@mui/material/styles";
 import Drawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
@@ -16,13 +15,8 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-
-const handleProfile = () => {
-	navigate("/profile");
-};
-const handleSettings = () => {
-	navigate("/settings");
-};
+import { logOut } from "../../_api/AuthApi";
+import { Link } from "react-router-dom";
 
 const drawerWidth = "15";
 
@@ -55,7 +49,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 const RightSideBar = () => {
 	const theme = useTheme();
 	const [open, setOpen] = React.useState(false);
-	const { user, logOut } = UserAuth();
 
 	const handleDrawerOpen = () => {
 		setOpen(true);
@@ -109,13 +102,22 @@ const RightSideBar = () => {
 				</DrawerHeader>
 				<Divider sx={{ backgroundColor: "gray" }} />
 				<List>
-					{["Profile", "Settings", "Help"].map((text, index) => (
-						<ListItem key={text} disablePadding>
-							<ListItemButton>
-								<ListItemText sx={{ color: "white" }} primary={text} />
-							</ListItemButton>
-						</ListItem>
-					))}
+					<ListItem disablePadding>
+						{/* Link to /profile */}
+						<ListItemButton component={Link} to={`/profile`}>
+							<ListItemText sx={{ color: "white" }} primary="Profile" />
+						</ListItemButton>
+					</ListItem>
+					<ListItem disablePadding>
+						<ListItemButton>
+							<ListItemText sx={{ color: "white" }} primary="Settings" />
+						</ListItemButton>
+					</ListItem>
+					<ListItem disablePadding>
+						<ListItemButton>
+							<ListItemText sx={{ color: "white" }} primary="Help" />
+						</ListItemButton>
+					</ListItem>
 				</List>
 				<Divider sx={{ backgroundColor: "gray" }} />
 				<List>

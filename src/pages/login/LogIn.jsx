@@ -1,40 +1,30 @@
-import { Button } from "@mui/material";
 import React from "react";
-import { UserAuth } from "../../context/AuthContext";
+import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { signInWithGoogle } from "../../_api/AuthApi";
+import { UserAuth } from "../../context/AuthContext";
 
 const LogIn = () => {
-
-  const { signInWithGoogle } = UserAuth();
   const navigate = useNavigate();
+  const {isLoading} = UserAuth();
 
   const handleLogin = async () => {
     const result = await signInWithGoogle();
     if (result) {
       navigate('/');
-    } else {
-      alert('Error logging in!');
     }
   }
 
   return (
-    <div className="w-full min-h-screen flex flex-col justify-center items-center">
-      <h1 className="text-6xl font-bold m-5">Welcome to FastChat!</h1>
-      <Button variant="outlined" onClick={() => handleLogin()}>
-        Log in with Google
-      </Button>
-      <Button variant="contained" onClick={() => handleLogin()}>
-        Log in with Google
-      </Button>
-      <Button variant="text" onClick={() => handleLogin()}>
-        Log in with Google
-      </Button>
+    <div className='flex flex-col items-center justify-center h-screen'>
+      <h1 className='text-5xl'>FastChat</h1>
       <Button
-        color="secondary"
-        variant="contained"
-        onClick={() => handleLogin()}
+        variant='contained'
+        color='primary'
+        onClick={handleLogin}
+        disabled={isLoading}
       >
-        Log in with Google
+        Log In
       </Button>
     </div>
   );

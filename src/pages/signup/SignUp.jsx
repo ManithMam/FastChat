@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
-import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { getDatabase, ref, set } from 'firebase/database';
-import { UserAuth } from '../../context/AuthContext';
+import { signUpWithEmail } from '../../_api/AuthApi';
 
 const SignUp = () => {
   const navigate = useNavigate();
-
-  const {signUpWithEmail} = UserAuth();
 
   const [userName, setUserName] = useState('');
   const [displayName, setDisplayName] = useState('');
@@ -19,6 +15,7 @@ const SignUp = () => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+    setError(null);
 
     // Email validation regex pattern
     const emailRegex = /^\S+@\S+\.\S+$/;
@@ -29,6 +26,11 @@ const SignUp = () => {
     // Validate email and password
     if (!emailRegex.test(email.trim())) {
       setError('Please enter a valid email address');
+      return;
+    }
+
+    if(userName === '') {
+      setError('Please enter a username');
       return;
     }
 
@@ -44,7 +46,7 @@ const SignUp = () => {
       return;
     }
 
-    const result = await signUpWithEmail(userName, email, password);
+    const result = await signUpWithEmail(userName, displayName, email, password);
     if(result.success === false) {
       setError(result.error);
       return;

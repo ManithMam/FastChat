@@ -6,29 +6,36 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { UserAuth } from "../../context/AuthContext";
+<<<<<<< HEAD
 import { BottomNavigation, BottomNavigationAction, Button } from "@mui/material";
 import FriendsList from "../../components/FriendsList"
+=======
+import { Button } from "@mui/material";
+import { createChat, onUserChatsUpdate } from "../../_api/ChatApi";
+>>>>>>> develop
 
 const LeftSideBar = ({ onSelectChat }) => {
-  const { user, onUserChatsUpdate, createChat } = UserAuth();
+
+  const { user, isLoading } = UserAuth();
   const [contacts, setContacts] = useState([]);
   const [contents, setContents] = useState(0);
 
   useEffect(() => {
-    if (!user) return;
-
-    const unsunscribe = onUserChatsUpdate(user?.id, (chats) => {
-      setContacts(chats ? chats : []);
+    console.log("User LeftSideBar: ", user)
+    const unsubscribe = onUserChatsUpdate(user, (chats) => {
+      console.log("Setting chats to: ", chats);
+      setContacts(chats);
     });
 
     return () => {
-      unsunscribe();
+      unsubscribe();
     };
   }, [user]);
 
   const createChatWithDemoUser = async () => {
-    const demoUserId = "kGmLPO72QUbdP7s3io8lsnzdmST2";
-    const result = await createChat(user?.id, demoUserId);
+    console.log(user)
+    const demoUserId = "weUmDH0F8wSmHcu4uqndK7UbJL82";
+    const result = await createChat(user, demoUserId);
     console.log(result);
   };
 
