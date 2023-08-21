@@ -1,6 +1,4 @@
 image: node:latest
-services:
-  - ibmjava
 
 before_script:  
   - apt-get update -qq && apt-get install  
@@ -28,6 +26,8 @@ build-job:
 
 test-job:
   stage: test
+  services:
+  - ibmjava:latest
   script:
     - echo "Install dependencies"
     - npm install
