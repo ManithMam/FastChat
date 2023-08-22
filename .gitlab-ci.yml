@@ -36,6 +36,7 @@ test-job:
   image: node:latest
   stage: test  
   script:         
+    - apt-get update -qq && apt-get install   
     - apt-get -y install default-jre
     - npm install -g pnpm
     - echo "Install firebase tools"
