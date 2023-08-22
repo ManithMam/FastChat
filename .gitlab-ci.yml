@@ -23,8 +23,6 @@ build-job:
     paths: 
       - dist
     expire_in: 1h
-  only:
-    - main
 
 test-job:
   stage: test  
