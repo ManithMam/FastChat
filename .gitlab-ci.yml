@@ -1,9 +1,8 @@
 image: node:latest
 
 before_script:  
-  #- apt-get update -qq && apt-get install  
-  #- apt-get -y install default-jre
-  #- npm install -g pnpm
+  - apt-get update -qq && apt-get install  
+  - apt-get -y install default-jre
   
 stages:      
   - setup    
@@ -35,8 +34,7 @@ build-job:
 
 test-job:
   stage: test  
-  script:       
-    - apt-get -y install default-jre
+  script:         
     - npm install -g pnpm
     - echo "Install firebase tools"
     - npm install -g firebase-tools
