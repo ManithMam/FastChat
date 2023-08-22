@@ -28,7 +28,7 @@ test-job:
     - echo "Install firebase tools"
     - npm install -g firebase-tools
     - echo "Run test"
-    - firebase emulators:exec --project socketchat-7dd2a 'pnpm test'
+    - firebase emulators:exec --project socketchat-7dd2a 'npm test'
 
 deploy-job:      
   stage: deploy  
