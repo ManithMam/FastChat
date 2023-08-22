@@ -13,7 +13,7 @@ build-job:
   stage: build 
   script:    
     - echo "Install all dependencies..." 
-    - pnpm install  
+    - npm install  
     - echo "Install firebase tools"
     - npm install -g firebase-tools
     - echo "Run build"    
@@ -33,8 +33,7 @@ test-job:
 deploy-job:      
   stage: deploy  
   environment: production 
-  script:   
-    - pnpm install -g firebase-tools
+  script:      
     - echo "Deploying application..."
     - firebase deploy --token $FIREBASE_TOKEN
     - echo "Application successfully deployed."
