@@ -1,7 +1,6 @@
-image: node:latest
 
-before_script:  
-  - apt-get update -qq && apt-get install   
+#before_script:  
+#  - apt-get update -qq && apt-get install   
   
 stages:      
   - setup    
@@ -10,6 +9,7 @@ stages:
   - deploy
 
 setup-job:
+  image: node:latest
   stage: setup
   script:
     - echo "Install all dependencies..." 
@@ -20,7 +20,8 @@ setup-job:
       - node_modules
     expire_in: 1h
 
-build-job:       
+build-job:     
+  image: node:latest  
   stage: build 
   script:         
     - echo "Run build"    
@@ -43,6 +44,7 @@ test-job:
     - firebase emulators:exec --project socketchat-7dd2a 'pnpm test'
 
 deploy-job:      
+  image: node:latest
   stage: deploy  
   environment: production 
   script:      
