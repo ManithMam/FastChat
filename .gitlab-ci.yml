@@ -15,7 +15,7 @@ setup-job:
   stage: setup
   script:
     - echo "Install all dependencies..." 
-    - npm ci    
+    - npm install    
     - echo "Install complete"
   artifacts:
     paths:
