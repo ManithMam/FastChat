@@ -6,7 +6,6 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { UserAuth } from "../../context/AuthContext";
-import { BottomNavigation, BottomNavigationAction, Button } from "@mui/material";
 import AddFriendDialog from "../../components/FriendsList"
 import { createChat, onUserChatsUpdate } from "../../_api/ChatApi";
 
@@ -65,7 +64,7 @@ const LeftSideBar = ({ onSelectChat }) => {
 			variant="persistent"
 			anchor="left"
 			open={open}>
-				
+
 			<AddFriendDialog />
 			<ChatList/>
 		</Drawer>

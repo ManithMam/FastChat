@@ -50,28 +50,4 @@ const AddFriendDialog = () => {
     </>)
 }
 
-const FriendsList = () => {
-    const contactList = [];
-    const [contacts, setContacts] = useState(contactList);
-
-    useEffect(() => { get(ref(getDatabase(), 'users/' + getAuth().currentUser.uid + '/contacts/'))
-                        .then((snapshot) => {snapshot.forEach((contact) => {contactList.push(contact.val())})}).then(() => {setContacts(contactList)}) });
-
-
-    return <>
-        <AddFriendDialog />
-        <Divider />
-        <List>
-            {contacts.map((item, index) => (
-                <ListItem sx={{margin: "10px"}} key={index} disablePadding>
-                    <ListItemAvatar>
-                        <Avatar src={item.profile_picture} />
-                    </ListItemAvatar>
-                    <ListItemText sx={{ color: "white" }} primary={item} secondary={item.userName} />
-                </ListItem>
-            ))}
-        </List>
-    </>
-};
-
 export default AddFriendDialog;
