@@ -28,7 +28,7 @@ const AddFriendDialog = () => {
                 <DialogContentText>Search for the user's name that you want to add as a friend.</DialogContentText>
                 <TextField sx={{margin: '10px 0'}} label="Search" type="search" variant="outlined" onChange={handleSearch}/>
                 <List>
-                    {searchQuery.length == 0 ? [] : userList.map((item, index) => (item.displayName.toLowerCase().includes(searchQuery) ?
+                    {searchQuery.length == 0 ? [] : userList.map((item, index) => (item.displayName.toLowerCase().includes(searchQuery) || item.userName.toLowerCase().includes(searchQuery) ?
                         <ListItem key={index} disablePadding>
                             <ListItemButton onClick={() => { addFriend(userList[index].id); setOpen(false) }}>
                                 <ListItemAvatar>
