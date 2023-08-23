@@ -1,3 +1,4 @@
+import React from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import LogIn from "./pages/login/LogIn";
@@ -5,7 +6,10 @@ import SignUp from "./pages/signup/SignUp";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AuthRoute from "./components/AuthRoute";
 import { createTheme, ThemeProvider } from "@mui/material";
+
 import Interface from "./pages/interface/Interface";
+import Profile from "./pages/profile/components/Profile";
+
 
 const App = () => {
   const theme = createTheme({
@@ -14,10 +18,11 @@ const App = () => {
         main: "#40033C",
       },
       secondary: {
-        main: "#797979",
-      },
+        main: "#05F2F2",
+      } 
     },
   });
+
 
   return (
     <div>
@@ -28,6 +33,14 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <Interface />
+              </ProtectedRoute>
+            }
+          />
+          <Route          
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile/>
               </ProtectedRoute>
             }
           />
