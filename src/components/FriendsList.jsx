@@ -1,23 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { List, ListItem, ListItemButton, ListItemText, ListItemAvatar, Avatar } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, TextField } from "@mui/material"
 import { getDatabase, ref, get } from "firebase/database";
+import { getAuth } from "firebase/auth";
+import { addFriend } from "../_api/HandleFriendRequests.ts";
 
 
-const allUsers = [];
+const userList = [];
 
 get(ref(getDatabase(), 'users/'))
-    .then((snapshot) => { snapshot.forEach((child) => {allUsers.push(child.val())}) })
+    .then((snapshot) => { snapshot.forEach((child) => {userList.push(child.val())}) })
 
 const AddFriendDialog = () => {
     
     const [open, setOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
-    const [searchResults, setSearchResults] = useState(allUsers);
 
-    const handleAddFriend = () => { setOpen(false) };
-    const handleCloseDialog = () => { setSearchQuery(''); setOpen(false); }; // Ich muss das Schließen des Dialogs in dieser Funktion durchführen, weil React ansonsten einen too many re-renders Fehler wirft wenn man setOpen direkt in der property aufruft
+    const handleAddFriend = (id) => { addFriend(id); setOpen(false) };
     const handleSearch = (event) => { setSearchQuery(event.target.value); }
 
     return (<>
@@ -28,37 +28,43 @@ const AddFriendDialog = () => {
                 <DialogContentText>Search for the user's name that you want to add as a friend.</DialogContentText>
                 <TextField sx={{margin: '10px 0'}} label="Search" type="search" variant="outlined" onChange={handleSearch}/>
                 <List>
-                    {searchQuery.length == 0 ? [] : searchResults.map((item, index) => (item.displayName.includes(searchQuery) ?
+                    {searchQuery.length == 0 ? [] : userList.map((item, index) => (item.displayName.toLowerCase().includes(searchQuery) ?
                         <ListItem key={index} disablePadding>
-                            <ListItemButton onClick={handleAddFriend}>
+                            <ListItemButton onClick={() => { addFriend(userList[index].id); setOpen(false) }}>
                                 <ListItemAvatar>
                                     <Avatar src={item.profile_picture}/>
                                 </ListItemAvatar>
-                                <ListItemText primary={item.displayName} />
+                                <ListItemText primary={item.displayName} secondary={item.userName} />
                             </ListItemButton>
                         </ListItem> : null
                     ))}
                 </List>
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleCloseDialog}>Cancel</Button>
+                <Button onClick={() => {setOpen(false)}}>Cancel</Button>
             </DialogActions>
         </Dialog>
     </>)
 }
 
 const FriendsList = () => {
-    const [friends, setFriends] = useState([]);
+    const contactList = [];
+    const [contacts, setContacts] = useState(contactList);
+
+    useEffect(() => { get(ref(getDatabase(), 'users/' + getAuth().currentUser.uid + '/contacts/'))
+                        .then((snapshot) => {snapshot.forEach((contact) => {contactList.push(contact.val())})}).then(() => {setContacts(contactList)}) });
+
 
     return <>
         <AddFriendDialog />
         <Divider />
         <List>
-            {friends.map((text, index) => (
-                <ListItem key={index} disablePadding>
-                    <ListItemButton onClick={() => { }}>
-                        <ListItemText sx={{ color: "white" }} primary={text} />
-                    </ListItemButton>
+            {contacts.map((item, index) => (
+                <ListItem sx={{margin: "10px"}} key={index} disablePadding>
+                    <ListItemAvatar>
+                        <Avatar src={item.profile_picture} />
+                    </ListItemAvatar>
+                    <ListItemText sx={{ color: "white" }} primary={item} secondary={item.userName} />
                 </ListItem>
             ))}
         </List>
