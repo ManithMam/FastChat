@@ -74,7 +74,7 @@ const LeftSideBar = ({ onSelectChat }) => {
       
       <BottomNavigation sx={{position: "absolute", bottom: "0", width: "100%", backgroundColor: "#141214"}} showLabels onChange={(newValue => {setContents(newValue)})}>
           <BottomNavigationAction value={0} label="Chats"></BottomNavigationAction>
-          <BottomNavigationAction value={1} label="Friends List"></BottomNavigationAction>
+          <BottomNavigationAction value={1} label="Contacts"></BottomNavigationAction>
       </BottomNavigation>
     </Drawer>
   );
