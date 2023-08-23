@@ -15,7 +15,7 @@ function Email(){
         if(fastchatUser?.email) {
             setEmail(fastchatUser.email)
         }
-      }, [email])  
+      }, [fastchatUser])  
 
     return(
         <div className=" flex flex-row">

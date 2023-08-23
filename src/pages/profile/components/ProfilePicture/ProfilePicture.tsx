@@ -15,7 +15,7 @@ function ProfilePicture (){
         if(fastchatUser?.profile_picture) {
           setImgUrl(fastchatUser?.profile_picture)
         }
-      }, [imgUrl])
+      }, [fastchatUser])
  
     return (
         <div>

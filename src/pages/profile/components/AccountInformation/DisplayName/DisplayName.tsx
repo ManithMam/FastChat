@@ -11,11 +11,10 @@ function DisplayName (){
 
     useEffect(() => {
         
-        if(fastchatUser?.displayName) {
-            console.log("change")
+        if(fastchatUser?.displayName) {           
           setName(fastchatUser.displayName)
         }
-      }, [name])   
+      }, [fastchatUser])   
     
     return (        
         <div className=" flex flex-row mb-20">

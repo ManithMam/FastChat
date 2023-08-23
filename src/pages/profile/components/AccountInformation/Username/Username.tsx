@@ -13,7 +13,7 @@ function Username(){
         if(fastchatUser?.userName) {
             setUsername(fastchatUser.userName)
         }
-      }, [username])   
+      }, [fastchatUser])   
 
     return(
         <div className=" flex flex-row mb-20">
