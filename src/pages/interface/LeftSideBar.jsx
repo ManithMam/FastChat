@@ -7,15 +7,13 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { UserAuth } from "../../context/AuthContext";
 import { BottomNavigation, BottomNavigationAction, Button } from "@mui/material";
-import FriendsList from "../../components/FriendsList"
+import AddFriendDialog from "../../components/FriendsList"
 import { createChat, onUserChatsUpdate } from "../../_api/ChatApi";
 
 const LeftSideBar = ({ onSelectChat }) => {
 	const { user } = UserAuth();
 	const [contacts, setContacts] = useState([]);
 
-
-	const [contents, setContents] = useState(0);
 	useEffect(() => {
 		console.log("User LeftSideBar: ", user);
 		const unsubscribe = onUserChatsUpdate(user, (chats) => {
@@ -49,10 +47,7 @@ const LeftSideBar = ({ onSelectChat }) => {
 				</ListItem>
 			))}
 		</List>
-			<Divider />
-			<Button variant="outlined" onClick={() => createChatWithDemoUser()}>
-				Create chat
-			</Button></>
+			<Divider /></>
 	};
 
 
@@ -69,14 +64,10 @@ const LeftSideBar = ({ onSelectChat }) => {
 			}}
 			variant="persistent"
 			anchor="left"
-			open={open}
-		>
-			{(contents === 0 ? <ChatList /> : <FriendsList />)}
-
-			<BottomNavigation sx={{ position: "absolute", bottom: "0", width: "100%", backgroundColor: "#141214" }} showLabels onChange={(newValue => { setContents(newValue) })}>
-				<BottomNavigationAction value={0} label="Chats"></BottomNavigationAction>
-				<BottomNavigationAction value={1} label="Contacts"></BottomNavigationAction>
-			</BottomNavigation>
+			open={open}>
+				
+			<AddFriendDialog />
+			<ChatList/>
 		</Drawer>
 	);
 };

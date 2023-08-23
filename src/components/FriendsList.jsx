@@ -4,7 +4,8 @@ import Divider from "@mui/material/Divider";
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, TextField } from "@mui/material"
 import { getDatabase, ref, get } from "firebase/database";
 import { getAuth } from "firebase/auth";
-import { addFriend } from "../_api/HandleFriendRequests.ts";
+import { UserAuth } from "../context/AuthContext";
+import { createChat } from "../_api/ChatApi";
 
 
 const userList = [];
@@ -13,6 +14,8 @@ get(ref(getDatabase(), 'users/'))
     .then((snapshot) => { snapshot.forEach((child) => {userList.push(child.val())}) })
 
 const AddFriendDialog = () => {
+
+    const { user } = UserAuth();
     
     const [open, setOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
@@ -21,16 +24,16 @@ const AddFriendDialog = () => {
     const handleSearch = (event) => { setSearchQuery(event.target.value); }
 
     return (<>
-        <Button variant="outlined" sx={{ margin: "5px" }} onClick={() => {setOpen(true)}}>Add friend</Button>
+        <Button variant="outlined" sx={{ margin: "10px" }} onClick={() => {setOpen(true)}}>Add Contact</Button>
         <Dialog open={open}>
-            <DialogTitle>Add New Friend</DialogTitle>
+            <DialogTitle>Add New Contact</DialogTitle>
             <DialogContent>
-                <DialogContentText>Search for the user's name that you want to add as a friend.</DialogContentText>
+                <DialogContentText>Search for the user's name that you want to save as a contact.</DialogContentText>
                 <TextField sx={{margin: '10px 0'}} label="Search" type="search" variant="outlined" onChange={handleSearch}/>
                 <List>
                     {searchQuery.length == 0 ? [] : userList.map((item, index) => (item.displayName.toLowerCase().includes(searchQuery) || item.userName.toLowerCase().includes(searchQuery) ?
                         <ListItem key={index} disablePadding>
-                            <ListItemButton onClick={() => { addFriend(userList[index].id); setOpen(false) }}>
+                            <ListItemButton onClick={() => { createChat(user, item.id); setOpen(false); }}>
                                 <ListItemAvatar>
                                     <Avatar src={item.profile_picture}/>
                                 </ListItemAvatar>
@@ -71,4 +74,4 @@ const FriendsList = () => {
     </>
 };
 
-export default FriendsList;
+export default AddFriendDialog;
