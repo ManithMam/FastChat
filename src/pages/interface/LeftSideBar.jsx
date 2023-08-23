@@ -6,7 +6,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { UserAuth } from "../../context/AuthContext";
-import { Button } from "@mui/material";
+import { Avatar, Button } from "@mui/material";
 import { createChat, getChatInfos, onUserChatsUpdate } from "../../_api/ChatApi";
 
 const LeftSideBar = ({ onSelectChat }) => {
@@ -60,7 +60,8 @@ const LeftSideBar = ({ onSelectChat }) => {
 				{contacts.map((chat, index) => (
 					<ListItem key={index} disablePadding>
 						<ListItemButton onClick={() => handleChatSelection(chat.id)}>
-							<ListItemText sx={{ color: "white" }} primary={chat.name} />
+							<Avatar alt="Remy Sharp" src={chat.photoUrl} />
+							<ListItemText sx={{ color: "white", paddingLeft: "20px" }} primary={chat.name} />
 						</ListItemButton>
 					</ListItem>
 				))}
