@@ -37,7 +37,10 @@ export async function createChat(user: User | null, participantId: string) {
 				if (currentUserSnapshot.val().participantOf === undefined) {
 					await set(userParticipantOfRef, [newChatKey]);
 				} else {
-					await update(userParticipantOfRef, [newChatKey]);
+					const userParticipantOfSnapshot = await get(userParticipantOfRef);
+					const userParticipantOf = userParticipantOfSnapshot.val();
+					userParticipantOf.push(newChatKey);
+					await set(userParticipantOfRef, userParticipantOf);
 				}
 
 				// Append the chat id to the participant's participantOf array
@@ -48,7 +51,12 @@ export async function createChat(user: User | null, participantId: string) {
 				if (participantSnapshot.val().participantOf === undefined) {
 					await set(participantParticipantOfRef, [newChatKey]);
 				} else {
-					await update(participantParticipantOfRef, [newChatKey]);
+					const participantParticipantOfSnapshot = await get(
+						participantParticipantOfRef
+					);
+					const participantParticipantOf = participantParticipantOfSnapshot.val();
+					participantParticipantOf.push(newChatKey);
+					await set(participantParticipantOfRef, participantParticipantOf);
 				}
 
 				return newChatKey;
