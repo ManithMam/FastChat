@@ -3,6 +3,7 @@ import { db as realtimedb } from "../firebase";
 import { v4 as uuidv4 } from "uuid";
 import Message from "./models/Message";
 import { User } from "firebase/auth";
+import { ChatInfo } from "./models/ChatInfo";
 
 export async function createChat(user: User | null, participantId: string) {
 	if (user) {
@@ -88,16 +89,6 @@ export function onUserChatsUpdate(user: User | null, callback: (chats: string[])
 	return () => { };
 }
 
-export async function getChatInfo(chatId: string) {
-	// Get chat info from database
-	const chatRef = ref(realtimedb, `chats/${chatId}`);
-	const chatSnapshot = await get(chatRef);
-	if (chatSnapshot.exists()) {
-		return chatSnapshot.val();
-	}
-	return null;
-}
-
 export function onChatMessagesUpdate(chatId: string, callback: (messages: Message[]) => void) {
 	// Get initial data and update whenever it changes, return a function to unsubscribe
 	const messagesRef = ref(realtimedb, `messages/${chatId}`);
@@ -107,6 +98,30 @@ export function onChatMessagesUpdate(chatId: string, callback: (messages: Messag
 	});
 
 	return unsubscribe;
+}
+
+export async function getChatInfos(user: User | null, chatId: string): Promise<ChatInfo> {
+	if(!user) return { id: "", name: "", photoUrl: "" };
+	
+	// Get chats participants from database
+	const chatRef = ref(realtimedb, `chats/${chatId}`);
+	const chatSnapshot = await get(chatRef);
+	const participants = chatSnapshot.val().participants;
+
+	// Filter participant ids to get the other participant
+	const otherParticipant: string = participants.filter((participant: string) => {
+		return participant !== user.uid;
+	});
+
+	// Get other participant's name from database
+	const otherParticipantRef = ref(realtimedb, `users/${otherParticipant}`);
+	const otherParticipantSnapshot = await get(otherParticipantRef);
+
+	return {
+		id: chatId,
+		name: otherParticipantSnapshot.val().displayName,
+		photoUrl: otherParticipantSnapshot.val().photoUrl,
+	};
 }
 
 export async function sendChatMessage(user: User | null, chatId: string, message: string, diplayName: string) {
