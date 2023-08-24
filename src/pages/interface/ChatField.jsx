@@ -56,6 +56,8 @@ const ChatField = ({ selectedChatId }) => {
 	};
 
 	useEffect(() => {
+		console.log("selectedChatId", selectedChatId)
+		setMessages([]);
 		if (!selectedChatId) {
 			setUserMessage("Please select a chat to start messaging");
 			return;
