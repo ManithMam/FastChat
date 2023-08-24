@@ -126,7 +126,7 @@ export async function getChatInfos(user: User | null, chatId: string): Promise<C
 	return {
 		id: chatId,
 		name: otherParticipantSnapshot.val().displayName,
-		photoUrl: otherParticipantSnapshot.val().photoUrl,
+		photoUrl: otherParticipantSnapshot.val().profile_picture,
 	};
 }
 
