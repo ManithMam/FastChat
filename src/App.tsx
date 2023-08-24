@@ -21,6 +21,20 @@ const App = () => {
         main: "#05F2F2",
       } 
     },
+
+    components: {
+      MuiBottomNavigation: {
+       styleOverrides: {
+        root: {
+          '.MuiBottomNavigationAction-label': {
+            color: 'lightgrey',
+            fontWeight: 'bold',
+            fontSize: '12pt'
+          }
+        }
+       }
+      }
+    }
   });
 
 

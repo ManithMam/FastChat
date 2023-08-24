@@ -74,13 +74,19 @@ export async function createChat(user: User | null, participantId: string) {
 	}
 }
 
-export function onUserChatsUpdate(user: User | null, callback: (chats: string[]) => void): () => void {
+export function onUserChatsUpdate(user: User | null, callback: (chats: ChatInfo[]) => void): () => void {
 	if (user) {
 		// Get initial data and update whenever it changes, return a function to unsubscribe
 		const chatsRef = ref(realtimedb, `users/${user.uid}/participantOf`);
-		const unsubscribe = onValue(chatsRef, (snapshot) => {
+		const unsubscribe = onValue(chatsRef, async (snapshot) => {
 			const chats = snapshot.val();
-			callback(chats ? chats : []);
+			if(chats) {
+				callback(await Promise.all(chats.map(async (chat: string) => {
+					return await getChatInfos(user, chat);
+				})));
+			} else {
+				callback([]);
+			}
 		});
 
 		return unsubscribe;
