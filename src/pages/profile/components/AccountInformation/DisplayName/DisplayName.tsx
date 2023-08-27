@@ -10,7 +10,8 @@ function DisplayName (){
     const [name, setName] = useState("")
 
     useEffect(() => {
-        if(fastchatUser?.displayName) {
+        
+        if(fastchatUser?.displayName) {           
           setName(fastchatUser.displayName)
         }
       }, [fastchatUser])   
