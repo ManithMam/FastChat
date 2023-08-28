@@ -7,9 +7,9 @@ import { uploadFile } from "../../api/UpdateProfilePicture";
  
 function ProfilePicture (){
 
-    const {fastchatUser} = UserAuth();
+    const {fastchatUser, updateFastchatUser} = UserAuth();
 
-    const [imgUrl, setImgUrl] = useState<string>();  
+    const [imgUrl, setImgUrl] = useState<string>();    
 
     useEffect(() => {
         if(fastchatUser?.profile_picture) {
@@ -17,9 +17,25 @@ function ProfilePicture (){
         }
       }, [fastchatUser])
  
+
+
+    const updateProfilePicture = async () => {
+      const test = await uploadFile(setImgUrl)
+      if(test.succes){
+        fastchatUser!.profile_picture = test.url
+        updateFastchatUser(fastchatUser!)
+      }     
+      else{
+        return {
+          error: "An unknown error occured",
+          success: false 
+        }
+      }     
+    }
+
     return (
         <div>
-            <Avatar src={imgUrl} sx={{width: 450, height: 450}} onClick={() => {uploadFile(setImgUrl)} }/>
+            <Avatar src={imgUrl} sx={{width: 450, height: 450}} onClick={() => {updateProfilePicture()} }/>
             <LoginInformation uid={fastchatUser?.id}/>
         </div>        
     )
