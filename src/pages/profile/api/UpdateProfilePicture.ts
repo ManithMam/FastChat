@@ -78,5 +78,10 @@ export const uploadFile = async (setImgUrl: React.Dispatch<React.SetStateAction<
     updateProflePictureURLInRealtimeDB(uid, imgUrl);
 
     setImgUrl(imgUrl);    
+
+    return {
+        url: imgUrl,
+        succes: true
+    }
    
 }
