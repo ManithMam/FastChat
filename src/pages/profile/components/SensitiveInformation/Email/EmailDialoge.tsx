@@ -3,41 +3,44 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, DialogConten
 import { useState } from "react"
 import { updateUserEmail } from "../../../api/UpdateEmailInformation";
 import { InformationDialogPropTypes } from "../Types/InformationDialogPropTypes";
+import { UserAuth } from "../../../../../context/AuthContext";
 
-function EmailDialoge({open, setOpen, setInformation}: InformationDialogPropTypes){
-    
+function EmailDialoge({ open, setOpen, setInformation }: InformationDialogPropTypes) {
+
+    const { fastchatUser, updateFastchatUser } = UserAuth();
+
     const [emailError, setEmailError] = useState(false)
 
     const [errorText, setErrorText] = useState('')
 
-    const [newEmail, setNewEmail] = useState('')    
+    const [newEmail, setNewEmail] = useState('')
 
     const emailRegex = /^\S+@\S+\.\S+$/;
 
-    function isEmail(newEmail: string){        
+    function isEmail(newEmail: string) {
 
-        if (!emailRegex.test(newEmail.trim())) {           
+        if (!emailRegex.test(newEmail.trim())) {
             setErrorText("Should be a email.")
             return false;
-        }        
+        }
 
         return true;
 
-    }  
+    }
 
-    function handleClose(){
+    function handleClose() {
         setOpen(false)
         setNewEmail('')
         setEmailError(false)
-    }   
+    }
 
     const isNotEmpty = (newEmail: string, setEmailError: React.Dispatch<React.SetStateAction<boolean>>) => {
 
-        if(newEmail == ''){
-            setEmailError(true)      
-            setErrorText("Should not be empty.")   
-            return false; 
-        }      
+        if (newEmail == '') {
+            setEmailError(true)
+            setErrorText("Should not be empty.")
+            return false;
+        }
 
         return true;
     }
@@ -46,12 +49,12 @@ function EmailDialoge({open, setOpen, setInformation}: InformationDialogPropType
 
         let isValid = true;
 
-        if(isNotEmpty(newEmail, setEmailError) == false){
+        if (isNotEmpty(newEmail, setEmailError) == false) {
             isValid = false;
             return isValid;
         }
 
-        if(isEmail(newEmail) == false){
+        if (isEmail(newEmail) == false) {
             isValid = false;
             return isValid;
         }
@@ -59,20 +62,32 @@ function EmailDialoge({open, setOpen, setInformation}: InformationDialogPropType
         return isValid;
     }
 
-    return(
+    const handleEmailChange = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        if (isValid()) {
+            if (await updateUserEmail(event, setInformation, newEmail, setErrorText)) {
+                handleClose()
+                fastchatUser!.email = newEmail;
+                updateFastchatUser(fastchatUser!);
+            } else {
+                setEmailError(true)
+            }
+        }
+    }
+
+    return (
         <Dialog open={open} PaperProps={{
             sx: {
-              width: "50%",
-              maxHeight: 300
+                width: "50%",
+                maxHeight: 300
             }
-          }}>
-                <DialogTitle className="bg-primary text-white"><p className=" text-slate-100">Change Email</p></DialogTitle>
-                <DialogContent  className="bg-primary">
-                    <DialogContentText sx={{color: "white"}}>
-                        Enter new email.
-                    </DialogContentText>
-                    <form autoComplete="off">  
-                        <TextField
+        }}>
+            <DialogTitle className="bg-primary text-white"><p className=" text-slate-100">Change Email</p></DialogTitle>
+            <DialogContent className="bg-primary">
+                <DialogContentText sx={{ color: "white" }}>
+                    Enter new email.
+                </DialogContentText>
+                <form autoComplete="off">
+                    <TextField
                         label="Email"
                         inputProps={{
                             style: {
@@ -86,23 +101,23 @@ function EmailDialoge({open, setOpen, setInformation}: InformationDialogPropType
                                 fontSize: '15px'
                             }
                         }}
-                        sx={{input: {color: "white"}}}
+                        sx={{ input: { color: "white" } }}
                         autoFocus
                         margin="dense"
-                        id="name"                       
+                        id="name"
                         fullWidth
                         variant="outlined"
-                        onChange={(event) => {setNewEmail(event.target.value)}}                                                                  
-                        error={emailError}   
-                        helperText={emailError == true ? errorText : ''}                         
-                        />
-                        <DialogActions>
-                            <Button onClick={handleClose} type="button" sx={{color: "white"}}>Cancel</Button>
-                            <Button onClick={async (event) => { if(isValid()) {await updateUserEmail(event, setInformation, newEmail, setErrorText) ? handleClose() : setEmailError(true)}}} color="secondary" variant="contained">Submit</Button>                    
-                        </DialogActions>
-                    </form>                    
-                </DialogContent>                
-            </Dialog>
+                        onChange={(event) => { setNewEmail(event.target.value) }}
+                        error={emailError}
+                        helperText={emailError == true ? errorText : ''}
+                    />
+                    <DialogActions>
+                        <Button onClick={handleClose} type="button" sx={{ color: "white" }}>Cancel</Button>
+                        <Button onClick={async (event) => handleEmailChange(event)} color="secondary" variant="contained">Submit</Button>
+                    </DialogActions>
+                </form>
+            </DialogContent>
+        </Dialog>
     )
 }
 

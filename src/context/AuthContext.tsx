@@ -16,12 +16,14 @@ interface AuthContextData {
   user: User | null;
   fastchatUser: FastChatUser | null;
   isLoading: boolean;
+  updateFastchatUser: (user: FastChatUser) => void;
 }
 
 const UserContext = createContext<AuthContextData>({
   user: null,
   fastchatUser: null,
   isLoading: true,
+  updateFastchatUser: () => {},
 });
 
 export const AuthContextProvider = ({ children }: AuthContextProps) => {
@@ -64,12 +66,17 @@ export const AuthContextProvider = ({ children }: AuthContextProps) => {
   }
   , [isLoading]);
   
+  const updateFastchatUser = (user: FastChatUser) => {
+    setFastchatUser(user);
+  }
+
   return (
     <UserContext.Provider
       value={{
         user: authUser,
         fastchatUser: fastchatUser,
         isLoading: isLoading,
+        updateFastchatUser: updateFastchatUser,
       }}
     >
       {children}
