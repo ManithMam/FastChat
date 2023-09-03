@@ -62,9 +62,10 @@ function EmailDialoge({ open, setOpen, setInformation }: InformationDialogPropTy
         return isValid;
     }
 
-    const handleEmailChange = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const handleEmailChange = async () => {
+        
         if (isValid()) {
-            if (await updateUserEmail(event, setInformation, newEmail, setErrorText)) {
+            if (await updateUserEmail(setInformation, newEmail, setErrorText)) {
                 handleClose()
                 fastchatUser!.email = newEmail;
                 updateFastchatUser(fastchatUser!);
@@ -113,7 +114,7 @@ function EmailDialoge({ open, setOpen, setInformation }: InformationDialogPropTy
                     />
                     <DialogActions>
                         <Button onClick={handleClose} type="button" sx={{ color: "white" }}>Cancel</Button>
-                        <Button onClick={async (event) => handleEmailChange(event)} color="secondary" variant="contained">Submit</Button>
+                        <Button onClick={async () => handleEmailChange()} color="secondary" variant="contained">Submit</Button>
                     </DialogActions>
                 </form>
             </DialogContent>

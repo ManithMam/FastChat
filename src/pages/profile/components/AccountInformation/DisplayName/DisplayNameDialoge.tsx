@@ -30,7 +30,7 @@ function DisplayNameDialoge({ open, setOpen, setInformation }: InformationDialog
 
     const handleOnDisplayNameChange = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         if (isNotEmpty(newName, setNameError)) {
-            updateUserDisplayName(event, setInformation, newName)
+            updateUserDisplayName(setInformation, newName)
 
             fastchatUser!.displayName = newName;
             updateFastchatUser(fastchatUser!);

@@ -63,25 +63,35 @@ const updateUserProfile = async (setImgUrl: React.Dispatch<React.SetStateAction<
 
 export const uploadFile = async (setImgUrl: React.Dispatch<React.SetStateAction<string | undefined>>) => {   
 
-    const storage = getStorage();
+    try{
+        const storage = getStorage();
   
-    const uid = getUserId();
+        const uid = getUserId();
 
-    const storageRef = await ref(storage, `avatars/${uid}/avatar`)
+        const storageRef = await ref(storage, `avatars/${uid}/avatar`)
 
-    const img = await readFile();
+        const img = await readFile();
 
-    await uploadBytes(storageRef, img)
+        await uploadBytes(storageRef, img)
 
-    const imgUrl = await getDownloadURL(storageRef)   
+        const imgUrl = await getDownloadURL(storageRef)   
 
-    updateProflePictureURLInRealtimeDB(uid, imgUrl);
+        updateProflePictureURLInRealtimeDB(uid, imgUrl);
 
-    setImgUrl(imgUrl);    
+        setImgUrl(imgUrl);    
 
-    return {
-        url: imgUrl,
-        succes: true
+        return {
+            url: imgUrl,
+            success: true
+        }
     }
+    catch(err: unknown){
+        if(err instanceof Error){
+            return {
+                err: err.message,
+                success: false
+            }
+        }        
+    }    
    
 }

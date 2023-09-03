@@ -8,27 +8,41 @@ const updateDisplayNameInDB = (id: string, name: string) => {
     });
 }
 
-export const updateUserDisplayName = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, setName: React.Dispatch<React.SetStateAction<string>>, newName: string) => {    
+export const updateUserDisplayName = async (setName: React.Dispatch<React.SetStateAction<string>>, newName: string) => {        
 
-    event.preventDefault()
+    try{
+        const auth = getAuth();
 
-    const auth = getAuth();
+        const user = auth.currentUser;
 
-    const user = auth.currentUser;
+        if(user != null){
+               await updateProfile(user, {        
+                displayName: newName
+            }).then(async () => {      
+                await updateDisplayNameInDB(user.uid, newName)  
+                setName(newName)                                 
+            })
+            .catch((err) => {
+                console.error(err)
+            })
+        }
+        else{
+            throw new Error("User is null")
+        }
 
-    if(user != null){
-        updateProfile(user, {        
-            displayName: newName
-        }).then(() => {        
-            setName(newName)        
-            updateDisplayNameInDB(user.uid, newName)
-        })
-        .catch((err) => {
-            console.error(err)
-        })
+        return{
+            newDisplayName: user.displayName,
+            success: true
+        }
     }
-     
-    
+    catch(err: unknown){
+        if(err instanceof Error){
+            return{
+                err: err.message,
+                success: false
+            }
+        }
+    }    
 }   
 
 

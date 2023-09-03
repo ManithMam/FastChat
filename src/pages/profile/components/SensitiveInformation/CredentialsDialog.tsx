@@ -93,8 +93,10 @@ function CredentialsDialog({open, setOpen, setInformation, InformationDialog: Di
         if(credentialsTestFailed(email, password) == true){
             handleWrongCredentials();
         }
+
+        const reauthentication = await ReauthenticateWithEmailAndPassword(email, password, setHelperTextPassword)        
         
-        if(await ReauthenticateWithEmailAndPassword(email, password, setHelperTextPassword)){            
+        if(reauthentication?.success){            
             succesfullSubmit = true
         }             
 

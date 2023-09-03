@@ -71,7 +71,7 @@ export async function updateUser(userId: string, userData: Partial<FastChatUser>
   }
 }
 
-const getUser = async (userId: string): Promise<ApiResponse<FastChatUser>> => {
+export const getUser = async (userId: string): Promise<ApiResponse<FastChatUser>> => {
   const userRef = ref(realtimedb, `users/${userId}`);
   const userSnapshot = await get(userRef);
 

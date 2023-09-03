@@ -24,18 +24,29 @@ export const updateUsernameInDB = (id: string, newUsername: string) => {
     });   
 }
 
-export const updateUsername = (event: React.MouseEvent<HTMLButtonElement>, setUsername: React.Dispatch<React.SetStateAction<string>>, newUsername: string) => {
-
-    event.preventDefault() 
+export const updateUsername = async ( setUsername: React.Dispatch<React.SetStateAction<string>>, newUsername: string) => { 
     
-    console.log("start")
-    const auth = getAuth();
+    try{      
+      const auth = getAuth();
 
-    const user = auth.currentUser;
+      const user = auth.currentUser;
 
-    if(user != null){
-      setUsername(newUsername);       
-      updateUsernameInDB(user.uid, newUsername)
-    }    
+      if(user != null){
+        await updateUsernameInDB(user.uid, newUsername)
+        setUsername(newUsername);              
+      }    
+      else{
+        throw new Error("User is null");
+      }
+    }
+    catch(err: unknown){
+      if(err instanceof Error){
+        return {
+          err: err.message,
+          success: false
+        }
+      }      
+    }
+    
 
 }
