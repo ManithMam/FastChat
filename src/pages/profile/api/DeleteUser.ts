@@ -77,7 +77,23 @@ const deleteUserAuth = () => {
 }
 
 export const deleteAccount = async () => {      
-    await ProfilePicCheck();  
-    deleteUserDB();    
-    deleteUserAuth();      
+
+    try{
+        await ProfilePicCheck();  
+        deleteUserDB();    
+        deleteUserAuth(); 
+
+        return {
+            success: true
+        }
+    }
+    catch(err: unknown){
+        if(err instanceof Error){
+            return {
+                err: err.message,
+                success: false
+            }
+        }
+    }
+         
 }

@@ -43,6 +43,25 @@ const GetCredentialsEmailAndPassword = async (email: string, password: string) =
 }
 
 export const ReauthenticateWithEmailAndPassword = async(email: string, password: string, setHelperTextPassword: React.Dispatch<React.SetStateAction<string>>) => {
-    const credentials = await GetCredentialsEmailAndPassword(email, password)    
-    return await Reauthenticate(credentials, setHelperTextPassword)       
+    try{
+        const credentials = await GetCredentialsEmailAndPassword(email, password)    
+        if(await Reauthenticate(credentials, setHelperTextPassword)){
+            return {
+                success: true
+            }
+        }
+        else{
+            return {
+                success: false
+            }
+        }
+    }
+    catch(err: unknown){
+        if(err instanceof Error){
+            return{
+                err: err.message,
+                success: false
+            }
+        }
+    }          
 }

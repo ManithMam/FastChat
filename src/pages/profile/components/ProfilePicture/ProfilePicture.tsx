@@ -21,7 +21,7 @@ function ProfilePicture (){
 
     const updateProfilePicture = async () => {
       const test = await uploadFile(setImgUrl)
-      if(test.succes){
+      if(test?.success && test?.url){
         fastchatUser!.profile_picture = test.url
         updateFastchatUser(fastchatUser!)
       }     

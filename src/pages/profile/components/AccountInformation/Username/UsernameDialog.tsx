@@ -71,7 +71,7 @@ function UsernameDialog({ open, setOpen, setInformation }: InformationDialogProp
 
     const handleUsernameChange = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         if (await isValid()) {
-            updateUsername(event, setInformation, newName);
+            updateUsername(setInformation, newName);
             setOpen(false); 
             fastchatUser!.userName = newName;
             updateFastchatUser(fastchatUser!);
