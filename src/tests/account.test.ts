@@ -10,8 +10,15 @@ import { updateUserEmail } from "../pages/profile/api/UpdateEmailInformation";
 import { updateUserPassword } from "../pages/profile/api/UpdatePassword";
 import { deleteAccount } from "../pages/profile/api/DeleteUser";
 import { beforeAll, describe, it, expect, afterAll, vi } from 'vitest' 
+import { logOut, signInWithEmail } from "../_api/AuthApi";
+import {
+  assertFails,
+  assertSucceeds,
+  initializeTestEnvironment,
+  RulesTestEnvironment,
+} from "@firebase/rules-unit-testing"
 
-beforeAll(() => {
+beforeAll(async () => {
 
     const auth = getAuth();
     connectAuthEmulator(auth, "http://127.0.0.1:9099");
@@ -19,6 +26,10 @@ beforeAll(() => {
     const db = getDatabase();
   // Point to the RTDB emulator running on localhost.
     connectDatabaseEmulator(db, "127.0.0.1", 9000);
+
+    let testEnv = await initializeTestEnvironment({
+      projectId: "socketchat-7dd2a",      
+    })
 })
 
 describe('User account modification', () => {  
@@ -118,13 +129,27 @@ describe('User account modification', () => {
 
   })
 
-  it('Should delete account', async () => {        
+  it('Should delete account', async () => {           
 
     const accountIsDeleted = await deleteAccount()    
 
     expect(accountIsDeleted?.success).toBe(true)
    
   })
+})
+
+describe('Security Rules', () => {
+
+  it.todo('Can not read chats if not authorized')
+  it.todo('Can not write chats if not authorized ')
+  it.todo('Can read chats when logged in')
+  it.todo('Can write chats when logged in')
+
+  it.todo('Can read own user information when logged in')
+  it.todo('Can change own user information when logged in')
+
+  it.todo('Can read chat messages when logged in')
+  it.todo('Can write chat messages when logged in')
 })
 
 afterAll(() => {
