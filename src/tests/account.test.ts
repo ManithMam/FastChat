@@ -9,6 +9,7 @@ import { ReauthenticateWithEmailAndPassword } from "../pages/profile/api/ReAuthe
 import { updateUserEmail } from "../pages/profile/api/UpdateEmailInformation";
 import { updateUserPassword } from "../pages/profile/api/UpdatePassword";
 import { deleteAccount } from "../pages/profile/api/DeleteUser";
+import { beforeAll, describe, it, expect, afterAll, vi } from 'vitest' 
 
 beforeAll(() => {
 
@@ -41,8 +42,8 @@ describe('User account modification', () => {
   })
 
   it('Should update display name', async () => {   
-
-    const mockState = jest.fn()
+    
+    const mockState = vi.fn()
     await updateUserDisplayName(mockState, "newDisplayName")
 
     const auth = getAuth(); 
@@ -58,7 +59,7 @@ describe('User account modification', () => {
   })
 
   it('Should update username', async () => {
-    const mockState = jest.fn()
+    const mockState = vi.fn()
     await updateUsername(mockState, "newUsername")
 
     const auth = getAuth(); 
@@ -74,18 +75,18 @@ describe('User account modification', () => {
   })
 
   it('Should reauthenticate user', async () => {
-    const setHelperTextMock = jest.fn()
+    const setHelperTextMock = vi.fn()
     const isReauthenticated = await ReauthenticateWithEmailAndPassword("test@mail.com", "myPassword123!", setHelperTextMock)
 
     expect(isReauthenticated?.success).toBe(true)
   })  
 
   it('Should update email', async () => {
-    const setHelperTextMock = jest.fn()
+    const setHelperTextMock = vi.fn()
     await ReauthenticateWithEmailAndPassword("test@mail.com", "myPassword123!", setHelperTextMock)
    
-    const setEmailMock = jest.fn()
-    const setErrorTextMock = jest.fn()
+    const setEmailMock = vi.fn()
+    const setErrorTextMock = vi.fn()
     const emailIsUpdated = await updateUserEmail(setEmailMock, "new@mail.com", setErrorTextMock)
     
     const auth = getAuth(); 
@@ -102,7 +103,7 @@ describe('User account modification', () => {
   })
 
   it('Should update password', async () => {
-    const setHelperTextMock = jest.fn()
+    const setHelperTextMock = vi.fn()
     await ReauthenticateWithEmailAndPassword("new@mail.com", "myPassword123!", setHelperTextMock)
 
     const isUpdated = await updateUserPassword("newPassword123!")
