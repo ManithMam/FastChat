@@ -16,9 +16,15 @@ dependencies:
   '@mui/material':
     specifier: ^5.11.16
     version: 5.14.5(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.20)(react-dom@18.2.0)(react@18.2.0)
+  file-system:
+    specifier: ^2.2.2
+    version: 2.2.2
   firebase:
     specifier: ^9.23.0
     version: 9.23.0
+  fs:
+    specifier: 0.0.1-security
+    version: 0.0.1-security
   jest-environment-jsdom:
     specifier: ^29.6.2
     version: 29.6.2
@@ -4202,6 +4208,19 @@ packages:
       flat-cache: 3.0.4
     dev: true
 
+  /file-match@1.0.2:
+    resolution: {integrity: sha512-g9p6bZV3HlSUM35QPvFWiP/PckDVe5jLPDhx6PfMuy06o+htesJTyDu7zRdXnOm3BY8pXmxb+QY5qIcsoWMGNg==}
+    dependencies:
+      utils-extend: 1.0.8
+    dev: false
+
+  /file-system@2.2.2:
+    resolution: {integrity: sha512-YgbXEVCu21CfmoeJ1rFLVLPGhW9o7iCzVFqk7ydy2TxF7rXH2YB68CFgDXLOvTD2pMLtg8paVqurzVjxGRdYmw==}
+    dependencies:
+      file-match: 1.0.2
+      utils-extend: 1.0.8
+    dev: false
+
   /fill-range@7.0.1:
     resolution: {integrity: sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==}
     engines: {node: '>=8'}
@@ -4294,6 +4313,10 @@ packages:
   /fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
     dev: true
+
+  /fs@0.0.1-security:
+    resolution: {integrity: sha512-3XY9e1pP0CVEUCdj5BmfIZxRBTSDycnbqhIOGec9QYtmVH2fbLpj86CFWkrNOkt/Fvty4KZG5lTglL9j/gJ87w==}
+    dev: false
 
   /fsevents@2.3.2:
     resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
@@ -6807,6 +6830,10 @@ packages:
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
     dev: true
+
+  /utils-extend@1.0.8:
+    resolution: {integrity: sha512-+VzQieEAijyCFGqnGAWIy7Em1dFGdgf1w+orKwmTWHyaGL19aw9Oq5e5ZZaxgcS777AkPYEsbgWqpz5E6KniPg==}
+    dev: false
 
   /uuid@9.0.0:
     resolution: {integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==}

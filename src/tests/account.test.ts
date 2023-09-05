@@ -17,6 +17,7 @@ import {
   initializeTestEnvironment,
   RulesTestEnvironment,
 } from "@firebase/rules-unit-testing"
+import { readFileSync } from "fs";
 
 beforeAll(async () => {
 
@@ -26,10 +27,7 @@ beforeAll(async () => {
     const db = getDatabase();
   // Point to the RTDB emulator running on localhost.
     connectDatabaseEmulator(db, "127.0.0.1", 9000);
-
-    let testEnv = await initializeTestEnvironment({
-      projectId: "socketchat-7dd2a",      
-    })
+   
 })
 
 describe('User account modification', () => {  
