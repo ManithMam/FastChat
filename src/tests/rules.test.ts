@@ -8,12 +8,10 @@ import {
 import { beforeAll, describe, it, expect, afterAll, vi, beforeEach } from 'vitest' 
 import fs from 'fs';
 import { getAuth, connectAuthEmulator, deleteUser } from "firebase/auth";
-import { getDatabase, connectDatabaseEmulator, ref, set, get, Database } from "firebase/database";
+import { getDatabase, connectDatabaseEmulator, ref, set, get, Database, update } from "firebase/database";
 import { getStorage, ref as storageRef, uploadBytes, getBytes } from "firebase/storage";
 import path from "path";
 import FastChatUser from "../_api/models/FastChatUser";
-
-
 
 
 const user1Id = "userId1"
@@ -78,15 +76,28 @@ describe('Firebase Storage - Security Rules', () => {
         await assertFails(getBytes(storageRef(unauthenticatedUser.storage(), `avatars/${user1Id}/avatar`)))
     })
 
-    it.todo('Should be able to write to db when authorized', () => {
-        const dbRef = ref(authenticatedUser.database(), 'users/')
-        
+    it('Should be able to write to db when authorized', async () => {
+        const userRef = ref(authenticatedUser.database(), 'users/' + user1Data.id)
+        set(userRef, user1Data)     
+
+        const userDataUpdate: Partial<FastChatUser> = {displayName: "newName1"}
+        await assertSucceeds(update(userRef, userDataUpdate))    
     })
 
-    it.todo('Should not be able to write to db when unauthorized')
+    it('Should not be able to write to db when unauthorized', async () => {
+        const userRefUnauth = ref(unauthenticatedUser.database(), 'users/' + user1Data.id)
+        const userDataUpdate: Partial<FastChatUser> = {displayName: "newNameUnauth"}
+        await assertFails(update(userRefUnauth, userDataUpdate))    
+    })
 
-    it.todo('Should be able to read db when authorized')
+    it('Should be able to read db when authorized', async () => {
+        const userRef = ref(authenticatedUser.database(), 'users/' + user1Data.id)
+        await assertSucceeds(get(userRef))
+    })
 
-    it.todo('Should not be able to read db when unauthorized')
+    it('Should not be able to read db when unauthorized', async () => {
+        const userRefUnauth = ref(unauthenticatedUser.database(), 'users/' + user1Data.id)
+        await assertFails(get(userRefUnauth))
+    })
     
 })
