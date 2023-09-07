@@ -26,7 +26,7 @@ describe('Firebase Storage - Security Rules', () => {
 
     let testEnv: RulesTestEnvironment
     let authenticatedUser:  RulesTestContext
-    let unauthenticatedUser
+    let unauthenticatedUser: RulesTestContext
 
     beforeAll(async () => {       
 
@@ -53,7 +53,8 @@ describe('Firebase Storage - Security Rules', () => {
 
     beforeEach(async () => {
         authenticatedUser = testEnv.authenticatedContext(user1Id)
-        const unauthenticatedUser = testEnv.unauthenticatedContext()
+        unauthenticatedUser = testEnv.unauthenticatedContext()
+        
     })
 
     it('Should be able to write to storage when authenticated', async () => {       
@@ -63,5 +64,7 @@ describe('Firebase Storage - Security Rules', () => {
         
     })
 
-    it.todo('Should fail when unauthorized and writting to storage')
+    it('Should fail when unauthorized and writting to storage', async () => {        
+        await assertFails(uploadBytes(storageRef(unauthenticatedUser.storage(), `avatars/${user2Id}/avatar`), avatar))
+    })
 })
