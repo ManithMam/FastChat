@@ -1,20 +1,6 @@
 {
   "rules": {
-    "chats:": {
     	".read": "auth != null",  //Chats können nur abgegriffen werden wenn man authorisiert ist
     	".write": "auth != null",	//Chats dürfen nur erstellt werden wenn man authorisiert ist
-  },
-    
-    "users": {
-      "$uid": {
-        ".read": "$uid === auth.uid",  //Es darf nur auf den eigenen Nutzer zugegriffen werden 
-        ".write": "$uid === auth.uid", //Es darf nur der eigene Nutzer verändert werden
-      }
-    },
-      
-    "messages": {
-      ".read": "auth != null",  //Nachrichten können nur gelesen werden wenn man authorisiert ist
-    	".write": "auth != null",	//Nachrichten dürfen nur gesendet werden wenn man authorisiert ist
     } //leider kann man hier aufgrund der limitierten queries von realtime db keine feingranulareren regeln aufstellen
-  }
 }
