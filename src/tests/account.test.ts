@@ -9,15 +9,8 @@ import { ReauthenticateWithEmailAndPassword } from "../pages/profile/api/ReAuthe
 import { updateUserEmail } from "../pages/profile/api/UpdateEmailInformation";
 import { updateUserPassword } from "../pages/profile/api/UpdatePassword";
 import { deleteAccount } from "../pages/profile/api/DeleteUser";
-import { beforeAll, describe, it, expect, afterAll, vi } from 'vitest' 
-import { logOut, signInWithEmail } from "../_api/AuthApi";
-import {
-  assertFails,
-  assertSucceeds,
-  initializeTestEnvironment,
-  RulesTestEnvironment,
-} from "@firebase/rules-unit-testing"
-import { readFileSync } from "fs";
+import { beforeAll, describe, it, expect, afterAll, vi, beforeEach } from 'vitest' 
+
 
 beforeAll(async () => {
 
@@ -134,20 +127,6 @@ describe('User account modification', () => {
     expect(accountIsDeleted?.success).toBe(true)
    
   })
-})
-
-describe('Security Rules', () => {
-
-  it.todo('Can not read chats if not authorized')
-  it.todo('Can not write chats if not authorized ')
-  it.todo('Can read chats when logged in')
-  it.todo('Can write chats when logged in')
-
-  it.todo('Can read own user information when logged in')
-  it.todo('Can change own user information when logged in')
-
-  it.todo('Can read chat messages when logged in')
-  it.todo('Can write chat messages when logged in')
 })
 
 afterAll(() => {

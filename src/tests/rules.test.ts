@@ -8,16 +8,18 @@ import {
 import { beforeAll, describe, it, expect, afterAll, vi, beforeEach } from 'vitest' 
 import fs from 'fs';
 import { getAuth, connectAuthEmulator, deleteUser } from "firebase/auth";
-import { getDatabase, connectDatabaseEmulator, ref, set, get } from "firebase/database";
-import { getStorage, ref as storageRef, uploadBytes } from "firebase/storage";
+import { getDatabase, connectDatabaseEmulator, ref, set, get, Database } from "firebase/database";
+import { getStorage, ref as storageRef, uploadBytes, getBytes } from "firebase/storage";
 import path from "path";
+import FastChatUser from "../_api/models/FastChatUser";
+
 
 
 
 const user1Id = "userId1"
-const user1Data = { userName: "bernd", displayName: "BeRnd", email: "Bernd@mail.com", password: "password123"}
+const user1Data: FastChatUser = { id: user1Id, userName: "bernd", displayName: "BeRnd", email: "Bernd@mail.com", profile_picture: "imgURL", lastOnline: 1, participantOf: []}
 const user2Id = "userId2"
-const user2Data = { userName: "anna", displayName: "AnNa", email: "Anna@mail.com", password: "password123"}
+const user2Data: FastChatUser = {id: user2Id, userName: "anna", displayName: "AnNa", email: "Anna@mail.com", profile_picture: "imgURL", lastOnline: 1, participantOf: []}
 const avatarPath = path.join(__dirname, "./avatar.png")
 const avatar = fs.readFileSync(avatarPath)
 
@@ -36,8 +38,10 @@ describe('Firebase Storage - Security Rules', () => {
         testEnv = await initializeTestEnvironment({
             projectId: "socketchat-7dd2a",
             storage: {
-              rules: fs.readFileSync(storageRulesPath, "utf-8"),
-             
+              rules: fs.readFileSync(storageRulesPath, "utf-8"),             
+            },
+            database: {
+                rules: fs.readFileSync(dbRulesPath, "utf-8")
             }
           });
 
@@ -57,14 +61,32 @@ describe('Firebase Storage - Security Rules', () => {
         
     })
 
-    it('Should be able to write to storage when authenticated', async () => {       
-        
+    it('Should be able to write to storage when authenticated', async () => {               
         const ref = storageRef(authenticatedUser.storage(), `avatars/${user1Id}/avatar`)
-        await assertSucceeds(uploadBytes(ref, avatar))
-        
+        await assertSucceeds(uploadBytes(ref, avatar))        
+    })
+
+    it('Should be able to read from storage when authenticated', async () => {
+        await assertSucceeds(getBytes(storageRef(authenticatedUser.storage(), `avatars/${user1Id}/avatar`)))
     })
 
     it('Should fail when unauthorized and writting to storage', async () => {        
-        await assertFails(uploadBytes(storageRef(unauthenticatedUser.storage(), `avatars/${user2Id}/avatar`), avatar))
+        await assertFails(uploadBytes(storageRef(unauthenticatedUser.storage(), `avatars/${user1Id}/avatar`), avatar))
     })
+
+    it('Should fail when unauthorized and reading from storage', async () => {
+        await assertFails(getBytes(storageRef(unauthenticatedUser.storage(), `avatars/${user1Id}/avatar`)))
+    })
+
+    it.todo('Should be able to write to db when authorized', () => {
+        const dbRef = ref(authenticatedUser.database(), 'users/')
+        
+    })
+
+    it.todo('Should not be able to write to db when unauthorized')
+
+    it.todo('Should be able to read db when authorized')
+
+    it.todo('Should not be able to read db when unauthorized')
+    
 })
