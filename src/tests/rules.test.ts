@@ -5,7 +5,7 @@ import {
     RulesTestContext,
     RulesTestEnvironment,    
   } from "@firebase/rules-unit-testing"
-import { beforeAll, describe, it, afterAll, beforeEach } from 'vitest' 
+import { beforeAll, describe, it, beforeEach } from 'vitest' 
 import fs from 'fs';
 import { ref, set, get, update } from "firebase/database";
 import { ref as storageRef, uploadBytes, getBytes } from "firebase/storage";

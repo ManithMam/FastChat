@@ -1,5 +1,5 @@
-import { getAuth, connectAuthEmulator, deleteUser } from "firebase/auth";
-import { getDatabase, connectDatabaseEmulator, ref, set, get } from "firebase/database";
+import { getAuth, connectAuthEmulator } from "firebase/auth";
+import { getDatabase, connectDatabaseEmulator } from "firebase/database";
 import { signUpWithEmail } from "../_api/AuthApi";
 import { resetAuthAndDb } from "./utils/utils";
 import { getUser } from "../_api/UserApi";
@@ -9,7 +9,7 @@ import { ReauthenticateWithEmailAndPassword } from "../pages/profile/api/ReAuthe
 import { updateUserEmail } from "../pages/profile/api/UpdateEmailInformation";
 import { updateUserPassword } from "../pages/profile/api/UpdatePassword";
 import { deleteAccount } from "../pages/profile/api/DeleteUser";
-import { beforeAll, describe, it, expect, afterAll, vi, beforeEach } from 'vitest' 
+import { beforeAll, describe, it, expect, afterAll, vi } from 'vitest' 
 
 
 beforeAll(async () => {
@@ -18,7 +18,7 @@ beforeAll(async () => {
     connectAuthEmulator(auth, "http://127.0.0.1:9099");
 
     const db = getDatabase();
-  // Point to the RTDB emulator running on localhost.
+  
     connectDatabaseEmulator(db, "127.0.0.1", 9000);
    
 })
