@@ -5,27 +5,25 @@ import {
     RulesTestContext,
     RulesTestEnvironment,    
   } from "@firebase/rules-unit-testing"
-import { beforeAll, describe, it, expect, afterAll, vi, beforeEach } from 'vitest' 
+import { beforeAll, describe, it, afterAll, beforeEach } from 'vitest' 
 import fs from 'fs';
-import { getAuth, connectAuthEmulator, deleteUser } from "firebase/auth";
-import { getDatabase, connectDatabaseEmulator, ref, set, get, Database, update } from "firebase/database";
-import { getStorage, ref as storageRef, uploadBytes, getBytes } from "firebase/storage";
+import { ref, set, get, update } from "firebase/database";
+import { ref as storageRef, uploadBytes, getBytes } from "firebase/storage";
 import path from "path";
 import FastChatUser from "../_api/models/FastChatUser";
 
 
-const user1Id = "userId1"
-const user1Data: FastChatUser = { id: user1Id, userName: "bernd", displayName: "BeRnd", email: "Bernd@mail.com", profile_picture: "imgURL", lastOnline: 1, participantOf: []}
-const user2Id = "userId2"
-const user2Data: FastChatUser = {id: user2Id, userName: "anna", displayName: "AnNa", email: "Anna@mail.com", profile_picture: "imgURL", lastOnline: 1, participantOf: []}
+
+const user1Data: FastChatUser = { id: "userId1", userName: "bernd", displayName: "BeRnd", email: "Bernd@mail.com", profile_picture: "imgURL", lastOnline: 1, participantOf: []}
+const user2Data: FastChatUser = {id: "userId2", userName: "anna", displayName: "AnNa", email: "Anna@mail.com", profile_picture: "imgURL", lastOnline: 1, participantOf: []}
 const avatarPath = path.join(__dirname, "./avatar.png")
 const avatar = fs.readFileSync(avatarPath)
-
 
 describe('Firebase Storage - Security Rules', () => {
 
     let testEnv: RulesTestEnvironment
     let authenticatedUser:  RulesTestContext
+    let authenticatedUser2:  RulesTestContext
     let unauthenticatedUser: RulesTestContext
 
     beforeAll(async () => {       
@@ -46,34 +44,34 @@ describe('Firebase Storage - Security Rules', () => {
 
           await testEnv.clearStorage();
           await testEnv.clearDatabase();         
-    })
-
-    afterAll( async () => {
-        
-        //await testEnv.cleanup()
-    })
+    }) 
 
     beforeEach(async () => {
-        authenticatedUser = testEnv.authenticatedContext(user1Id)
+        authenticatedUser = testEnv.authenticatedContext(user1Data.id)
+        authenticatedUser2 = testEnv.authenticatedContext(user2Data.id)
         unauthenticatedUser = testEnv.unauthenticatedContext()
         
     })
 
     it('Should be able to write to storage when authenticated', async () => {               
-        const ref = storageRef(authenticatedUser.storage(), `avatars/${user1Id}/avatar`)
+        const ref = storageRef(authenticatedUser.storage(), `avatars/${user1Data.id}/avatar`)
         await assertSucceeds(uploadBytes(ref, avatar))        
     })
 
     it('Should be able to read from storage when authenticated', async () => {
-        await assertSucceeds(getBytes(storageRef(authenticatedUser.storage(), `avatars/${user1Id}/avatar`)))
+        await assertSucceeds(getBytes(storageRef(authenticatedUser.storage(), `avatars/${user1Data.id}/avatar`)))
     })
 
     it('Should fail when unauthorized and writting to storage', async () => {        
-        await assertFails(uploadBytes(storageRef(unauthenticatedUser.storage(), `avatars/${user1Id}/avatar`), avatar))
+        await assertFails(uploadBytes(storageRef(unauthenticatedUser.storage(), `avatars/${user1Data.id}/avatar`), avatar))
     })
 
     it('Should fail when unauthorized and reading from storage', async () => {
-        await assertFails(getBytes(storageRef(unauthenticatedUser.storage(), `avatars/${user1Id}/avatar`)))
+        await assertFails(getBytes(storageRef(unauthenticatedUser.storage(), `avatars/${user1Data.id}/avatar`)))
+    })
+
+    it('Should fail when different account reads from storage', async () => {
+        await assertFails(getBytes(storageRef(authenticatedUser2.storage(), `avatars/${user1Data.id}/avatar`)))
     })
 
     it('Should be able to write to db when authorized', async () => {
@@ -98,6 +96,6 @@ describe('Firebase Storage - Security Rules', () => {
     it('Should not be able to read db when unauthorized', async () => {
         const userRefUnauth = ref(unauthenticatedUser.database(), 'users/' + user1Data.id)
         await assertFails(get(userRefUnauth))
-    })
+    })   
     
 })
