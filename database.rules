@@ -1,0 +1,6 @@
+{
+  "rules": {
+    	".read": "auth != null",  //Chats können nur abgegriffen werden wenn man authorisiert ist
+    	".write": "auth != null",	//Chats dürfen nur erstellt werden wenn man authorisiert ist
+    } //leider kann man hier aufgrund der limitierten queries von realtime db keine feingranulareren regeln aufstellen
+}
