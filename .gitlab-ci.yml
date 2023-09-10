@@ -8,7 +8,10 @@ setup-job:
   image: node:latest
   stage: setup
   script:   
-    - npm install --legacy-peer-deps --include=dev
+    - npm ci --legacy-peer-deps --include=dev
+    - ls
+    - cd ./node_modules
+    - ls
   artifacts:
     paths:
       - node_modules
@@ -36,9 +39,7 @@ test-job:
     - apt-get update -qq && apt-get install   
     - apt-get -y install default-jre      
     - npm install -g firebase-tools   
-    - ls
-    - cd ./node_modules
-    - ls
+    
     - firebase emulators:exec --project socketchat-7dd2a 'npm vitest'
   only:
     #- develop
