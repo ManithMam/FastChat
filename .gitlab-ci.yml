@@ -8,7 +8,7 @@ setup-job:
   image: node:latest
   stage: setup
   script:   
-    - npm install --include=dev
+    - npm install --legacy-peer-deps --include=dev
   artifacts:
     paths:
       - node_modules
