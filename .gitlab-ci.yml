@@ -36,6 +36,7 @@ test-job:
     - apt-get update -qq && apt-get install   
     - apt-get -y install default-jre      
     - npm install -g firebase-tools   
+    - npm install -D vitest
     - firebase emulators:exec --project socketchat-7dd2a 'npm vitest'
   only:
     #- develop
