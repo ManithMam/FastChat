@@ -30,7 +30,7 @@ build-job:
       - dist
     expire_in: 1h
   only:
-    - main
+    #- main
 
 test-job:
   image: node:18
@@ -43,8 +43,8 @@ test-job:
     
     - firebase emulators:exec 'npm test'
   only:
-    #- develop
-    #- main
+    - develop
+    - main
 
 deploy-job:      
   image: node:latest
@@ -52,8 +52,8 @@ deploy-job:
   environment: production 
   script:          
     - npm install -g firebase-tools    
-    - firebase deploy --token $FIREBASE_TOKEN
+    - firebase deploy --token $FIREBASE_TOKEN --only hosting
   only:
-    - main
+    #- main
    
  
