@@ -5,7 +5,7 @@ stages:
   - deploy
 
 setup-job:
-  image: node:latest
+  image: node:18
   stage: setup
   script:   
     - npm install --legacy-peer-deps --include=dev
@@ -31,10 +31,10 @@ build-job:
       - dist
     expire_in: 1h
   only:
-    #- main
+    - main
 
 test-job:
-  image: node:latest
+  image: node:18
   stage: test  
   before_script:
     - corepack enable
@@ -47,7 +47,7 @@ test-job:
     
     - firebase emulators:exec --project socketchat-7dd2a 'pnpm test'
   only:
-    - develop
+    #- develop
     #- main
 
 deploy-job:      
@@ -58,6 +58,6 @@ deploy-job:
     - npm install -g firebase-tools    
     - firebase deploy --token $FIREBASE_TOKEN
   only:
-    #- main
+    - main
    
  
