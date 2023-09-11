@@ -9,9 +9,9 @@ setup-job:
   stage: setup
   script:   
     - npm install --legacy-peer-deps --include=dev
-    - ls
-    - cd ./node_modules
-    - ls
+    #- ls
+    #- cd ./node_modules
+    #- ls
   artifacts:
     paths:
       - node_modules
