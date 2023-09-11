@@ -45,7 +45,7 @@ test-job:
     - apt-get -y install default-jre      
     - npm install -g firebase-tools   
     
-    - firebase emulators:exec --project socketchat-7dd2a 'pnpm test'
+    - firebase emulators:exec 'pnpm test'
   only:
     #- develop
     #- main
