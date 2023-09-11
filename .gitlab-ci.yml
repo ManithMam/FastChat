@@ -22,7 +22,7 @@ setup-job:
     #- main
 
 build-job:     
-  image: node:latest  
+  image: node:20-alpine3.17
   stage: build 
   script:   
     - npm run build 
