@@ -9,7 +9,7 @@ setup-job:
   stage: setup
   script:   
     - npm install --legacy-peer-deps --include=dev
-    - npm install vite@latest --save-dev
+    - npm install vite@latest --save-dev --legacy-peer-deps
     #- ls
     #- cd ./node_modules
     #- ls
