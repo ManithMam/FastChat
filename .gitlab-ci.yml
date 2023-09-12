@@ -5,10 +5,10 @@ stages:
   - deploy
 
 setup-job:
-  image: node:latest
+  image: node:18
   stage: setup
   script:   
-    - npm install  
+    - npm install --legacy-peer-deps --include=dev       
   artifacts:
     paths:
       - node_modules
@@ -18,7 +18,7 @@ setup-job:
     - main
 
 build-job:     
-  image: node:latest  
+  image: node:18
   stage: build 
   script:   
     - npm run build 
@@ -30,24 +30,24 @@ build-job:
     - main
 
 test-job:
-  image: node:latest
-  stage: test  
+  image: node:18
+  stage: test   
   script:         
     - apt-get update -qq && apt-get install   
     - apt-get -y install default-jre      
-    - npm install -g firebase-tools   
-    - firebase emulators:exec --project socketchat-7dd2a 'npm test'
+    - npm install -g firebase-tools      
+    - firebase emulators:exec 'npm test'
   only:
     - develop
     - main
 
 deploy-job:      
-  image: node:latest
+  image: node:18
   stage: deploy  
   environment: production 
   script:          
     - npm install -g firebase-tools    
-    - firebase deploy --token $FIREBASE_TOKEN
+    - firebase deploy --token $FIREBASE_TOKEN --only hosting
   only:
     - main
    
