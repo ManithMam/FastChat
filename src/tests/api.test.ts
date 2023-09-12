@@ -26,8 +26,8 @@ beforeAll(async () => {
 describe('User account modification', () => {  
 
   it('Should add user', async () => {
-    const sth = await signUpWithEmail("usernametest", "displaynametest", "test@mail.com", "myPassword123!")
-    expect(sth.success).toBe(true)   
+    const signUpUser = await signUpWithEmail("usernametest", "displaynametest", "test@mail.com", "myPassword123!")
+    expect(signUpUser.success).toBe(true)   
 
     const auth = getAuth(); 
     const user = auth.currentUser;
