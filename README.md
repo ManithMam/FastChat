@@ -33,6 +33,7 @@ https://blog.mi.hdm-stuttgart.de/index.php/2023/09/13/fastchat-your-words-instan
 Michael Dick                         
 Manith Mam                           
 Tim Drobny                             
-Georg Bogdanov                    
+Georg Bogdanov  
+Serhat Alpay                     
 Kethella Karoline Casimiro de Oliveira 
-Serhat Alpay                           
+                        
