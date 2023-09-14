@@ -13,20 +13,18 @@ The technologies used to build this project are:
 
 1. Clone the repository
 2. Install pnpm
-3. Use the following command: "pnpm install"
+3. Use the following command: `pnpm install`
 
 ## Testing
 
 To test our application we used Vitest as our framework and the Firebase Emulator to emulate database access.
 
 1. Download the latest version of Java
-2. Use the following command to run tests: " firebase emulators:exec 'pnpm test' "
+2. Use the following command to run tests: `firebase emulators:exec 'pnpm test'`
 
 ## Blogpost 
 
-To learn more about our project visit our blogpost at:
-
-https://blog.mi.hdm-stuttgart.de/index.php/2023/09/13/fastchat-your-words-instantly-delivered/ 
+To learn more about our project visit our [blogpost](https://blog.mi.hdm-stuttgart.de/index.php/2023/09/13/fastchat-your-words-instantly-delivered/)
 
 ## Credits
 
