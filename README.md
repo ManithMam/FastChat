@@ -1,7 +1,5 @@
 # FastChat - Your Words, Instantly Delivered
 
-## Description
-
 FastChat is a web application used to send instant messages. You can add friends and customize your profile.
 
 The technologies used to build this project are:
