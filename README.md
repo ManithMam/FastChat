@@ -30,10 +30,10 @@ https://blog.mi.hdm-stuttgart.de/index.php/2023/09/13/fastchat-your-words-instan
 
 ## Credits
 
-Michael Dick                         
-Manith Mam                           
-Tim Drobny                             
-Georg Bogdanov  
-Serhat Alpay                     
-Kethella Karoline Casimiro de Oliveira 
+Michael Dick                            - nd148             
+Manith Mam                              - mm334                
+Tim Drobny                              - td095            
+Georg Bogdanov                          - gb037
+Serhat Alpay                            - sa102          
+Kethella Karoline Casimiro de Oliveira  - kc029
                         
