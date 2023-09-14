@@ -1,0 +1,54 @@
+stages:      
+  - setup    
+  - build
+  - test
+  - deploy
+
+setup-job:
+  image: node:18
+  stage: setup
+  script:   
+    - npm install --legacy-peer-deps --include=dev       
+  artifacts:
+    paths:
+      - node_modules
+    expire_in: 1h
+  only:
+    - develop
+    - main
+
+build-job:     
+  image: node:18
+  stage: build 
+  script:   
+    - npm run build 
+  artifacts:
+    paths: 
+      - dist
+    expire_in: 1h
+  only:
+    - main
+
+test-job:
+  image: node:18
+  stage: test   
+  script:         
+    - apt-get update -qq && apt-get install   
+    - apt-get -y install default-jre      
+    - npm install -g firebase-tools      
+    - firebase emulators:exec 'npm test'
+  only:
+    - develop
+    - main
+
+deploy-job:      
+  image: node:18
+  stage: deploy  
+  environment: production 
+  script:          
+    - npm install -g firebase-tools    
+    - firebase deploy --token $FIREBASE_TOKEN --only hosting
+  only:
+    - main
+   
+ 
