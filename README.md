@@ -35,5 +35,4 @@ Manith Mam
 Tim Drobny                             
 Georg Bogdanov                    
 Kethella Karoline Casimiro de Oliveira 
- 
 Serhat Alpay                           
