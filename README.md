@@ -30,7 +30,7 @@ To learn more about our project visit our [blogpost](https://blog.mi.hdm-stuttga
 
 - **Michael Dick** (md148)             
 - **Manith Mam** (mm334)              
-- **Tim Drobny** (td095)          
+- **Tim Drobny** (td059)          
 - **Georg Bogdanov** (gb037)
 - **Serhat Alpay** (sa102)        
 - **Kethella Karoline Casimiro de Oliveira** (kc029)
