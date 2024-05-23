@@ -28,10 +28,9 @@ To learn more about our project visit our [blogpost](https://blog.mi.hdm-stuttga
 
 ## Credits
 
-- **Michael Dick** (md148)             
-- **Manith Mam** (mm334)              
-- **Tim Drobny** (td059)          
-- **Georg Bogdanov** (gb037)
-- **Serhat Alpay** (sa102)        
-- **Kethella Karoline Casimiro de Oliveira** (kc029)
-                        
+- **Michael Dick**          
+- **Manith Mam**               
+- **Tim Drobny**           
+- **Georg Bogdanov** 
+- **Serhat Alpay**        
+- **Kethella Karoline Casimiro de Oliveira** 
